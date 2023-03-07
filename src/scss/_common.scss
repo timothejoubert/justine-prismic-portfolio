@@ -1,0 +1,63 @@
+html {
+    --color-main: #DF5A3F;
+    --color-main-soft: #F9E2DE;
+    --color-bg: #FFFFFB;
+
+    background-color: var(--theme-default);
+    color: var(--theme-on-default);
+}
+
+body {
+    @include text-body-m;
+
+    font-family: $kostic;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit;
+    text-decoration-thickness: inherit;
+    text-underline-offset: inherit;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    text-align: inherit;
+    text-transform: inherit;
+
+    &:disabled {
+        cursor: default;
+    }
+}
+
+input{
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
+
+    &[type="submit"],
+    &[type="reset"] {
+        cursor: pointer;
+    }
+}
+
+textarea,
+select {
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+}
+
+::selection {
+    background-color: var(--theme-on-default);
+    color: var(--theme-default);
+    text-shadow: none;
+}

@@ -1,0 +1,46 @@
+backend:
+    name: git-gateway
+    branch: main
+
+i18n:
+    structure: multiple_files
+    locales: [en, hr, de]
+
+collections:
+    - name: taxonomies
+      label: Taxonomies
+      format: json
+      i18n:
+          structure: single_file
+          locales: [en, hr, de]
+      files: [
+          {
+              label: Travel type ideas,
+              name: travelTypes,
+              file: travelTypes,
+              18n: true,
+              fields: [
+                {name: title, label: Title, widget: string, 18n: true},
+                {name: id, label: ID, widget: string, 18n: true},
+          ]},
+      ]
+
+    - name: travel-ideas
+      label: Travel Ideas
+      folder: content/travel-ideas
+      i18n: true
+      fields: [
+          {name: title, label: Title, widget: string, 18n: true},
+          {
+              name: travelType,
+               label: Travel type,
+               widget: relation,
+               collection: taxonomies,
+               file: travelTypes,
+               search_fields: ["items.*.title"],
+               display_fields: ["items.*.title"],
+               value_field: "items.*.id",
+               i18n: duplicate
+          },
+      ]},
+    ]

@@ -1,0 +1,19 @@
+$themes: (
+    light: (
+        default: color(light),
+        button-background-hovered: rgba(color(light), 0.9),
+        on-default: color(dark),
+    ),
+    orange: (
+        default: color(orange),
+        button-background-hovered: rgba(color(orange), 0.9),
+        on-default: color(light),
+    ),
+    dark: (
+        default: color(dark),
+        button-background-hovered: rgba(color(dark), 0.9),
+        on-default: color(light),
+    )
+);
+
+$default-theme: dark;

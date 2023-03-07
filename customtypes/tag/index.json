@@ -1,0 +1,25 @@
+{
+  "id": "tag",
+  "label": "tag",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "tags": {
+        "type": "Group",
+        "config": {
+          "label": "tags",
+          "fields": {
+            "name": {
+              "type": "Text",
+              "config": {
+                "label": "Name",
+                "placeholder": ""
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

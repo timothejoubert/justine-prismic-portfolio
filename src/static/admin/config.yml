@@ -1,0 +1,116 @@
+# used `npx netlify-cms-proxy-server` for use default proxy server
+# https://www.netlifycms.org/docs/beta-features/#working-with-a-local-git-repository
+# check if locale storage site_url is not production url
+local_backend: true
+
+#https://timothe-joubert.netlify.app/
+site_url: http://localhost:3000/
+logo_url: https://timothe-joubert.netlify.app/icon.png
+
+#publish_mode: editorial_workflow
+
+backend:
+  name: git-gateway
+  branch: main
+  squash_merges: true
+
+
+media_folder: static/img
+#public_folder: /img
+
+media_library:
+    name: cloudinary
+    config:
+        cloud_name: duiyjc3zu
+        api_key: 165339578982617
+
+# Docs: https://www.netlifycms.org/docs/configuration-options/#collections
+# Docs: https://www.netlifycms.org/docs/collection-types/
+collections:
+    # Generals info
+  - label: 'Site settings'
+    name: 'siteSettings'
+    files:
+      - label: 'Info'
+        name: 'info'
+        file: 'content/site/info.json'
+        format: 'json'
+        editor:
+          preview: false
+        fields:
+          - { label: Site Name, name: siteName, widget: string, hint: 'Nom du site' }
+          - {
+              label: Site Description,
+              name: siteDescription,
+              widget: string,
+              hint: 'Description du site dans les recherches Google',
+            }
+          - { label: 'Share Image', name: 'shareImage', widget: 'image', required: true, allow_multiple: false }
+      -   label: 'À propos'
+          name: 'about'
+          file: 'content/site/about.json'
+          format: 'json'
+          editor:
+              preview: false
+          fields:
+            - { label: 'Title', name: 'title', widget: 'string', required: true }
+            - { label: 'Description', name: 'description', widget: 'text', required: false }
+#      -   name: 'tags'
+#          label: 'Tags'
+#          file: 'content/site/tags.json'
+#          format: 'json'
+#          editor:
+#              preview: false
+#          fields:
+#            -  name: tagList
+#               label: List de tag
+#               widget: list
+#               slug: "tagList"
+#               identifier_field: tagList
+#               summary: '{{fields.tag}}'
+#               hint: 'Ajouter des tags'
+#               allow_add: true
+#               field: { label: Tag, name: tag, widget: string }
+  - name: tags
+    label: Tags des projets
+    folder: "content/tags"
+    format: 'frontmatter'
+    create: true
+    slug: "{{name}}"
+    identifier_field: name
+    summary: "{{name}}"
+    fields:
+        - {name: name, label: Name}
+  - name: 'projects'
+    label: 'Projets'
+    label_singular: 'Project'
+    folder: 'content/projects'
+    create: true
+    format: 'frontmatter'
+    slug: '{{slug}}'
+    preview_path: 'projects/{{slug}}'
+    fields:
+      - {
+          name: 'projectTags',
+          label: 'Tags du projet',
+          widget: "relation",
+          collection: "tags",
+          search_fields: ["name"],
+          value_field: "name",
+          multiple: true,
+        }
+      - { label: 'Title', name: 'title', widget: 'string', required: true }
+      - { label: 'Date', name: 'date', widget: 'date', default: '', format: 'YYYY MM DD' }
+      - { label: 'Coup de coeur', name: 'promote', widget: 'boolean', default: false, required: false  }
+      - { label: 'Nouveau', name: 'new', widget: 'boolean', default: false, required: false  }
+      - { label: 'Lien', name: 'link', widget: 'markdown', required: false }
+      - { label: 'Description', name: 'description', widget: 'string', required: false }
+      - { label: 'Thumbnail', name: 'thumbnail', widget: 'image', allow_multiple: false, required: true, }
+      - {
+          label: 'Gallery',
+          name: 'gallery',
+          widget: 'list',
+          required: false,
+          summary: '{{fields.image}}',
+          field: {label: Image, name: image, widget: image }
+        }

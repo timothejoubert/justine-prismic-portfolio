@@ -1,13 +1,54 @@
 {
-  "siteTitle": {
-    "__TYPE__": "StructuredTextContent",
+  "uid": {
+    "__TYPE__": "UIDContent",
+    "value": "shade"
+  },
+  "site_name": {
+    "__TYPE__": "FieldContent",
+    "value": "separate",
+    "type": "Text"
+  },
+  "image": {
+    "__TYPE__": "LinkContent",
+    "value": {
+      "id": "mock_Media_link",
+      "kind": "image/jpeg",
+      "name": "mock_name",
+      "url": "https://source.unsplash.com/daily",
+      "size": "0",
+      "__TYPE__": "FileLink"
+    }
+  },
+  "socials": {
+    "__TYPE__": "GroupContentType",
     "value": [
       {
-        "type": "heading1",
-        "content": {
-          "text": "System"
-        }
+        "__TYPE__": "GroupItemContent",
+        "value": [
+          [
+            "name",
+            {
+              "__TYPE__": "FieldContent",
+              "value": "due",
+              "type": "Text"
+            }
+          ],
+          [
+            "link",
+            {
+              "__TYPE__": "LinkContent",
+              "value": {
+                "__TYPE__": "ExternalLink",
+                "url": "http://twitter.com"
+              }
+            }
+          ]
+        ]
       }
     ]
+  },
+  "slices": {
+    "__TYPE__": "SliceContentType",
+    "value": []
   }
 }

@@ -8,25 +8,53 @@
       "uid": {
         "type": "UID",
         "config": {
-          "label": "UID",
+          "label": "id",
           "placeholder": ""
         }
       },
       "title": {
-        "type": "StructuredText",
+        "type": "Text",
         "config": {
           "label": "Title",
-          "placeholder": "",
-          "allowTargetBlank": true,
-          "single": "heading1"
+          "placeholder": ""
         }
       },
-      "parent": {
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Description",
+          "placeholder": "",
+          "allowTargetBlank": true,
+          "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+        }
+      },
+      "image": {
         "type": "Link",
         "config": {
-          "label": "Parent",
-          "select": "document",
-          "customtypes": ["page"]
+          "label": "Image",
+          "placeholder": "",
+          "select": "media"
+        }
+      },
+      "type": {
+        "type": "Select",
+        "config": {
+          "label": "Type",
+          "placeholder": "",
+          "options": [
+            "Default",
+            "Home",
+            "SketchBooks",
+            "Projects",
+            "About"
+          ]
+        }
+      },
+      "parent_page": {
+        "type": "Link",
+        "config": {
+          "label": "Parent page",
+          "select": "document"
         }
       },
       "slices": {
@@ -34,22 +62,10 @@
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
-            "hero": {
+            "loading_image": {
               "type": "SharedSlice"
             },
-            "quote": {
-              "type": "SharedSlice"
-            },
-            "text": {
-              "type": "SharedSlice"
-            },
-            "image": {
-              "type": "SharedSlice"
-            },
-            "image_cards": {
-              "type": "SharedSlice"
-            },
-            "text_with_image": {
+            "socials": {
               "type": "SharedSlice"
             }
           }
