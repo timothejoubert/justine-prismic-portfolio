@@ -2,7 +2,9 @@
 // https://github.com/nuxt-modules/prismic/issues/62
 // this was from another solution, I just added because it's useful
 import { getApi } from 'prismic-javascript'
-import { DefaultClient } from 'prismic-javascript/types/client'
+// import ResolvedApi from '@prismicio/client/types/ResolvedApi'
+// import { DefaultClient } from 'prismic-javascript/types/client'
+import { DefaultClient } from '@prismicio/client/types/client'
 import {Module} from "@nuxt/types";
 
 // import Vue from 'vue'
@@ -60,7 +62,7 @@ type PrismicVue<T> = VuePrismic & T
 
 declare module '@nuxt/types' {
     interface Context {
-        $prismic: PrismicVue<PrismicAPI>
+        $prismic: PrismicVue<PrismicAPI> & RichText
     }
 }
 
@@ -68,7 +70,7 @@ declare module '@nuxt/types' {
 // here's the solution
 declare module 'vue/types/vue' {
     interface Vue {
-        $prismic: PrismicVue<PrismicAPI>
+        $prismic: PrismicVue<PrismicAPI> & RichText
     }
 }
 
