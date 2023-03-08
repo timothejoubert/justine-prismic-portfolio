@@ -1,27 +1,31 @@
 <template>
-  <SliceZone :slices="page.data.slices" :components="components" />
+  <div :class="$style.root">
+    <lazy-v-home v-if="isHome" :slices="slices" />
+    <lazy-v-sketch-books v-else-if="isSketchBook" :slices="slices" />
+    <lazy-v-project-list v-else-if="isProjectListing" :slices="slices" />
+    <lazy-v-about v-else-if="isAbout" :slices="slices" />
+    <lazy-v-project v-else-if="isProject" :slices="slices" />
+<!--    <SliceZone :slices="page.data.slices" :components="components" />-->
+  </div>
 </template>
 
-<script>
-import { components } from '~/../../slices'
+<script lang="ts">
+// SliceZone is all slice in page
+import { components } from '~/../slices'
+import mixins from "vue-typed-mixins";
+import Page from "~/mixins/Page";
 
-export default {
-  async asyncData ({ $prismic, params, store }) {
-    const page = await $prismic.api.getByUID('page', params.uid)
-    await store.dispatch('load')
-    if (page) {
-      return { page }
-    } else {
-      return { data: { title: 'fallBackTitle'}}
-    }
-  },
+export default mixins(Page).extend({
   data () {
     return { components }
   },
-  head () {
-    return {
-      title: `${this.$prismic.asText(this.page?.data?.title || '')} | ${this.$prismic.asText(this.$store.state.settings?.data?.siteTitle || '')}`
-    }
-  }
-}
+})
 </script>
+
+<style lang="scss" module>
+.root {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+}
+</style>

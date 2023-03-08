@@ -5,52 +5,30 @@
   "status": true,
   "json": {
     "Main" : {
-    "siteTitle" : {
-      "type" : "StructuredText",
-      "config" : {
-        "label" : "Site Title",
-        "placeholder" : "Title of the site",
-        "allowTargetBlank" : false,
-        "single" : "heading1"
-      }
-    },
-    "socials" : {
-      "type" : "Group",
-      "config" : {
-        "fields" : {
-          "name" : {
-            "type" : "Text",
-            "config" : {
-              "label" : "Name"
-            }
-          },
-          "link" : {
-            "type" : "Link",
-            "config" : {
-              "label" : "Link",
-              "select" : null
+      "links" : {
+        "type" : "Group",
+        "config" : {
+          "label" : "Links",
+          "fields" : {
+            "label" : {
+              "type" : "Text",
+              "config" : {
+                "label" : "Label",
+                "placeholder" : "Label du lien"
+              }
+            },
+            "link" : {
+              "type" : "Link",
+              "config" : {
+                "label" : "Link",
+                "placeholder" : "Lien",
+                "select" : null,
+                "allowTargetBlank" : true
+              }
             }
           }
-        },
-        "label" : "Socials"
-      }
-    },
-    "description" : {
-      "type" : "StructuredText",
-      "config" : {
-        "single" : "paragraph",
-        "label" : "Description",
-        "placeholder" : "Meta description de la page"
-      }
-    },
-    "thumbnail" : {
-      "type" : "Image",
-      "config" : {
-        "constraint" : { },
-        "thumbnails" : [ ],
-        "label" : "Thumbnail"
+        }
       }
     }
-  }
   }
 }

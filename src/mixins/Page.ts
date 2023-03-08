@@ -1,33 +1,53 @@
 import type { MetaInfo } from 'vue-meta'
 import Vue from 'vue'
-import { Context } from '@nuxt/types'
+// import { Context } from '@nuxt/types'
 import { FacebookMetaOptions, PageMetaPropertyName, TwitterMetaOptions } from '~/types/meta'
 import { createFacebookMeta } from '~/utils/meta/facebook'
 import { createTwitterMeta } from '~/utils/meta/twitter'
-import { PageData } from '~/types/app'
-import { getAllPagePath, getAppTitle, getPageByPath } from '~/utils/parse-api-data'
-import pageDataFallBack from '~/static/mock-data/page-data-fallback.json'
+import { getAllPagePath, getAppTitle } from '~/utils/parse-api-data'
 import { isAbout, isHomePage, isProject, isProjectListing, isSketchBooks } from '~/utils/entity'
+import { PageDocumentData } from '~/types/prismic-types.generated'
+import {LinkToMediaField} from "@prismicio/types/src/value/linkToMedia";
+import * as prismicT from "@prismicio/types";
 
 export default Vue.extend({
-    middleware({ req, redirect }: Context) {
-        if (!req?.url) return
-
-        const allPath = getAllPagePath()
-        const slugifyPath = req?.url?.toLowerCase()?.replace(/\/$/, '')
-
-        const isNotExactly = allPath.includes(slugifyPath)
-        const findNoMatch = !allPath.includes(req?.url)
-
-        if (findNoMatch && !isNotExactly) return redirect('/')
-        if (isNotExactly) return redirect(slugifyPath)
+    // middleware({ req, redirect }: Context) {
+    //     if (!req?.url) return
+    //
+    //     const allPath = getAllPagePath()
+    //     const slugifyPath = req?.url?.toLowerCase()?.replace(/\/$/, '')
+    //
+    //     const isNotExactly = allPath.includes(slugifyPath)
+    //     const findNoMatch = !allPath.includes(req?.url)
+    //
+    //     if (findNoMatch && !isNotExactly) return redirect('/')
+    //     if (isNotExactly) return redirect(slugifyPath)
+    // },
+    async asyncData ({ $prismic, params, store }) {
+        const page = await $prismic.api.getByUID('page', params.uid)
+        await store.dispatch('load')
+        if (page) {
+            return { page }
+        } else {
+            console.log("don\'t find page date in mixin Page")
+            return {
+                data: {
+                    title: 'fallBackTitle',
+                    description: '',
+                    type: 'default',
+                    parent: {},
+                    tags: null,
+                    slices: [],
+                }
+            }
+        }
     },
     head(): MetaInfo {
         const meta = [
             {
                 hid: 'description',
                 name: 'description',
-                content: this.pageData?.description || 'fallback de description dans mixin page',
+                content: this.pageDescription,
             } as PageMetaPropertyName,
             ...createFacebookMeta(this.getFacebookMetaOptions()),
             ...createTwitterMeta(this.getTwitterMetaOptions()),
@@ -40,16 +60,37 @@ export default Vue.extend({
             },
             title: this.metaTitle,
             meta,
-            script: [{ src: 'https://identity.netlify.com/v1/netlify-identity-widget.js' }],
         }
     },
     computed: {
-        pageData(): PageData {
-            return getPageByPath(this.$route.path) || (pageDataFallBack as PageData)
+        pageData(): PageDocumentData {
+            return this.page?.data
+        },
+        appTitle(): string {
+            return ''
+            // return this.$prismic.asText(this.$store.state.settings?.data?.siteTitle || 'fallBack site name')
         },
         metaTitle(): string {
-            const appName = getAppTitle()
-            return this.isHome ? appName : `${this.pageData.title} | ${appName}`
+            return ''
+            // const pageTitle = this.$prismic.asText(this.pageData?.title || 'fallBack title page')
+            // return `${pageTitle} | ${this.appTitle}`
+        },
+        metaImage(): string {
+            return '/images/share.jpg'
+            // const media = !!this.pageData.thumbnail ? this.pageData.thumbnail as LinkToMediaField<"filled"> : undefined
+            // return media?.url || '/images/share.jpg'
+        },
+        pageUrl(): string {
+            return ''
+            // return this.appTitle + this.$route.fullPath.substring(1)
+        },
+        pageDescription(): string {
+            return ''
+            // return this.$prismic.asText(this.pageData?.description || '') || this.$prismic.asText(this.$store.state.settings?.data?.description)
+        },
+        slices(): prismicT.SliceZone {
+            return []
+            // return this.pageData?.slices
         },
         isHome(): boolean {
             return isHomePage(this.pageData)
@@ -68,31 +109,21 @@ export default Vue.extend({
         },
     },
     methods: {
-        getMetaImage(): string {
-            // TODO: store relative path if providerImg used
-            const image =
-                typeof this.pageData.shareImg === 'string' ? this.pageData.shareImg : this.pageData.shareImg?.src
-
-            return image || '/images/share.jpg'
-        },
-        getPageUrl(): string {
-            return this.$config.siteUrl + this.$route.fullPath.substring(1)
-        },
         getTwitterMetaOptions(): TwitterMetaOptions {
             return {
                 title: this.metaTitle,
-                description: this.pageData.description || '',
-                url: this.getPageUrl(),
-                image: this.getMetaImage(),
+                description: this.pageDescription,
+                url: this.pageUrl,
+                image: this.metaImage,
             }
         },
         getFacebookMetaOptions(): FacebookMetaOptions {
             return {
                 siteName: getAppTitle(),
                 title: this.metaTitle,
-                description: this.pageData.description || '',
-                url: this.getPageUrl(),
-                image: this.getMetaImage(),
+                description: this.pageDescription,
+                url: this.pageUrl,
+                image: this.metaImage,
             }
         },
     },

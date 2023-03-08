@@ -16,8 +16,8 @@ const actions: ActionTree<RootState, RootState> = {
         const navigation = await context.$prismic.api.getSingle('navigation')
         const settings = await context.$prismic.api.getSingle('settings')
 
-        commit(mutationType.SET_NAVIGATION, navigation)
-        commit(mutationType.SET_SETTINGS, settings)
+        commit(mutationType.SET_NAVIGATION, navigation || {})
+        commit(mutationType.SET_SETTINGS, settings || {})
     },
     async load(store) {
         console.log('load function in store')

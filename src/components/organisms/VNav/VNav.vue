@@ -5,13 +5,14 @@
                 <div ref="slider" :class="$style.slider"></div>
                 <ul v-if="pages && pages.length" :class="$style.list">
                     <li
-                        v-for="link in pages"
-                        :key="link['@id']"
+                        v-for="(page, i) in pages"
+                        :key="i"
                         ref="link"
                         :class="$style.item"
-                        @mouseenter="onLinkMouseEnter(link.relativePath)"
+                        @mouseenter="onLinkMouseEnter(page.slug)"
                     >
-                        <nuxt-link :to="link.relativePath" :class="$style.item__link">{{ link.title }}</nuxt-link>
+                        <prismic-link v-if="page && page.link" :field="page.link">{{ page.label }}</prismic-link>
+<!--                        <nuxt-link :to="link.relativePath" :class="$style.item__link">{{ link.title }}</nuxt-link>-->
                     </li>
                 </ul>
             </div>
@@ -57,7 +58,9 @@ export default mixins(ThemeProvider).extend({
             ]
         },
         pages(): PageData[] {
-            return getMenu() as PageData[]
+            console.log(this.$store.state.navigation.data)
+          return this.$store.state.navigation.data.links
+            // return getMenu() as PageData[]
         },
     },
     watch: {

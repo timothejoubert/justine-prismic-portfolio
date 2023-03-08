@@ -1,4 +1,5 @@
-import { NodeElement, PageData, ProjectListing } from '~/types/app'
+import { NodeElement, PageData } from '~/types/app'
+import {PageDocumentData} from "~/types/prismic-types.generated";
 
 //
 // Node type
@@ -24,26 +25,28 @@ export const isNodeMenu = (entity: NodeElement): boolean => {
 // Node name
 //
 
-export function isNodeElement(entity: NodeElement, name: string): boolean {
-    return entity.nodeName === name
+// TODO: update type name
+
+export function isNodeElement(entity: PageDocumentData | undefined, name: string): boolean {
+    return !!entity?.type && entity.type === name
 }
 
-export const isProjectListing = (entity: NodeElement): entity is ProjectListing => {
+export const isProjectListing = (entity?: PageDocumentData): boolean => {
     return isNodeElement(entity, 'projectListing')
 }
 
-export const isSketchBooks = (entity: NodeElement): entity is ProjectListing => {
+export const isSketchBooks = (entity?: PageDocumentData): boolean => {
     return isNodeElement(entity, 'sketchbooks')
 }
 
-export const isAbout = (entity: NodeElement): entity is ProjectListing => {
+export const isAbout = (entity?: PageDocumentData): boolean => {
     return isNodeElement(entity, 'about')
 }
 
-export const isHomePage = (entity: NodeElement): entity is ProjectListing => {
+export const isHomePage = (entity?: PageDocumentData): boolean => {
     return isNodeElement(entity, 'homePage')
 }
 
-export const isProject = (entity: NodeElement): entity is ProjectListing => {
+export const isProject = (entity?: PageDocumentData): boolean => {
     return isNodeElement(entity, 'project')
 }
