@@ -4,36 +4,53 @@
   "repeatable": false,
   "status": true,
   "json": {
-    "Main": {
-      "name": {
-        "type": "Group",
-        "config": {
-          "label": "link",
-          "fields": {
-            "name": {
-              "type": "Text",
-              "config": {
-                "label": "Name",
-                "placeholder": ""
-              }
-            },
-            "page_link": {
-              "type": "Link",
-              "config": {
-                "label": "Page link",
-                "select": "document"
-              }
+    "Main" : {
+    "siteTitle" : {
+      "type" : "StructuredText",
+      "config" : {
+        "label" : "Site Title",
+        "placeholder" : "Title of the site",
+        "allowTargetBlank" : false,
+        "single" : "heading1"
+      }
+    },
+    "socials" : {
+      "type" : "Group",
+      "config" : {
+        "fields" : {
+          "name" : {
+            "type" : "Text",
+            "config" : {
+              "label" : "Name"
+            }
+          },
+          "link" : {
+            "type" : "Link",
+            "config" : {
+              "label" : "Link",
+              "select" : null
             }
           }
-        }
-      },
-      "slices": {
-        "type": "Slices",
-        "fieldset": "Slice Zone",
-        "config": {
-          "choices": {}
-        }
+        },
+        "label" : "Socials"
+      }
+    },
+    "description" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "paragraph",
+        "label" : "Description",
+        "placeholder" : "Meta description de la page"
+      }
+    },
+    "thumbnail" : {
+      "type" : "Image",
+      "config" : {
+        "constraint" : { },
+        "thumbnails" : [ ],
+        "label" : "Thumbnail"
       }
     }
+  }
   }
 }

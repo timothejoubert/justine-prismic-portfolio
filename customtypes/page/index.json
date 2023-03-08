@@ -4,70 +4,72 @@
   "repeatable": true,
   "status": true,
   "json": {
-    "Main": {
-      "uid": {
-        "type": "UID",
-        "config": {
-          "label": "id",
-          "placeholder": ""
+    "Main" : {
+      "uid" : {
+        "type" : "UID",
+        "config" : {
+          "label" : "UID",
+          "placeholder" : ""
         }
       },
-      "title": {
-        "type": "Text",
-        "config": {
-          "label": "Title",
-          "placeholder": ""
+      "title" : {
+        "type" : "StructuredText",
+        "config" : {
+          "label" : "Title",
+          "placeholder" : "",
+          "allowTargetBlank" : true,
+          "single" : "heading1"
         }
       },
-      "description": {
-        "type": "StructuredText",
-        "config": {
-          "label": "Description",
-          "placeholder": "",
-          "allowTargetBlank": true,
-          "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+      "description" : {
+        "type" : "StructuredText",
+        "config" : {
+          "multi" : "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink",
+          "label" : "Description"
         }
       },
-      "image": {
-        "type": "Link",
-        "config": {
-          "label": "Image",
-          "placeholder": "",
-          "select": "media"
+      "thumbnail" : {
+        "type" : "Link",
+        "config" : {
+          "select" : "media",
+          "label" : "Thumbnail"
         }
       },
-      "type": {
-        "type": "Select",
-        "config": {
-          "label": "Type",
-          "placeholder": "",
-          "options": [
-            "Default",
-            "Home",
-            "SketchBooks",
-            "Projects",
-            "About"
-          ]
+      "type" : {
+        "type" : "Select",
+        "config" : {
+          "options" : [ "Default", "Home", "Sketchooks", "Projects", "Project", "About" ],
+          "default_value" : "Default",
+          "label" : "type"
         }
       },
-      "parent_page": {
-        "type": "Link",
-        "config": {
-          "label": "Parent page",
-          "select": "document"
+      "parent" : {
+        "type" : "Link",
+        "config" : {
+          "label" : "Parent",
+          "select" : "document",
+          "customtypes" : [ "page" ]
         }
       },
-      "slices": {
-        "type": "Slices",
-        "fieldset": "Slice Zone",
-        "config": {
-          "choices": {
-            "loading_image": {
-              "type": "SharedSlice"
-            },
-            "socials": {
-              "type": "SharedSlice"
+      "tags" : {
+        "type" : "Group",
+        "config" : {
+          "fields" : {
+            "name" : {
+              "type" : "Text",
+              "config" : {
+                "label" : "Name"
+              }
             }
+          },
+          "label" : "Tags"
+        }
+      },
+      "slices" : {
+        "type" : "Slices",
+        "fieldset" : "Slice Zone",
+        "config" : {
+          "choices" : {
           }
         }
       }
