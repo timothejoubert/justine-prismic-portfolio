@@ -1,4 +1,4 @@
-import MyComponent from '../../../../../src/slices/Socials';
+import MyComponent from '../../../../../slices/Socials';
 import SliceZone from 'vue-slicezone'
 
 export default {

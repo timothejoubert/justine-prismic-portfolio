@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { components } from '~/slices'
+import { components } from '~/../../slices'
 
 export default {
   async asyncData ({ $prismic, params, store }) {

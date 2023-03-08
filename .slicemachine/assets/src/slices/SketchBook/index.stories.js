@@ -1,4 +1,4 @@
-import MyComponent from '../../../../../src/slices/SketchBook';
+import MyComponent from '../../../../../slices/SketchBook';
 import SliceZone from 'vue-slicezone'
 
 export default {

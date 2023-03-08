@@ -1,4 +1,4 @@
-import MyComponent from '../../../../../src/slices/LoadingImage';
+import MyComponent from '../../../../../slices/LoadingImage';
 import SliceZone from 'vue-slicezone'
 
 export default {
