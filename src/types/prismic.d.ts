@@ -1,16 +1,16 @@
 
 // https://github.com/nuxt-modules/prismic/issues/62
 // this was from another solution, I just added because it's useful
-import { getApi } from 'prismic-javascript'
+// import type { getApi } from 'prismic-javascript'
 // import ResolvedApi from '@prismicio/client/types/ResolvedApi'
 // import { DefaultClient } from 'prismic-javascript/types/client'
-import { DefaultClient } from '@prismicio/client/types/client'
+import type { DefaultClient } from '@prismicio/client/types/client'
 import {Module} from "@nuxt/types";
 
 // import Vue from 'vue'
 
 type ThenArg<T> = T extends Promise<infer U> ? U : T
-type PrismicAPIPromise = ReturnType<typeof getApi>
+type PrismicAPIPromise = ReturnType<typeof DefaultClient.getApi>
 type PrismicAPI = ThenArg<PrismicAPIPromise>
 
 type ElementType =
@@ -62,7 +62,7 @@ type PrismicVue<T> = VuePrismic & T
 
 declare module '@nuxt/types' {
     interface Context {
-        $prismic: PrismicVue<PrismicAPI> & RichText
+        $prismic: PrismicVue<PrismicAPI> & RichText & DefaultClient
     }
 }
 

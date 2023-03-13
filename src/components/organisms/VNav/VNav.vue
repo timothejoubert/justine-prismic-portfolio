@@ -9,10 +9,9 @@
                         :key="i"
                         ref="link"
                         :class="$style.item"
-                        @mouseenter="onLinkMouseEnter(page.slug)"
+                        @mouseenter="onLinkMouseEnter(page)"
                     >
-                        <prismic-link v-if="page && page.link" :field="page.link">{{ page.label }}</prismic-link>
-<!--                        <nuxt-link :to="link.relativePath" :class="$style.item__link">{{ link.title }}</nuxt-link>-->
+                        <nuxt-link :to="page.link.uid" :class="$style.item__link">{{ page.label }}</nuxt-link>
                     </li>
                 </ul>
             </div>
@@ -31,9 +30,9 @@ import { gsap } from 'gsap'
 import mixins from 'vue-typed-mixins'
 import ThemeProvider from '~/mixins/ThemeProvider'
 import { getCSSVarFromTheme } from '~/utils/get-theme'
-import { PageData } from '~/types/app'
-import { getMenu } from '~/utils/parse-api-data'
 import { isListingPage } from '~/utils/entity'
+import {MenuDocumentData, MenuDocumentDataLinksItem} from "~/types/prismic-types.generated";
+import {isInternalLinkFulled} from "~/utils/prismic/prismic-guard";
 
 export default mixins(ThemeProvider).extend({
     name: 'VNav',
@@ -57,10 +56,8 @@ export default mixins(ThemeProvider).extend({
                 typeof this.theme === 'string' && this.$style[`root--theme-${this.theme}`],
             ]
         },
-        pages(): PageData[] {
-            console.log(this.$store.state.navigation.data)
+        pages(): MenuDocumentDataLinksItem[] {
           return this.$store.state.navigation.data.links
-            // return getMenu() as PageData[]
         },
     },
     watch: {
@@ -87,16 +84,23 @@ export default mixins(ThemeProvider).extend({
             this.timeoutId = -1
             this.isMenuOpen = true
         },
-        onLinkMouseEnter(relativePath: string) {
-            this.updateSelectedIndexByPath(relativePath)
+        onLinkMouseEnter(page: MenuDocumentDataLinksItem) {
+          const uid = isInternalLinkFulled(page.link) ? page.link.uid : null
+          if (!uid) return
+          this.updateSelectedIndexByPath(uid)
         },
         updateSelectedIndexByRoute() {
-            this.updateSelectedIndexByPath(this.$route.path)
+          this.updateSelectedIndexByPath(this.$route.path)
         },
         updateSelectedIndexByPath(path: string) {
+          const parsedPath = path[0] === '/' ? path.substring(1) : path
+
             this.selectedIndex = Math.max(
                 this.pages?.findIndex((page) => {
-                    return path === page.relativePath || (isListingPage(page) && path.includes(page.relativePath))
+                  const pageUid = isInternalLinkFulled(page.link) ? page.link.uid : null
+                  if (!pageUid) return false
+                  const isInProjectPage = isListingPage(page) && path.includes(pageUid)
+                  return parsedPath === pageUid || isInProjectPage
                 }),
                 0
             )

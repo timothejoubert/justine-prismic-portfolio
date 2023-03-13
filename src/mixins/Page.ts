@@ -1,14 +1,13 @@
 import type { MetaInfo } from 'vue-meta'
 import Vue from 'vue'
-// import { Context } from '@nuxt/types'
 import { FacebookMetaOptions, PageMetaPropertyName, TwitterMetaOptions } from '~/types/meta'
 import { createFacebookMeta } from '~/utils/meta/facebook'
 import { createTwitterMeta } from '~/utils/meta/twitter'
-import { getAllPagePath, getAppTitle } from '~/utils/parse-api-data'
-import { isAbout, isHomePage, isProject, isProjectListing, isSketchBooks } from '~/utils/entity'
-import { PageDocumentData } from '~/types/prismic-types.generated'
-import {LinkToMediaField} from "@prismicio/types/src/value/linkToMedia";
+import { isAbout, isHomePage, isProjectPage, isProjectListing, isSketchBooks } from '~/utils/entity'
+import type { PageDocumentData } from '~/types/prismic-types.generated'
+import type { LinkToMediaField } from "@prismicio/types/src/value/linkToMedia";
 import * as prismicT from "@prismicio/types";
+import {PrismicDocument} from "@prismicio/types";
 
 export default Vue.extend({
     // middleware({ req, redirect }: Context) {
@@ -24,7 +23,7 @@ export default Vue.extend({
     //     if (isNotExactly) return redirect(slugifyPath)
     // },
     async asyncData ({ $prismic, params, store }) {
-        const page = await $prismic.api.getByUID('page', params.uid)
+        const page = await ($prismic.api as any).getByUID('page', params.uid) as PrismicDocument | undefined
         await store.dispatch('load')
         if (page) {
             return { page }
@@ -64,48 +63,43 @@ export default Vue.extend({
     },
     computed: {
         pageData(): PageDocumentData {
+            console.log(this.page)
             return this.page?.data
         },
         appTitle(): string {
-            return ''
-            // return this.$prismic.asText(this.$store.state.settings?.data?.siteTitle || 'fallBack site name')
+            return this.$prismic.asText(this.$store.state.settings?.data?.siteTitle || 'fallBack site name')
         },
         metaTitle(): string {
-            return ''
-            // const pageTitle = this.$prismic.asText(this.pageData?.title || 'fallBack title page')
-            // return `${pageTitle} | ${this.appTitle}`
+            const pageTitle = this.$prismic.asText(this.pageData?.title || 'fallBack title page')
+            return `${pageTitle} | ${this.appTitle}`
         },
         metaImage(): string {
-            return '/images/share.jpg'
-            // const media = !!this.pageData.thumbnail ? this.pageData.thumbnail as LinkToMediaField<"filled"> : undefined
-            // return media?.url || '/images/share.jpg'
+            const media = !!this.pageData.thumbnail ? this.pageData.thumbnail as LinkToMediaField<"filled"> : undefined
+            return media?.url || '/images/share.jpg'
         },
         pageUrl(): string {
-            return ''
-            // return this.appTitle + this.$route.fullPath.substring(1)
+            return this.appTitle + this.$route.fullPath.substring(1)
         },
         pageDescription(): string {
-            return ''
-            // return this.$prismic.asText(this.pageData?.description || '') || this.$prismic.asText(this.$store.state.settings?.data?.description)
+            return this.$prismic.asText(this.pageData?.description || '') || this.$prismic.asText(this.$store.state.settings?.data?.description)
         },
         slices(): prismicT.SliceZone {
-            return []
-            // return this.pageData?.slices
+            return this.pageData?.slices
         },
         isHome(): boolean {
-            return isHomePage(this.pageData)
+            return isHomePage(this.page)
         },
         isProjectListing(): boolean {
-            return isProjectListing(this.pageData)
+            return isProjectListing(this.page)
         },
         isSketchBook(): boolean {
-            return isSketchBooks(this.pageData)
+            return isSketchBooks(this.page)
         },
         isAbout(): boolean {
-            return isAbout(this.pageData)
+            return isAbout(this.page)
         },
-        isProject(): boolean {
-            return isProject(this.pageData)
+        isProjectPage(): boolean {
+            return isProjectPage(this.page)
         },
     },
     methods: {
@@ -119,7 +113,7 @@ export default Vue.extend({
         },
         getFacebookMetaOptions(): FacebookMetaOptions {
             return {
-                siteName: getAppTitle(),
+                siteName: this.appTitle,
                 title: this.metaTitle,
                 description: this.pageDescription,
                 url: this.pageUrl,

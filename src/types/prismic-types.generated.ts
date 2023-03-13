@@ -7,7 +7,7 @@ type Simplify<T> = {
     [KeyType in keyof T]: T[KeyType];
 };
 /** Content for Menu documents */
-interface MenuDocumentData {
+export interface MenuDocumentData {
     /**
      * Links field in *Menu*
      *

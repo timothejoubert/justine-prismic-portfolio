@@ -1,52 +1,54 @@
-import { NodeElement, PageData } from '~/types/app'
-import {PageDocumentData} from "~/types/prismic-types.generated";
+import { PrismicDocumentWithUID} from "@prismicio/types/src/value/document";
+import {PrismicDocument} from "@prismicio/types";
 
 //
 // Node type
 //
 
-export function isEntityType(entity: NodeElement, type: string): boolean {
-    return entity['@type'] === type
+export function isEntityType(document: PrismicDocument, type: string): boolean {
+    return document.type === type
 }
 
-export const isPage = (entity: NodeElement): entity is PageData => {
-    return isEntityType(entity, 'Page')
+export const isPage = (document: PrismicDocument): boolean => {
+    return isEntityType(document, 'Page')
 }
 
-export const isListingPage = (entity: NodeElement): Boolean => {
-    return isEntityType(entity, 'PageListing')
+export const isListingPage = (document: PrismicDocument): boolean => {
+    return !!document.data?.parent
 }
 
-export const isNodeMenu = (entity: NodeElement): boolean => {
-    return isPage(entity) || isProjectListing(entity)
+export const isNodeMenu = (document: PrismicDocument): boolean => {
+    return isEntityType(document, "navigation")
 }
 
 //
-// Node name
+// Node by uid
 //
 
-// TODO: update type name
-
-export function isNodeElement(entity: PageDocumentData | undefined, name: string): boolean {
-    return !!entity?.type && entity.type === name
+export function isDocumentByUid(document: PrismicDocument, name: string): boolean {
+    return hasUid(document) && document.uid === name
 }
 
-export const isProjectListing = (entity?: PageDocumentData): boolean => {
-    return isNodeElement(entity, 'projectListing')
+const hasUid = (document: PrismicDocument): document is PrismicDocumentWithUID => {
+    return !!document?.uid
 }
 
-export const isSketchBooks = (entity?: PageDocumentData): boolean => {
-    return isNodeElement(entity, 'sketchbooks')
+export const isProjectListing = (document: PrismicDocument): boolean => {
+    return isPage(document) && isDocumentByUid(document, 'project-page')
 }
 
-export const isAbout = (entity?: PageDocumentData): boolean => {
-    return isNodeElement(entity, 'about')
+export const isSketchBooks = (document: PrismicDocument): boolean => {
+    return isPage(document) && isDocumentByUid(document, 'sketchbook')
 }
 
-export const isHomePage = (entity?: PageDocumentData): boolean => {
-    return isNodeElement(entity, 'homePage')
+export const isAbout = (document: PrismicDocument): boolean => {
+    return isPage(document) && isDocumentByUid(document, 'about')
 }
 
-export const isProject = (entity?: PageDocumentData): boolean => {
-    return isNodeElement(entity, 'project')
+export const isHomePage = (document: PrismicDocument): boolean => {
+    return isPage(document) && isDocumentByUid(document, 'home')
+}
+
+export const isProjectPage = (document: PrismicDocument): boolean => {
+    return isListingPage(document) && isProjectListing(document)
 }

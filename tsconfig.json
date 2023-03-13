@@ -31,7 +31,7 @@
             "@nuxt/image",
             "@nuxt/content",
             "webpack-env",
-            "./src/types/prismic-types.generated.ts"
+            "/src/types/prismic-types.generated.ts"
         ]
     },
     "exclude": [

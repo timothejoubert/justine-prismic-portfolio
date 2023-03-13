@@ -1,10 +1,10 @@
 <template>
     <main :class="$style.root">
-        <lazy-v-home v-if="isHome" />
-        <lazy-v-sketch-books v-else-if="isSketchBook" />
-        <lazy-v-project-list v-else-if="isProjectListing" />
-        <lazy-v-about v-else-if="isAbout" />
-        <lazy-v-project v-else-if="isProject" />
+        <lazy-v-home v-if="isHome" :page="pageData"/>
+        <lazy-v-sketch-books v-else-if="isSketchBook" :page="pageData"/>
+        <lazy-v-project-list v-else-if="isProjectListing" :page="pageData"/>
+        <lazy-v-about v-else-if="isAbout" :page="pageData"/>
+        <lazy-v-project v-else-if="isProject" :page="pageData"/>
     </main>
 </template>
 

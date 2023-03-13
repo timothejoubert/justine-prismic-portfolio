@@ -1,10 +1,11 @@
 <template>
-  <div :class="$style.root">
+  <div :class="$style.root" v-if="pageData">
+    <prismic-rich-text :field="pageData.title" />
     <lazy-v-home v-if="isHome" :slices="slices" />
     <lazy-v-sketch-books v-else-if="isSketchBook" :slices="slices" />
     <lazy-v-project-list v-else-if="isProjectListing" :slices="slices" />
     <lazy-v-about v-else-if="isAbout" :slices="slices" />
-    <lazy-v-project v-else-if="isProject" :slices="slices" />
+    <lazy-v-project v-else-if="isProjectPage" :slices="slices" />
 <!--    <SliceZone :slices="page.data.slices" :components="components" />-->
   </div>
 </template>

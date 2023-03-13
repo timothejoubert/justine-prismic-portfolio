@@ -1,5 +1,6 @@
+import {PrismicDocument} from "@prismicio/types/src/value/document";
 
-export const prismicHtmlSerializer = (type: string, element: {'data': any}, content: any, children: { join(content: string): string}) => {
+const prismicHtmlSerializer = (type: string, element: PrismicDocument, content: any, children: { join(content: string): string}) => {
     switch (type) {
         case 'heading1':
             return /* html */ `<h1 class="font-semibold leading-tight tracking-tight md:leading-tight text-4xl md:text-5xl mb-7 mt-12 first:mt-0 last:mb-0">${children.join('')}</h1>`
@@ -40,3 +41,5 @@ export const prismicHtmlSerializer = (type: string, element: {'data': any}, cont
             return null
     }
 }
+
+module.exports = prismicHtmlSerializer;
