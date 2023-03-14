@@ -1,11 +1,13 @@
-import sm from './sm.json'
-import { version } from './package.json'
 // @ts-ignore
 import SpriteLoaderPlugin from 'svg-sprite-loader/plugin'
-import { Configuration as WebpackConfiguration } from 'webpack'
+import sm from './sm.json'
+import { version } from './package.json'
 import createSitemap from './src/utils/create-sitemap'
 // import { prismicHtmlSerializer } from './src/utils/prismic-html-serializer'
+// import { Configuration as WebpackConfiguration } from 'webpack'
+
 const isProduction = process.env.NODE_ENV === 'production'
+const defaultPageUid = 'home-page'
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
@@ -102,7 +104,8 @@ export default {
   publicRuntimeConfig: {
     development: process.env.NODE_ENV === 'development',
     siteUrl: process.env.APP_URL,
-    apiUrl: sm.apiEndpoint || process.env.API_URL
+    apiUrl: sm.apiEndpoint || process.env.API_URL,
+    defaultPageUid,
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -114,8 +117,8 @@ export default {
     linkResolver: (doc) => {
       switch (doc.type) {
         case 'page':
-          return `/${doc.slugs[0]}`
           // return doc.uid === 'home' ? '/' : `/${doc.uid}`
+          return doc.uid === 'home-page' ? '/' : `/${doc.uid}`
         default:
           return '/'
       }

@@ -22,8 +22,8 @@ export default Vue.extend({
     //     if (findNoMatch && !isNotExactly) return redirect('/')
     //     if (isNotExactly) return redirect(slugifyPath)
     // },
-    async asyncData ({ $prismic, params, store }) {
-        const page = await ($prismic.api as any).getByUID('page', params.uid) as PrismicDocument | undefined
+    async asyncData ({ $prismic, params, store, $config }) {
+        const page = await ($prismic.api as any).getByUID('page', params?.uid || $config.defaultPageUid) as PrismicDocument | undefined
 
         // await store.dispatch('load')
 
@@ -89,7 +89,7 @@ export default Vue.extend({
             return this.pageData?.slices
         },
         isHome(): boolean {
-            return isHomePage(this.page)
+            return isHomePage(this.page) || this.$route.fullPath === '/'
         },
         isProjectListing(): boolean {
             return isProjectListing(this.page)

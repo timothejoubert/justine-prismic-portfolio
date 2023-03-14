@@ -1,19 +1,29 @@
 <template>
-    <main :class="$style.root">
-        <lazy-v-home v-if="isHome" :page="pageData"/>
-        <lazy-v-sketch-books v-else-if="isSketchBook" :page="pageData"/>
-        <lazy-v-project-list v-else-if="isProjectListing" :page="pageData"/>
-        <lazy-v-about v-else-if="isAbout" :page="pageData"/>
-        <lazy-v-project v-else-if="isProject" :page="pageData"/>
-    </main>
+  <div v-if="pageData" :class="$style.root" >
+    <lazy-v-home v-if="isHome" :slices="slices" :page-data="pageData"/>
+    <lazy-v-sketch-books v-else-if="isSketchBook" :slices="slices" :page-data="pageData"/>
+    <lazy-v-project-list v-else-if="isProjectListing" :slices="slices" :page-data="pageData"/>
+    <lazy-v-about v-else-if="isAbout" :slices="slices" :page-data="pageData"/>
+    <lazy-v-project v-else-if="isProjectPage" :slices="slices" :page-data="pageData"/>
+    <lazy-v-default v-else :slices="slices" :page-data="pageData"/>
+
+    <!--    <SliceZone :slices="page.data.slices" :components="components" />-->
+  </div>
+  <h1 v-else>_.vue</h1>
+
 </template>
 
 <script lang="ts">
-import mixins from 'vue-typed-mixins'
-import Page from '~/mixins/Page'
+// SliceZone is all slice in page
+import { components } from '~/../slices'
+import mixins from "vue-typed-mixins";
+import Page from "~/mixins/Page";
 
 export default mixins(Page).extend({
-    name: 'DefaultPage',
+  name: 'page',
+  data () {
+    return { components }
+  },
 })
 </script>
 
