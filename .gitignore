@@ -89,3 +89,7 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# Personal notes
+NOTES.md
+TODO.md

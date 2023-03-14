@@ -2,15 +2,15 @@
     <div :class="$style.root">
         <h1>{{ pageData.title }}</h1>
         <!--        <v-about-tags :class="$style.tags" />-->
-        <v-marquee-carousel />
+<!--        <v-marquee-carousel />-->
 
-        <div :class="$style.left">
-            <h2 v-if="about.subTitle" class="text-h3" :class="$style.title">{{ about.subTitle }}</h2>
-            <p class="text-h4" :class="$style.content">{{ about.description }}</p>
-            <div :class="$style.socials">
-                <v-social v-for="(social, i) in socials" :key="i" :social="social" />
-            </div>
-        </div>
+<!--        <div :class="$style.left">-->
+<!--            <h2 v-if="about.subTitle" class="text-h3" :class="$style.title">{{ about.subTitle }}</h2>-->
+<!--            <p class="text-h4" :class="$style.content">{{ about.description }}</p>-->
+<!--            <div :class="$style.socials">-->
+<!--                <v-social v-for="(social, i) in socials" :key="i" :social="social" />-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </template>
 
@@ -22,9 +22,6 @@ import PageProvider from '~/mixins/PageProvider'
 export default mixins(PageProvider).extend({
     name: 'VAbout',
     computed: {
-        about(): AboutPage {
-            return this.pageData as AboutPage
-        },
         socials() {
             return this.$store.state.headData.socials
         },

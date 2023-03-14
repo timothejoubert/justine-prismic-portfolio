@@ -7,7 +7,7 @@
             :class="$style.item"
             @mouseenter="onMouseEnter(index)"
         >
-            <nuxt-img :src="`/images/cul${image.src}`" :alt="image.title" :class="$style.image" />
+<!--            <nuxt-img :src="`/images/cul${image.src}`" :alt="image.title" :class="$style.image" />-->
         </div>
     </div>
 </template>
@@ -96,7 +96,7 @@ export default Vue.extend({
                 }
             })
 
-            console.log(unusedIndex)
+            // console.log(unusedIndex)
 
             const randomIndex = unusedIndex.length
                 ? Math.floor(Math.random() * unusedIndex.length)

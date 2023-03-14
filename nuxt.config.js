@@ -114,7 +114,7 @@ export default {
     linkResolver: (doc) => {
       switch (doc.type) {
         case 'page':
-          return `/${doc.uid}`
+          return `/${doc.slugs[0]}`
           // return doc.uid === 'home' ? '/' : `/${doc.uid}`
         default:
           return '/'

@@ -30,8 +30,8 @@ import { gsap } from 'gsap'
 import mixins from 'vue-typed-mixins'
 import ThemeProvider from '~/mixins/ThemeProvider'
 import { getCSSVarFromTheme } from '~/utils/get-theme'
-import { isListingPage } from '~/utils/entity'
-import {MenuDocumentData, MenuDocumentDataLinksItem} from "~/types/prismic-types.generated";
+// import { isListingPage } from '~/utils/entity'
+import { MenuDocumentDataLinksItem} from "~/types/prismic-types.generated";
 import {isInternalLinkFulled} from "~/utils/prismic/prismic-guard";
 
 export default mixins(ThemeProvider).extend({
@@ -57,7 +57,7 @@ export default mixins(ThemeProvider).extend({
             ]
         },
         pages(): MenuDocumentDataLinksItem[] {
-          return this.$store.state.navigation.data.links
+          return this.$store.state.mainMenu?.data?.links
         },
     },
     watch: {
@@ -99,7 +99,7 @@ export default mixins(ThemeProvider).extend({
                 this.pages?.findIndex((page) => {
                   const pageUid = isInternalLinkFulled(page.link) ? page.link.uid : null
                   if (!pageUid) return false
-                  const isInProjectPage = isListingPage(page) && path.includes(pageUid)
+                  const isInProjectPage = false //isListingPage(page) && path.includes(pageUid)
                   return parsedPath === pageUid || isInProjectPage
                 }),
                 0
@@ -146,9 +146,7 @@ $height: rem(34);
 .root {
     @include theme-variants;
 
-    position: relative;
     display: flex;
-    width: min-content;
     flex-direction: column;
     align-items: center;
     justify-content: center;

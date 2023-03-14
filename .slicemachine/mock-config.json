@@ -1,10 +1,10 @@
 {
   "_cts": {
-    "page_de_projet": {},
     "page": {},
     "settings": {},
-    "menu": {},
-    "tag": {}
+    "main_menu": {
+      "link": {}
+    }
   },
   "src/slices": {
     "Socials": {

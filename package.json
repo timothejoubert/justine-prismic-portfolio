@@ -12,7 +12,7 @@
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint-fix": "yarn lint:js --fix && yarn lint:style --fix",
     "slicemachine": "start-slicemachine",
-    "customtypes:ts": "npx prismic-ts-codegen",
+    "types:ts": "npx prismic-ts-codegen",
     "format": "prettier --write ."
   },
   "dependencies": {
@@ -22,7 +22,8 @@
     "nuxt": "^2.15.8",
     "portal-vue": "^2.1.7",
     "swiper": "^9.0.2",
-    "throttle-debounce": "^3.0.1"
+    "throttle-debounce": "^3.0.1",
+    "ts-prismic": "^0.3.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",

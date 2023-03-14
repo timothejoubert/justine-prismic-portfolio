@@ -1,6 +1,5 @@
 <template>
     <div :class="rootClass">
-      <h1>VSketchBooks</h1>
       <h1>{{ pageData.title }}</h1>
     </div>
 </template>

@@ -1,24 +1,44 @@
-import { PrismicDocumentWithUID} from "@prismicio/types/src/value/document";
-import {PrismicDocument} from "@prismicio/types";
+import { PrismicDocumentWithUID } from "@prismicio/types/src/value/document";
+import { PrismicDocument } from "@prismicio/types";
 
 //
 // Node type
 //
 
-export function isEntityType(document: PrismicDocument, type: string): boolean {
+type NodeType = 'page' | 'main-menu' | 'settings'
+
+export function isEntityType(document: PrismicDocument, type: NodeType): boolean {
     return document.type === type
 }
 
+export const isSettings = (document: PrismicDocument): boolean => {
+    return isEntityType(document, 'settings')
+}
+
 export const isPage = (document: PrismicDocument): boolean => {
-    return isEntityType(document, 'Page')
+    return isEntityType(document, 'page')
 }
 
-export const isListingPage = (document: PrismicDocument): boolean => {
-    return !!document.data?.parent
+export const isMainMenu = (document: PrismicDocument): boolean => {
+    return isEntityType(document, "main-menu")
 }
 
-export const isNodeMenu = (document: PrismicDocument): boolean => {
-    return isEntityType(document, "navigation")
+//
+// Node data
+//
+
+export const hasParentPage = (document: PrismicDocument): boolean => {
+    return !!document.data?.parent?.uid || !!document.data?.parent?.slug
+}
+
+export const getListingPageUid = (documents: PrismicDocument[]): string[] => {
+    return documents
+        ?.filter((document) => hasParentPage(document))
+        ?.map((document) => document.data.parent.uid)
+}
+
+export const isListingPage = (documents: PrismicDocument[], uid: string): boolean => {
+    return !!getListingPageUid(documents)?.includes(uid)
 }
 
 //
@@ -26,7 +46,7 @@ export const isNodeMenu = (document: PrismicDocument): boolean => {
 //
 
 export function isDocumentByUid(document: PrismicDocument, name: string): boolean {
-    return hasUid(document) && document.uid === name
+    return hasUid(document) && (document as PrismicDocumentWithUID).uid === name
 }
 
 const hasUid = (document: PrismicDocument): document is PrismicDocumentWithUID => {
@@ -34,11 +54,11 @@ const hasUid = (document: PrismicDocument): document is PrismicDocumentWithUID =
 }
 
 export const isProjectListing = (document: PrismicDocument): boolean => {
-    return isPage(document) && isDocumentByUid(document, 'project-page')
+    return isPage(document) && isDocumentByUid(document, 'project-listing')
 }
 
 export const isSketchBooks = (document: PrismicDocument): boolean => {
-    return isPage(document) && isDocumentByUid(document, 'sketchbook')
+    return isPage(document) && isDocumentByUid(document, 'sketchbooks')
 }
 
 export const isAbout = (document: PrismicDocument): boolean => {
@@ -46,9 +66,9 @@ export const isAbout = (document: PrismicDocument): boolean => {
 }
 
 export const isHomePage = (document: PrismicDocument): boolean => {
-    return isPage(document) && isDocumentByUid(document, 'home')
+    return isPage(document) && isDocumentByUid(document, 'home-page')
 }
 
 export const isProjectPage = (document: PrismicDocument): boolean => {
-    return isListingPage(document) && isProjectListing(document)
+    return isPage(document) && hasParentPage(document) && isProjectListing(document.data.parent)
 }

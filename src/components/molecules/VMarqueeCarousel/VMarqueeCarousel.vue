@@ -6,7 +6,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { getProjectTags } from '~/utils/parse-api-data'
 import { CarouselOptions } from '~/components/molecules/VCarousel/VCarousel.vue'
 
 export default Vue.extend({
@@ -17,11 +16,8 @@ export default Vue.extend({
         }
     },
     computed: {
-        rootClass(): (undefined | false | string)[] {
-            return [this.$style.root]
-        },
         tags(): string[] {
-            return getProjectTags()
+            return ['static tags']
         },
         carouselOptions(): CarouselOptions {
             return {
@@ -38,7 +34,6 @@ export default Vue.extend({
             }
         },
     },
-    methods: {},
 })
 </script>
 

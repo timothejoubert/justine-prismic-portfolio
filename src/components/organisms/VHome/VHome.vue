@@ -18,7 +18,6 @@ export default mixins(PageProvider).extend({
   },
     computed: {
         rootClass(): (undefined | false | string)[] {
-          console.log('homepage', this.page)
             return [this.$style.root]
         },
     },

@@ -24,7 +24,9 @@ export default Vue.extend({
     // },
     async asyncData ({ $prismic, params, store }) {
         const page = await ($prismic.api as any).getByUID('page', params.uid) as PrismicDocument | undefined
-        await store.dispatch('load')
+
+        // await store.dispatch('load')
+
         if (page) {
             return { page }
         } else {
@@ -63,7 +65,7 @@ export default Vue.extend({
     },
     computed: {
         pageData(): PageDocumentData {
-            console.log(this.page)
+            // console.log(this.page)
             return this.page?.data
         },
         appTitle(): string {
