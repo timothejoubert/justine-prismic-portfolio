@@ -1,7 +1,7 @@
 <template>
     <div :class="rootClass">
-      <h1>Home</h1>
-        <v-random-grid-images />
+      <h1 v-if="pageData && pageData.title">{{pageData.title}}</h1>
+<!--        <v-random-grid-images />-->
     </div>
 </template>
 
@@ -9,13 +9,13 @@
 import mixins from 'vue-typed-mixins'
 import PageProvider from '~/mixins/PageProvider'
 import type {PropType} from "vue";
-import type {PageDocumentData} from "~/types/prismic-types.generated";
+import { MainPageData } from "~/types/prismic/app-prismic";
 
 export default mixins(PageProvider).extend({
     name: 'VHome',
-  props: {
-    page: Object as PropType<PageDocumentData>,
-  },
+    props: {
+      page: Object as PropType<MainPageData>,
+    },
     computed: {
         rootClass(): (undefined | false | string)[] {
             return [this.$style.root]

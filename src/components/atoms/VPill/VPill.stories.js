@@ -1,5 +1,5 @@
 import VPill from '~/components/atoms/VPill/VPill.vue'
-import { getProjectTags } from '~/utils/parse-api-data'
+import { getProjectTags } from '~/utils/prismic/parse-api-data'
 
 const tags = getProjectTags()
 

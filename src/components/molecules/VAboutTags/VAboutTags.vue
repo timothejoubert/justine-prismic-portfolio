@@ -10,9 +10,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { PageDocument } from "~/types/prismic";
+import { PageDocument } from "~/types/prismic/prismic";
 import * as prismicT from "@prismicio/types";
-import {PageDocumentDataTagsItem} from "~/types/prismic-types.generated";
+import {PageDocumentDataTagsItem} from "~/types/prismic/prismic-types.generated";
 
 export default Vue.extend({
     name: 'VAboutTags',

@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import type { PropType } from 'vue'
-import { PageDocumentData } from "~/types/prismic-types.generated";
+import {MainPageData} from "~/types/prismic/app-prismic";
 
 export default Vue.extend({
     props: {
-        pageData: Object as PropType<PageDocumentData>
+        pageData: Object as PropType<MainPageData>
     },
 })

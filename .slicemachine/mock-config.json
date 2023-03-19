@@ -4,7 +4,8 @@
     "settings": {},
     "main_menu": {
       "link": {}
-    }
+    },
+    "project": {}
   },
   "src/slices": {
     "Socials": {

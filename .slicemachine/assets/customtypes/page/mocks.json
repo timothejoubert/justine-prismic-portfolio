@@ -1,11 +1,11 @@
 {
   "uid": {
     "__TYPE__": "UIDContent",
-    "value": "lamp"
+    "value": "day"
   },
   "title": {
     "__TYPE__": "FieldContent",
-    "value": "effort",
+    "value": "curve",
     "type": "Text"
   },
   "description": {
@@ -14,39 +14,42 @@
       {
         "type": "paragraph",
         "content": {
-          "text": "Reprehenderit amet sint cillum voluptate consequat incididunt. Est ex qui esse proident cillum. Aliqua eiusmod culpa ea."
+          "text": "Tempor et dolor aliquip duis irure irure exercitation incididunt anim. Est occaecat nulla labore labore ea amet nostrud irure."
         }
       }
     ]
   },
-  "image": {
-    "__TYPE__": "LinkContent",
-    "value": {
-      "id": "mock_Media_link",
-      "kind": "image/jpeg",
-      "name": "mock_name",
-      "url": "https://source.unsplash.com/daily",
-      "size": "0",
-      "__TYPE__": "FileLink"
-    }
+  "thumbnail": {
+    "__TYPE__": "ImageContent",
+    "origin": {
+      "id": "main",
+      "url": "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5",
+      "width": 5848,
+      "height": 3899
+    },
+    "url": "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5",
+    "width": 5848,
+    "height": 3899,
+    "edit": {
+      "zoom": 1,
+      "crop": {
+        "x": 0,
+        "y": 0
+      },
+      "background": "transparent"
+    },
+    "thumbnails": {}
   },
   "type": {
     "__TYPE__": "FieldContent",
-    "value": "Projects",
+    "value": "Default",
     "type": "Select"
-  },
-  "parent_page": {
-    "__TYPE__": "LinkContent",
-    "value": {
-      "__TYPE__": "DocumentLink",
-      "id": "mock_document_id"
-    }
   },
   "slices": {
     "__TYPE__": "SliceContentType",
     "value": [
       {
-        "key": "loading_image$8d3e8773-db39-4747-ab97-1ba4551d29eb",
+        "key": "loading_image$629171e4-f1ee-4afb-8756-e5ffe88a9025",
         "name": "loading_image",
         "widget": {
           "__TYPE__": "SharedSliceContent",
@@ -67,40 +70,6 @@
                       "url": "https://source.unsplash.com/daily",
                       "size": "0",
                       "__TYPE__": "FileLink"
-                    }
-                  }
-                ]
-              ]
-            }
-          ]
-        }
-      },
-      {
-        "key": "socials$5a537362-0c35-4009-b662-51f7d56666b0",
-        "name": "socials",
-        "widget": {
-          "__TYPE__": "SharedSliceContent",
-          "variation": "default",
-          "primary": {},
-          "items": [
-            {
-              "__TYPE__": "GroupItemContent",
-              "value": [
-                [
-                  "name",
-                  {
-                    "__TYPE__": "FieldContent",
-                    "value": "once",
-                    "type": "Text"
-                  }
-                ],
-                [
-                  "link",
-                  {
-                    "__TYPE__": "LinkContent",
-                    "value": {
-                      "__TYPE__": "ExternalLink",
-                      "url": "https://slicemachine.dev"
                     }
                   }
                 ]

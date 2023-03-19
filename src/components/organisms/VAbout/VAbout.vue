@@ -1,6 +1,6 @@
 <template>
     <div :class="$style.root">
-        <h1>{{ pageData.title }}</h1>
+      <h1 v-if="pageData && pageData.title">{{pageData.title}}</h1>
         <!--        <v-about-tags :class="$style.tags" />-->
 <!--        <v-marquee-carousel />-->
 

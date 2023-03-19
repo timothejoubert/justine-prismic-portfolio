@@ -1,16 +1,13 @@
 <template>
     <div :class="$style.root">
-      <h1>listing</h1>
-      <h1 v-if="pageData.title">{{ pageData.title }}</h1>
-      <p>find pages: {{ projects }}</p>
-<!--        <v-carousel v-model="slideIndex" :options="carouselOptions" :class="$style.carousel" wrapper-tag="ul">-->
-<!--            <li v-for="(project, i) in projects" :key="i" :class="$style.project">-->
-<!--              <p>{{project.data.title}}</p>-->
-<!--                <v-link :to="project.relativePath">-->
-<!--                    <v-project-card :index="i" :project="project" :length="projects.length" :class="$style.card" />-->
-<!--                </v-link>-->
-<!--            </li>-->
-<!--        </v-carousel>-->
+      <h1 v-if="pageData && pageData.title">{{pageData.title}}</h1>
+        <v-carousel v-model="slideIndex" :options="carouselOptions" :class="$style.carousel" wrapper-tag="ul">
+            <li v-for="(project, i) in projects" :key="i" :class="$style.project">
+                <v-link :to="project.url">
+                    <v-project-card :index="i" :project="project" :length="projects.length" :class="$style.card" />
+                </v-link>
+            </li>
+        </v-carousel>
     </div>
 </template>
 
@@ -18,31 +15,30 @@
 import mixins from 'vue-typed-mixins'
 import { CarouselOptions } from '~/components/molecules/VCarousel/VCarousel.vue'
 import PageProvider from '~/mixins/PageProvider'
-import {PageDocument} from "~/types/prismic";
-// import {PrismicDocument} from "@prismicio/types";
-// import {PageDocumentData} from "~/types/prismic-types.generated";
+import { getProjectDataList } from "~/utils/prismic/parse-api-data";
+import {ProjectData} from "~/types/prismic/app-prismic";
 
 export default mixins(PageProvider).extend({
     name: 'VProjectList',
-    async asyncData(context) {
-      const pages = await context.$prismic.api.query(
-          context.$prismic.predicates.at('document.type', 'page')
-      ).then(response => response.results as PageDocument[])
-      // if (pages) {
-        return { pages }
-      // } else {
-      //   error({statusCode: 404, message: 'Page not found'})
-      // }
-    },
     data() {
         return {
-            slideIndex: 0,
+          projects: [] as ProjectData[],
+          slideIndex: 0,
         }
     },
+    async mounted() {
+      try {
+        const projectsResponse = await this.$prismic.api.query(
+            this.$prismic.predicates.at('document.type', 'project')
+        ).then((response) => response.results)
+
+        this.projects = projectsResponse?.length ? getProjectDataList(projectsResponse) : []
+
+      } catch {
+        console.log('can\'t fetch projects in Project listing')
+      }
+    },
     computed: {
-        projects(): string[] {
-          return this.pages?.map((page: PageDocument) => page.data.title)
-        },
           carouselOptions(): CarouselOptions {
               return {
                   freeMode: {

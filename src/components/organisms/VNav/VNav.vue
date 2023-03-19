@@ -9,9 +9,9 @@
                         :key="i"
                         ref="link"
                         :class="$style.item"
-                        @mouseenter="onLinkMouseEnter(page)"
+                        @mouseenter="onLinkMouseEnter(i)"
                     >
-                        <nuxt-link :to="page.link.uid" :class="$style.item__link">{{ page.label }}</nuxt-link>
+                      <component :is="page.link.uid ? 'nuxt-link' : 'span'" :to="pageLink(page.link.uid)" :class="$style.item__link">{{ page.label }}</component>
                     </li>
                 </ul>
             </div>
@@ -30,9 +30,10 @@ import { gsap } from 'gsap'
 import mixins from 'vue-typed-mixins'
 import ThemeProvider from '~/mixins/ThemeProvider'
 import { getCSSVarFromTheme } from '~/utils/get-theme'
-// import { isListingPage } from '~/utils/entity'
-import { MenuDocumentDataLinksItem} from "~/types/prismic-types.generated";
-import {isInternalLinkFulled} from "~/utils/prismic/prismic-guard";
+import { isInternalLinkFulled } from "~/types/prismic/prismic-guard";
+import {getMenuLinkList} from "~/utils/prismic/parse-api-data";
+import { MenuItem } from "~/types/prismic/app-prismic";
+import { getInternalLinkUid} from "~/utils/prismic/utils";
 
 export default mixins(ThemeProvider).extend({
     name: 'VNav',
@@ -43,7 +44,6 @@ export default mixins(ThemeProvider).extend({
         return {
             isMenuOpen: false,
             selectedIndex: null as null | number,
-            indicatorTimeline: null as null | GSAPTimeline,
             timeoutId: -1,
         }
     },
@@ -56,9 +56,12 @@ export default mixins(ThemeProvider).extend({
                 typeof this.theme === 'string' && this.$style[`root--theme-${this.theme}`],
             ]
         },
-        pages(): MenuDocumentDataLinksItem[] {
-          return this.$store.state.mainMenu?.data?.links
+        pages(): MenuItem[] {
+          return getMenuLinkList(this.$store.state.mainMenu)
         },
+      isHome(): boolean {
+          return
+      }
     },
     watch: {
         selectedIndex(newIndex: number, oldIndex: number) {
@@ -70,6 +73,9 @@ export default mixins(ThemeProvider).extend({
         },
     },
     methods: {
+        pageLink(pageUid: string): string {
+            return (!pageUid || pageUid === this.$config.defaultPageUid) ? '/' : pageUid
+        },
         onMouseLeave() {
             this.timeoutId = window.setTimeout(this.closeMenu, 100)
         },
@@ -84,26 +90,20 @@ export default mixins(ThemeProvider).extend({
             this.timeoutId = -1
             this.isMenuOpen = true
         },
-        onLinkMouseEnter(page: MenuDocumentDataLinksItem) {
-          const uid = isInternalLinkFulled(page.link) ? page.link.uid : null
-          if (!uid) return
-          this.updateSelectedIndexByPath(uid)
+        onLinkMouseEnter(index: number) {
+          this.updateSelectedIndex(index)
         },
         updateSelectedIndexByRoute() {
-          this.updateSelectedIndexByPath(this.$route.path)
-        },
-        updateSelectedIndexByPath(path: string) {
-          const parsedPath = path[0] === '/' ? path.substring(1) : path
+          const currentPageUid = this.$route.params?.uid || (this.$route.fullPath === '/' ? this.$config.defaultPageUid : this.$route.path.replace('/', ''))
 
-            this.selectedIndex = Math.max(
-                this.pages?.findIndex((page) => {
-                  const pageUid = isInternalLinkFulled(page.link) ? page.link.uid : null
-                  if (!pageUid) return false
-                  const isInProjectPage = false //isListingPage(page) && path.includes(pageUid)
-                  return parsedPath === pageUid || isInProjectPage
-                }),
-                0
-            )
+          const pageIndex = this.pages?.findIndex((page) => {
+            return getInternalLinkUid(page.link) === currentPageUid
+          })
+
+          this.updateSelectedIndex(pageIndex)
+        },
+        updateSelectedIndex(index: number) {
+            this.selectedIndex = index
         },
         initIndicatorPosition() {
             this.updateSelectedIndexByRoute()
@@ -116,8 +116,7 @@ export default mixins(ThemeProvider).extend({
 
             if (!selectedTarget || !slider) return
 
-            this.indicatorTimeline = gsap.timeline({ defaults: { duration: 0.4 } })
-            this.indicatorTimeline.to(slider, {
+            gsap.to(slider, 0.4, {
                 x: selectedTarget.offsetLeft - 5,
                 width: selectedTarget.offsetWidth + 2,
             })
@@ -130,10 +129,10 @@ export default mixins(ThemeProvider).extend({
             gsap.to(selectedTarget, 0.3, { color: theme['--theme-on-default'], ease: 'none' })
 
             if (oldIndex) {
-                gsap.to(targets[oldIndex], 0.3, { color: theme['--theme-default'], ease: 'none' })
+                gsap.to(targets[Math.max(oldIndex || 0)], 0.3, { color: theme['--theme-default'], ease: 'none' })
             } else {
                 const notSelectedLinks = targets.filter((_, i) => i !== this.selectedIndex)
-                gsap.to(notSelectedLinks, 0.3, { color: theme['--theme-default'], ease: 'none' })
+              gsap.to(notSelectedLinks, 0.3, { color: theme['--theme-default'], ease: 'none' })
             }
         },
     },

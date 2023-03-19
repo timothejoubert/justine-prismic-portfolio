@@ -5,31 +5,31 @@
   "status": true,
   "json": {
     "Main": {
-      "link": {
+      "links": {
         "type": "Group",
         "config": {
-          "label": "Link",
           "fields": {
             "label": {
-              "type": "StructuredText",
+              "type": "Text",
               "config": {
                 "label": "Label",
-                "placeholder": "",
-                "allowTargetBlank": true,
-                "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink,image,embed,list-item,o-list-item,rtl"
+                "placeholder": "Label affiché dans le menu"
               }
             },
             "link": {
               "type": "Link",
               "config": {
-                "label": "Link",
                 "select": "document",
                 "customtypes": [
-                  "page"
-                ]
+                  "page",
+                  "project"
+                ],
+                "label": "Link",
+                "placeholder": "Lien vers une page"
               }
             }
-          }
+          },
+          "label": "Links"
         }
       }
     }

@@ -7,7 +7,7 @@ import createSitemap from './src/utils/create-sitemap'
 // import { Configuration as WebpackConfiguration } from 'webpack'
 
 const isProduction = process.env.NODE_ENV === 'production'
-const defaultPageUid = 'home-page'
+const defaultPageUid = 'accueil'
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target

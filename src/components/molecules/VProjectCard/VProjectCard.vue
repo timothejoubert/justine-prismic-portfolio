@@ -5,33 +5,35 @@
                 <span :class="$style.current">{{ index + 1 }} /</span>
                 <span :class="$style.length">{{ length }}</span>
             </span>
-            <h2>{{ project.title }}</h2>
+            <h2>{{title}}</h2>
             <div v-if="year">{{ year }}</div>
         </div>
-        <div :class="$style.image"></div>
+        <PrismicImage v-if="project.thumbnail" :field="project.thumbnail" :class="$style.image"/>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import type { PropType } from 'vue'
-import { Project } from '~/types/app'
 import { stringDateToYear } from '~/utils/utils'
+import {asText} from "~/utils/prismic/utils";
+import {ProjectData} from "~/types/prismic/app-prismic";
 
 export default Vue.extend({
     name: 'VProjectCard',
     props: {
-        project: Object as PropType<Project>,
+        project: Object as PropType<ProjectData>,
         length: Number,
         index: Number,
     },
     computed: {
-        rootClass(): (undefined | false | string)[] {
-            return [this.$style.root]
-        },
         year(): number | null {
-            return stringDateToYear(this.project.date)
+          console.log(this.project)
+            return stringDateToYear(this.project?.date)
         },
+      title(): string {
+          return asText(this, this.project.title) || 'add a project title'
+      }
     },
     methods: {},
 })
@@ -46,6 +48,7 @@ export default Vue.extend({
 .image {
     width: 100%;
     min-height: 100%;
+    object-fit: cover;
     background-color: lightgrey;
 
     img {

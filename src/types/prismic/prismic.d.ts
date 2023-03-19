@@ -8,8 +8,6 @@ import type { DefaultClient } from '@prismicio/client/types/client'
 import {Module} from "@nuxt/types";
 import ResolvedApi from "@prismicio/client/types/ResolvedApi";
 import Prismic from "@prismicio/client/types/index";
-import {PrismicDocumentHeader} from "@prismicio/types/src/value/document";
-import {PageDocumentData} from "~/types/prismic-types.generated";
 
 // import Vue from 'vue'
 
@@ -73,7 +71,7 @@ declare module '@nuxt/types' {
 // here's the solution
 declare module 'vue/types/vue' {
     interface Vue {
-        $prismic: PrismicVue<PrismicAPI> & RichText
+        $prismic: PrismicVue<PrismicAPI> & RichText & { api: ResolvedApi } & typeof Prismic
     }
 }
 
@@ -82,8 +80,3 @@ interface PrismicModuleOptions {}
 declare const prismicModule: Module<PrismicModuleOptions>;
 
 export default prismicModule;
-
-
-export interface PageDocument extends PrismicDocumentHeader<'page'> {
-    data: PageDocumentData;
-}

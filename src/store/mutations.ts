@@ -2,7 +2,7 @@ import type { MutationTree } from 'vuex'
 import MutationType from '~/constants/mutation-type'
 import { RootState } from '~/types/store'
 import { HeadData } from '~/types/app'
-import {MenuDocumentData, SettingsDocumentData} from "~/types/prismic-types.generated";
+import {MenuDocumentData, SettingsDocumentData} from "~/types/prismic/prismic-types.generated";
 import {PrismicDocument} from "@prismicio/types/src/value/document";
 
 export default {

@@ -4,72 +4,62 @@
   "repeatable": true,
   "status": true,
   "json": {
-    "Main" : {
-      "uid" : {
-        "type" : "UID",
-        "config" : {
-          "label" : "UID",
-          "placeholder" : ""
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "Slug",
+          "placeholder": "Le nom de ta page dans l'url"
         }
       },
-      "title" : {
-        "type" : "StructuredText",
-        "config" : {
-          "label" : "Title",
-          "placeholder" : "",
-          "allowTargetBlank" : true,
-          "single" : "heading1"
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Title",
+          "placeholder": "Titre de la page"
         }
       },
-      "description" : {
-        "type" : "StructuredText",
-        "config" : {
-          "multi" : "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink",
-          "label" : "Description"
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "multi": "paragraph,heading1,heading2,heading3,heading4,heading5,heading6,strong,em,hyperlink",
+          "allowTargetBlank": true,
+          "label": "Description",
+          "placeholder": "Description de la page"
         }
       },
-      "thumbnail" : {
-        "type" : "Link",
-        "config" : {
-          "select" : "media",
-          "label" : "Thumbnail"
+      "thumbnail": {
+        "type": "Image",
+        "config": {
+          "constraint": {},
+          "thumbnails": [],
+          "label": "Thumbnail"
         }
       },
-      "type" : {
-        "type" : "Select",
-        "config" : {
-          "options" : [ "Default", "Home", "Sketchooks", "Projects", "Project", "About" ],
-          "default_value" : "Default",
-          "label" : "type"
+      "type": {
+        "type": "Select",
+        "config": {
+          "options": [
+            "Default",
+            "Home",
+            "Sketchooks",
+            "Projects",
+            "Project",
+            "About"
+          ],
+          "default_value": "Default",
+          "label": "type",
+          "placeholder": "Définit l'apparence de la page"
         }
       },
-      "parent" : {
-        "type" : "Link",
-        "config" : {
-          "label" : "Parent",
-          "select" : "document",
-          "customtypes" : [ "page" ]
-        }
-      },
-      "tags" : {
-        "type" : "Group",
-        "config" : {
-          "fields" : {
-            "name" : {
-              "type" : "Text",
-              "config" : {
-                "label" : "Name"
-              }
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {
+            "loading_image": {
+              "type": "SharedSlice"
             }
-          },
-          "label" : "Tags"
-        }
-      },
-      "slices" : {
-        "type" : "Slices",
-        "fieldset" : "Slice Zone",
-        "config" : {
-          "choices" : {
           }
         }
       }

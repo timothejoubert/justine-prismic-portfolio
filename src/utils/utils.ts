@@ -1,3 +1,7 @@
+import * as prismicT from "@prismicio/types";
+import {FilledContentRelationshipField} from "@prismicio/types/src/value/contentRelationship";
+import {isInternalLinkFulled} from "~/types/prismic/prismic-guard";
+
 export const slugify = (text: string | null | undefined): string => {
     return text
         ? text
@@ -51,7 +55,7 @@ export const removeCssProp = (propName: string) => {
     return document.documentElement.style.setProperty(propName, null)
 }
 
-export function uid(): string {
+export function generateId(): string {
     const a = new Uint32Array(3)
     window.crypto.getRandomValues(a)
     return (
@@ -62,8 +66,8 @@ export function uid(): string {
     ).replace(/\./g, '')
 }
 
-export const stringDateToYear = (date: string | null): number | null => {
+export const stringDateToYear = (date: string | null, position: number = 0, separator: string = '-'): number | null => {
     if (!date) return null
-    const items = date.split('-')
-    return Number(items[items.length - 1])
+    const items = date.split(separator)
+    return Number(items[position])
 }

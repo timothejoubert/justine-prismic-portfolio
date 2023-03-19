@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import {PropType} from "vue";
-import { PageDocumentData } from "~/types/prismic-types.generated";
+import { PageDocumentData } from "~/types/prismic/prismic-types.generated";
 
 export default {
   props: {

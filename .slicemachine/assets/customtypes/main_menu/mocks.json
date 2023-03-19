@@ -1,5 +1,5 @@
 {
-  "link": {
+  "links": {
     "__TYPE__": "GroupContentType",
     "value": [
       {
@@ -13,7 +13,7 @@
                 {
                   "type": "paragraph",
                   "content": {
-                    "text": "Irure excepteur reprehenderit proident irure aliquip ex. Voluptate labore nostrud consequat. Eiusmod velit enim mollit."
+                    "text": "Aute minim culpa reprehenderit consectetur occaecat nisi nisi eiusmod exercitation elit irure nulla quis occaecat."
                   }
                 }
               ]
