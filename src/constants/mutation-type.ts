@@ -3,7 +3,6 @@ enum MutationType {
     SET_MAIN_MENU = 'setMainMenu',
     SET_SETTINGS = 'setSettings',
     SET_PROJECTS = 'setProjects',
-    SET_PROJECTS_LISTING = 'setProjectsListing',
     // data
     HEAD_DATA = 'headData',
     // loading

@@ -5,9 +5,7 @@ export default (): RootState => ({
     settings: null,
     mainMenu: null,
     projects: null,
-    // Data
-    headData: null,
-    projectsListingUid: [],
+
     // General
     errorPage: null,
     windowWidth: 0,

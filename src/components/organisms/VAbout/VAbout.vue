@@ -1,30 +1,43 @@
 <template>
     <div :class="$style.root">
       <h1 v-if="pageData && pageData.title">{{pageData.title}}</h1>
-        <!--        <v-about-tags :class="$style.tags" />-->
-<!--        <v-marquee-carousel />-->
+        <v-about-tags :class="$style.tags" />
+<!--        <v-marquee-carousel :tags="tags"/>-->
 
-<!--        <div :class="$style.left">-->
-<!--            <h2 v-if="about.subTitle" class="text-h3" :class="$style.title">{{ about.subTitle }}</h2>-->
-<!--            <p class="text-h4" :class="$style.content">{{ about.description }}</p>-->
-<!--            <div :class="$style.socials">-->
-<!--                <v-social v-for="(social, i) in socials" :key="i" :social="social" />-->
-<!--            </div>-->
-<!--        </div>-->
+        <div :class="$style.left">
+            <PrismicRichText v-if="settingsData.description"  class="text-h3" :class="$style.tagline" :field="settingsData.tagline" />
+            <PrismicRichText class="text-h4" :class="$style.content" :field="pageData.description" />
+            <div :class="$style.socials">
+                <v-social v-for="(social, i) in socials" :key="i" :social="social" />
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
-import { AboutPage } from '~/types/app'
 import PageProvider from '~/mixins/PageProvider'
+import ProjectsMutation from "~/mixins/ProjectsMutation";
 
-export default mixins(PageProvider).extend({
+export default mixins(PageProvider, ProjectsMutation).extend({
     name: 'VAbout',
     computed: {
-        socials() {
-            return this.$store.state.headData.socials
+        settingsData() {
+          return this.$store.state.settings.data
         },
+        socials() {
+            return this.settingsData.socials
+        },
+        tags(): string[] {
+          const tagGroup = this.projects.map((project) => project.data.tags).flat(2)
+
+          const labelList = tagGroup
+              .filter((tagGroup) => {
+                  return !!tagGroup?.label
+              }).map(tagGroup => tagGroup.label) as string[]
+
+          return [...new Set(labelList)]
+        }
     },
 })
 </script>
@@ -42,7 +55,7 @@ export default mixins(PageProvider).extend({
     transform-origin: center;
 }
 
-.title {
+.tagline {
     margin-bottom: rem(30);
 }
 

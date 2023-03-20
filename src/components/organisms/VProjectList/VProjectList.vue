@@ -1,9 +1,13 @@
 <template>
     <div :class="$style.root">
       <h1 v-if="pageData && pageData.title">{{pageData.title}}</h1>
-        <v-carousel v-model="slideIndex" :options="carouselOptions" :class="$style.carousel" wrapper-tag="ul">
-            <li v-for="(project, i) in projects" :key="i" :class="$style.project">
-                <v-link :to="project.url">
+      <p v-if="$fetchState.pending">Fetching Projects...</p>
+
+      <div v-for="(project,i) in projectsData" :key="i">{{project.uid}}</div>
+
+        <v-carousel v-if="projectsData && projectsData.length" v-model="slideIndex" async-slides :options="carouselOptions" :class="$style.carousel" wrapper-tag="ul">
+            <li v-for="(project, i) in projectsData" :key="project.uid" :class="$style.project">
+                <v-link :to="project.uid">
                     <v-project-card :index="i" :project="project" :length="projects.length" :class="$style.card" />
                 </v-link>
             </li>
@@ -13,32 +17,27 @@
 
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
-import { CarouselOptions } from '~/components/molecules/VCarousel/VCarousel.vue'
+import { CarouselOptions } from '~/components/organisms/VCarousel/VCarousel.vue'
 import PageProvider from '~/mixins/PageProvider'
-import { getProjectDataList } from "~/utils/prismic/parse-api-data";
+import ProjectsMutation from "~/mixins/ProjectsMutation";
 import {ProjectData} from "~/types/prismic/app-prismic";
 
-export default mixins(PageProvider).extend({
+export default mixins(PageProvider, ProjectsMutation).extend({
     name: 'VProjectList',
     data() {
         return {
-          projects: [] as ProjectData[],
           slideIndex: 0,
         }
     },
-    async mounted() {
-      try {
-        const projectsResponse = await this.$prismic.api.query(
-            this.$prismic.predicates.at('document.type', 'project')
-        ).then((response) => response.results)
-
-        this.projects = projectsResponse?.length ? getProjectDataList(projectsResponse) : []
-
-      } catch {
-        console.log('can\'t fetch projects in Project listing')
-      }
-    },
     computed: {
+          projectsData(): (ProjectData & { uid: string })[] {
+            return this.projects.map((project) => {
+              return {
+                ...project.data,
+                uid: project.uid
+              }
+            })
+          },
           carouselOptions(): CarouselOptions {
               return {
                   freeMode: {

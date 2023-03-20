@@ -14,7 +14,6 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { ProviderImage } from '~/types/app'
 import { getRandomFromRange } from '~/utils/utils'
 
 type Location = [number, number]
@@ -29,7 +28,7 @@ export default Vue.extend({
             wrapperStyle: {},
             positions: [] as Location[],
             usedPositions: [] as number[],
-            images: [] as ProviderImage[],
+            images: [] as any[],
         }
     },
     created() {

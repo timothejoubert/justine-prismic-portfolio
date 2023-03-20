@@ -1,5 +1,5 @@
 <template>
-    <nav :class="rootClass" @mouseleave="onMouseLeave" @mouseenter="onMouseEnter">
+    <nav :class="rootClass" @mouseleave="onMouseLeave" @mouseenter="onMouseEnter" >
         <transition :name="$style.menu" @enter="initIndicatorPosition">
             <div v-show="isMenuOpen" :class="$style.menu">
                 <div ref="slider" :class="$style.slider"></div>
@@ -30,10 +30,12 @@ import { gsap } from 'gsap'
 import mixins from 'vue-typed-mixins'
 import ThemeProvider from '~/mixins/ThemeProvider'
 import { getCSSVarFromTheme } from '~/utils/get-theme'
-import { isInternalLinkFulled } from "~/types/prismic/prismic-guard";
 import {getMenuLinkList} from "~/utils/prismic/parse-api-data";
 import { MenuItem } from "~/types/prismic/app-prismic";
-import { getInternalLinkUid} from "~/utils/prismic/utils";
+import {getInternalLinkUid, isHomeRoute} from "~/utils/prismic/utils";
+import NodeUid from "~/constants/node-uid";
+import {isHomePage} from "~/utils/prismic/entity";
+import page from "~/mixins/Page";
 
 export default mixins(ThemeProvider).extend({
     name: 'VNav',
@@ -57,11 +59,11 @@ export default mixins(ThemeProvider).extend({
             ]
         },
         pages(): MenuItem[] {
-          return getMenuLinkList(this.$store.state.mainMenu)
+          return getMenuLinkList(this.$store.state.mainMenu) || []
         },
-      isHome(): boolean {
-          return
-      }
+        isHome(): boolean {
+            return isHomeRoute(this.$route.fullPath, this.$route.params?.uid)
+        },
     },
     watch: {
         selectedIndex(newIndex: number, oldIndex: number) {
@@ -74,7 +76,8 @@ export default mixins(ThemeProvider).extend({
     },
     methods: {
         pageLink(pageUid: string): string {
-            return (!pageUid || pageUid === this.$config.defaultPageUid) ? '/' : pageUid
+          console.log(pageUid, isHomePage(pageUid), '/' + (isHomePage(pageUid) ? '' : pageUid))
+            return '/' + (isHomePage(pageUid) ? '' : pageUid)
         },
         onMouseLeave() {
             this.timeoutId = window.setTimeout(this.closeMenu, 100)
@@ -94,7 +97,7 @@ export default mixins(ThemeProvider).extend({
           this.updateSelectedIndex(index)
         },
         updateSelectedIndexByRoute() {
-          const currentPageUid = this.$route.params?.uid || (this.$route.fullPath === '/' ? this.$config.defaultPageUid : this.$route.path.replace('/', ''))
+          const currentPageUid = this.$route.params?.uid || NodeUid.HOME
 
           const pageIndex = this.pages?.findIndex((page) => {
             return getInternalLinkUid(page.link) === currentPageUid

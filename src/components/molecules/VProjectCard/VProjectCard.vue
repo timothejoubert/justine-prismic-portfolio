@@ -13,13 +13,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
 import type { PropType } from 'vue'
 import { stringDateToYear } from '~/utils/utils'
-import {asText} from "~/utils/prismic/utils";
 import {ProjectData} from "~/types/prismic/app-prismic";
+import mixins from "vue-typed-mixins";
+import CarouselSlide from "~/mixins/CarouselSlide";
 
-export default Vue.extend({
+export default mixins(CarouselSlide).extend({
     name: 'VProjectCard',
     props: {
         project: Object as PropType<ProjectData>,
@@ -28,13 +28,18 @@ export default Vue.extend({
     },
     computed: {
         year(): number | null {
-          console.log(this.project)
             return stringDateToYear(this.project?.date)
         },
       title(): string {
-          return asText(this, this.project.title) || 'add a project title'
+        console.log(this.project)
+          return this.$asText(this.project.title) || 'add a project title'
       }
     },
+  watch: {
+      project(value) {
+        console.log('project card, project content watch', value)
+      }
+  },
     methods: {},
 })
 </script>
@@ -48,8 +53,8 @@ export default Vue.extend({
 .image {
     width: 100%;
     min-height: 100%;
-    object-fit: cover;
     background-color: lightgrey;
+    object-fit: cover;
 
     img {
         width: 100%;

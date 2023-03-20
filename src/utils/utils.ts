@@ -1,6 +1,4 @@
-import * as prismicT from "@prismicio/types";
-import {FilledContentRelationshipField} from "@prismicio/types/src/value/contentRelationship";
-import {isInternalLinkFulled} from "~/types/prismic/prismic-guard";
+import NodeUid from "~/constants/node-uid";
 
 export const slugify = (text: string | null | undefined): string => {
     return text

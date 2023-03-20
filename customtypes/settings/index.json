@@ -4,51 +4,59 @@
   "repeatable": false,
   "status": true,
   "json": {
-    "Main" : {
-      "siteTitle" : {
-        "type" : "StructuredText",
-        "config" : {
-          "label" : "Site Title",
-          "placeholder" : "Title of the site",
-          "allowTargetBlank" : false,
-          "single" : "heading1"
+    "Main": {
+      "siteTitle": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Site Title",
+          "placeholder": "Title of the site",
+          "allowTargetBlank": false,
+          "single": "heading1"
         }
       },
-      "socials" : {
-        "type" : "Group",
-        "config" : {
-          "fields" : {
-            "name" : {
-              "type" : "Text",
-              "config" : {
-                "label" : "Name"
+      "tagline": {
+        "type": "StructuredText",
+        "config": {
+          "multi": "paragraph, heading1, heading2, heading3, heading4, heading5, heading6",
+          "label": "Tagline",
+          "placeholder": "Tagline présente la page About"
+        }
+      },
+      "socials": {
+        "type": "Group",
+        "config": {
+          "fields": {
+            "name": {
+              "type": "Text",
+              "config": {
+                "label": "Name"
               }
             },
-            "link" : {
-              "type" : "Link",
-              "config" : {
-                "label" : "Link",
-                "select" : null
+            "link": {
+              "type": "Link",
+              "config": {
+                "label": "Link",
+                "select": null
               }
             }
           },
-          "label" : "Socials"
+          "label": "Socials"
         }
       },
-      "description" : {
-        "type" : "StructuredText",
-        "config" : {
-          "single" : "paragraph",
-          "label" : "Description",
-          "placeholder" : "Meta description de la page"
+      "description": {
+        "type": "StructuredText",
+        "config": {
+          "single": "paragraph",
+          "label": "Description",
+          "placeholder": "Meta description de la page"
         }
       },
-      "thumbnail" : {
-        "type" : "Image",
-        "config" : {
-          "constraint" : { },
-          "thumbnails" : [ ],
-          "label" : "Thumbnail"
+      "thumbnail": {
+        "type": "Image",
+        "config": {
+          "constraint": {},
+          "thumbnails": [],
+          "label": "Thumbnail"
         }
       }
     }

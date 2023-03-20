@@ -10,19 +10,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { PageDocument } from "~/types/prismic/prismic";
-import * as prismicT from "@prismicio/types";
-import {PageDocumentDataTagsItem} from "~/types/prismic/prismic-types.generated";
 
 export default Vue.extend({
     name: 'VAboutTags',
     computed: {
         pageTags(): string[] {
-          const pageTags = this.$store.state.projects
-              ?.filter((project: PageDocument) => !!project.data.tags?.length)
-              ?.map((project: PageDocument) => (project.data.tags as PageDocument['tags']).map((tag) => (tag as unknown as PageDocumentDataTagsItem)?.name ))
-          console.log(pageTags)
-            return pageTags
+            return ['pageTags', 'tag 2', 'pageTags', 'tag 2', 'pageTags', 'tag 2', 'pageTags', 'tag 2']
         },
     },
 })

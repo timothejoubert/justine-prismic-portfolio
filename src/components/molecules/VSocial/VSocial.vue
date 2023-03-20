@@ -1,24 +1,34 @@
 <template>
-    <v-button :label="name" size="m" outlined :href="url" />
+    <v-button :label="label" size="m" outlined :href="href"  />
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import type { PropType } from 'vue'
-import { Social } from '~/types/app'
+
+interface ExternalLink {
+  link_type: string
+  url: string
+}
+
+export type Social = {
+  name: string | null
+  link?: ExternalLink
+}
 
 export default Vue.extend({
     name: 'VSocial',
     props: {
         social: Object as PropType<Social>,
     },
-    computed: {
-        name(): string {
-            return Object.keys(this.social)[0]
-        },
-        url(): string {
-            return Object.values(this.social)[0]
-        },
+  computed: {
+    label(): string {
+      console.log(this.social)
+      return this.social?.name || 'fallback réseaux'
     },
+    href(): string | undefined {
+      return this.social?.link?.url
+    }
+  },
 })
 </script>

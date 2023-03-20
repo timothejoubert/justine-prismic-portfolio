@@ -5,20 +5,20 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import { CarouselOptions } from '~/components/molecules/VCarousel/VCarousel.vue'
+import Vue, {PropType} from 'vue'
+import { CarouselOptions } from '~/components/organisms/VCarousel/VCarousel.vue'
 
 export default Vue.extend({
     name: 'VMarqueeCarousel',
+    props: {
+        tags: Array as PropType<String[]>,
+    },
     data() {
         return {
             slideIndex: 0,
         }
     },
     computed: {
-        tags(): string[] {
-            return ['static tags']
-        },
         carouselOptions(): CarouselOptions {
             return {
                 freeMode: {

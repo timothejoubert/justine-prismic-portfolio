@@ -1,13 +1,13 @@
 // @ts-ignore
 import SpriteLoaderPlugin from 'svg-sprite-loader/plugin'
 import sm from './sm.json'
+import NodeUid from './src/constants/node-uid'
 import { version } from './package.json'
 import createSitemap from './src/utils/create-sitemap'
 // import { prismicHtmlSerializer } from './src/utils/prismic-html-serializer'
 // import { Configuration as WebpackConfiguration } from 'webpack'
 
 const isProduction = process.env.NODE_ENV === 'production'
-const defaultPageUid = 'accueil'
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
@@ -104,12 +104,14 @@ export default {
   publicRuntimeConfig: {
     development: process.env.NODE_ENV === 'development',
     siteUrl: process.env.APP_URL,
-    apiUrl: sm.apiEndpoint || process.env.API_URL,
-    defaultPageUid,
+    apiUrl: sm.apiEndpoint || process.env.API_URL
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/gsap.client.ts'],
+  plugins: [
+    '~/plugins/gsap.client.ts',
+    '~/plugins/prismic-utils.ts'
+  ],
 
   prismic: {
     endpoint: sm.apiEndpoint,

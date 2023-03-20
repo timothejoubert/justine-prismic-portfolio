@@ -9,12 +9,18 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 ### TODO
 
-* **(PrismicTypeModule)** import correctly client types _(ex: context.$prismic.api.query())_
+* **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_
 * **(ProjectListing && About)**: set tags in store if not already exist
 * **(Config)**: Set default page as Home (if no params go to => fetch uid === 'home-page')
-* **(Nav && Config)**: Configure nested route 
+* **(Nav && Config)**: Configure nested route
+* **(VProjectListing)**: Rename uid by **_projects_** for use it in nested pages
 * **(Data)**: Sync prismic-repo data with local
 * **(Config)*: Add preview
 
+#### LATER  
+* I18n  
 
-https://github.com/prismicio/prismic-vue/issues/5#issuecomment-493795628
+
+#### RESOURCES
+
+[Import shim client type](https://github.com/prismicio/prismic-vue/issues/5#issuecomment-493795628)

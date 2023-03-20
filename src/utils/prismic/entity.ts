@@ -1,7 +1,7 @@
-import { PrismicDocumentWithUID } from "@prismicio/types/src/value/document";
 import { PrismicDocument } from "@prismicio/types";
-import {hasUid} from "~/utils/prismic/utils";
 import {CustomTypeName} from "~/types/prismic/app-prismic";
+import NodeUid from '~/constants/node-uid'
+import {hasUid, isPrismicDocument} from "~/types/prismic/prismic-guard";
 
 //
 // Node type
@@ -32,7 +32,15 @@ export const isMainMenu = (document: PrismicDocument): boolean => {
 //
 
 export function isDocumentByUid(document: PrismicDocument, name: string): boolean {
-    return hasUid(document) && (document as PrismicDocumentWithUID).uid === name
+    return hasUid(document) && document.uid === name
+}
+
+export const isHomePage = (element?: Record<string, any> | string): boolean => {
+    if (!element) return false
+    if (typeof element === 'string') return element === NodeUid.HOME || element === '/'
+    if (isPrismicDocument(element)) isDocumentByUid(element, NodeUid.HOME)
+    console.log('can\'t find element in function isHomePage')
+    return false
 }
 
 export const isProjectListing = (document: PrismicDocument): boolean => {
@@ -45,8 +53,4 @@ export const isSketchBooks = (document: PrismicDocument): boolean => {
 
 export const isAbout = (document: PrismicDocument): boolean => {
     return isPage(document) && isDocumentByUid(document, 'about')
-}
-
-export const isHomePage = (document: PrismicDocument): boolean => {
-    return isPage(document) && isDocumentByUid(document, 'home-page')
 }

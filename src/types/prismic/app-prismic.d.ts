@@ -12,7 +12,8 @@ export type PageData = GeneratedTypes.ProjectDocument['data']
 
 // PROJECT
 export type ProjectDocument = GeneratedTypes.ProjectDocument
-export type ProjectData = GeneratedTypes.ProjectDocument['data'] & { url?: string }
+export type ProjectData = GeneratedTypes.ProjectDocument['data']
+export type ProjectTag = ProjectData['tags']
 
 // MENU
 export type MainMenuLinks = GeneratedTypes.MainMenuDocument
