@@ -1,5 +1,5 @@
 <template>
-    <v-button :label="label" size="m" outlined :href="href"  />
+  <v-button :label="label" size="m" outlined :href="href" />
 </template>
 
 <script lang="ts">
@@ -17,18 +17,17 @@ export type Social = {
 }
 
 export default Vue.extend({
-    name: 'VSocial',
-    props: {
-        social: Object as PropType<Social>,
-    },
+  name: 'VSocial',
+  props: {
+    social: Object as PropType<Social>,
+  },
   computed: {
     label(): string {
-      console.log(this.social)
       return this.social?.name || 'fallback réseaux'
     },
     href(): string | undefined {
       return this.social?.link?.url
-    }
+    },
   },
 })
 </script>

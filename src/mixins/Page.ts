@@ -8,7 +8,7 @@ import * as prismicT from "@prismicio/types";
 import {MainPageData} from "~/types/prismic/app-prismic";
 import NodeUid from "~/constants/node-uid";
 import {Context} from "@nuxt/types";
-import {isHomeRoute} from "~/utils/prismic/utils";
+import {getProjectUid, isHomeRoute} from "~/utils/prismic/utils";
 
 const MOCK_PAGE_DATA = {
     title: 'mock page data fallBackTitle',
@@ -19,25 +19,32 @@ const MOCK_PAGE_DATA = {
 }
 
 export default Vue.extend({
-    middleware({ req, redirect }: Context) {
-        if (!req?.url) return
-
-        const slugifyPath = req.url.replace(/\s+/g, '-').toLowerCase();
-        if (slugifyPath !== req.url) return redirect(slugifyPath)
-    },
-    async asyncData ({ $prismic, params, store, $config }) {
+    // middleware({ req, redirect }: Context) {
+    //     if (!req?.url) return
+    //
+    //     const slugifyPath = req.url.replace(/\s+/g, '-').toLowerCase();
+    //     if (slugifyPath !== req.url) return redirect(slugifyPath)
+    // },
+    async asyncData ({ $prismic, params }: Context) {
         let page
-        console.log(params?.uid)
+
+        const projectUid = getProjectUid(params)
+        const parameter = params?.uid || projectUid
+
+        console.log(params)
         try {
-            if (params?.uid) page = await $prismic.api.getByUID('page', params.uid)
-            if (params?.uid && !page) page = await $prismic.api.getByUID('project', params.uid)
+
+            if (parameter) page = await $prismic.api.getByUID('page', parameter)
+            if (parameter && !page) page = await $prismic.api.getByUID('project', parameter)
             if (!page) page = await $prismic.api.getByUID('page', NodeUid.HOME)
+
         } catch (error) {
             console.log('failed on asyncData page', error)
         }
 
         if (page) return { page }
         return  { page: MOCK_PAGE_DATA }
+
         // await store.dispatch('load', 'second function argument to pass in load function')
     },
     head(): MetaInfo {
@@ -82,9 +89,6 @@ export default Vue.extend({
         pageDescription(): string {
             return this.$asText(this.pageData?.description) || this.$asText(this.$store.state.settings?.data?.description) || 'fallback description in page'
         },
-        slices(): prismicT.SliceZone | [] {
-            return this.page.data?.slices
-        },
         isHome(): boolean {
             return isHomeRoute(this.$route.fullPath, this.page?.uid)
         },
@@ -99,6 +103,9 @@ export default Vue.extend({
         },
         isProjectPage(): boolean {
             return isProjectPage(this.page)
+        },
+        slices(): prismicT.SliceZone | [] {
+            return this.page.data?.slices
         },
     },
     methods: {

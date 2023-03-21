@@ -4,106 +4,106 @@ import type { PropType, VNode } from 'vue'
 import ImagePlaceHolder from '~/assets/images/icons/not-found.svg?sprite'
 
 function isImageObject(image: CloudinaryImage | string): image is CloudinaryImage {
-    return typeof image !== 'string'
+  return typeof image !== 'string'
 }
 
 interface CloudinaryImage {
-    formats: CloudinaryImageFormats
+  formats: CloudinaryImageFormats
 }
 
 type CloudinaryFormats = 'large' | 'medium' | 'small' | string
 
 type CloudinaryImageFormats = {
-    [key in CloudinaryFormats]: CloudinaryImageContent
+  [key in CloudinaryFormats]: CloudinaryImageContent
 }
 
 interface CloudinaryImageContent {
-    url?: string
-    width?: number
-    height?: number
-    alternativeText?: string
-    extension?: ImageExtension
+  url?: string
+  width?: number
+  height?: number
+  alternativeText?: string
+  extension?: ImageExtension
 }
 
 type ImageExtension = 'gif' | 'png' | 'jpg' | 'jpeg' | 'webp'
 
 export default Vue.extend({
-    name: 'VImage',
-    components: { ImagePlaceHolder },
-    props: {
-        image: [String, Object] as PropType<CloudinaryImage | string>,
-    },
-    data() {
-        return {
-            loaded: false,
-            isSourceNotFound: false,
-        }
-    },
-    mounted() {
-        const img = this.$el.querySelector('img')
-        if (img?.complete) this.loaded = true
-    },
-    render(createElement): VNode {
-        const img = this.image
-        if (!img) return createElement('')
+  name: 'VImage',
+  components: { ImagePlaceHolder },
+  props: {
+    image: [String, Object] as PropType<CloudinaryImage | string>,
+  },
+  data() {
+    return {
+      loaded: false,
+      isSourceNotFound: false,
+    }
+  },
+  mounted() {
+    const img = this.$el.querySelector('img')
+    if (img?.complete) this.loaded = true
+  },
+  render(createElement): VNode {
+    const img = this.image
+    if (!img) return createElement('')
 
-        const imgAttributes: Record<string, any> = {}
+    const imgAttributes: Record<string, any> = {}
 
-        if (!isImageObject(img)) {
-            imgAttributes.src = img as string
-        } else {
-            const largeImage = (img as CloudinaryImage)?.formats?.large
-            imgAttributes.src = largeImage?.url || ''
-            imgAttributes.alt = largeImage?.alternativeText || 'text alternative fallback'
-            imgAttributes.width = largeImage?.width || ''
-            imgAttributes.height = largeImage?.height || ''
+    if (!isImageObject(img)) {
+      imgAttributes.src = img as string
+    } else {
+      const largeImage = (img as CloudinaryImage)?.formats?.large
+      imgAttributes.src = largeImage?.url || ''
+      imgAttributes.alt = largeImage?.alternativeText || 'text alternative fallback'
+      imgAttributes.width = largeImage?.width || ''
+      imgAttributes.height = largeImage?.height || ''
 
-            if ('formats' in img && !!img.formats) {
-                // (max-width: 640px) 100vw,
-                Object.keys(img.formats)
-                    .sort((prev: CloudinaryFormats, next: CloudinaryFormats) => {
-                        const formats = img?.formats
-                        if (!formats) return 0
-                        const prevFormat = formats[prev]
-                        const nextFormat = formats[next]
-                        return (prevFormat?.width || 0) - (nextFormat?.width || 0)
-                    })
-                    .forEach((formatKey: string, index: number, formatsKey: string[]) => {
-                        const format = img?.formats
-                        const formatData = format[formatKey]
-                        if (!formatData) return
-                        const separator = index === formatsKey.length - 1 ? '' : ','
-                        imgAttributes.srcSet += `${formatData.url} ${formatData.width}w` + separator
-                        imgAttributes.imgSizes += `(max-width: ${formatData.width}px) 50vw` + separator
-                    })
-            }
-        }
+      if ('formats' in img && !!img.formats) {
+        // (max-width: 640px) 100vw,
+        Object.keys(img.formats)
+          .sort((prev: CloudinaryFormats, next: CloudinaryFormats) => {
+            const formats = img?.formats
+            if (!formats) return 0
+            const prevFormat = formats[prev]
+            const nextFormat = formats[next]
+            return (prevFormat?.width || 0) - (nextFormat?.width || 0)
+          })
+          .forEach((formatKey: string, index: number, formatsKey: string[]) => {
+            const format = img?.formats
+            const formatData = format[formatKey]
+            if (!formatData) return
+            const separator = index === formatsKey.length - 1 ? '' : ','
+            imgAttributes.srcSet += `${formatData.url} ${formatData.width}w` + separator
+            imgAttributes.imgSizes += `(max-width: ${formatData.width}px) 50vw` + separator
+          })
+      }
+    }
 
-        const imgNode = createElement('img', {
-            attrs: {
-                ...imgAttributes,
-            },
-            class: [this.$style.image],
-            on: {
-                load: () => {
-                    this.loaded = true
-                },
-                error: () => {
-                    this.isSourceNotFound = true
-                },
-            },
-        })
+    const imgNode = createElement('img', {
+      attrs: {
+        ...imgAttributes,
+      },
+      class: [this.$style.image],
+      on: {
+        load: () => {
+          this.loaded = true
+        },
+        error: () => {
+          this.isSourceNotFound = true
+        },
+      },
+    })
 
-        return this.isSourceNotFound
-            ? createElement('div', { class: this.$style.placeholder }, [createElement(ImagePlaceHolder)])
-            : createElement(
-                  'figure',
-                  {
-                      class: [this.$style.root],
-                  },
-                  [imgNode]
-              )
-    },
+    return this.isSourceNotFound
+      ? createElement('div', { class: this.$style.placeholder }, [createElement(ImagePlaceHolder)])
+      : createElement(
+          'figure',
+          {
+            class: [this.$style.root],
+          },
+          [imgNode]
+        )
+  },
 })
 </script>
 

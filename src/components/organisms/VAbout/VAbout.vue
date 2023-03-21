@@ -1,44 +1,58 @@
 <template>
-    <div :class="$style.root">
-      <h1 v-if="pageData && pageData.title">{{pageData.title}}</h1>
-        <v-about-tags :class="$style.tags" />
-<!--        <v-marquee-carousel :tags="tags"/>-->
+  <div :class="$style.root">
+    <PrismicImage :field="pageData.thumbnail" :class="$style.image"/>
 
-        <div :class="$style.left">
-            <PrismicRichText v-if="settingsData.description"  class="text-h3" :class="$style.tagline" :field="settingsData.tagline" />
-            <PrismicRichText class="text-h4" :class="$style.content" :field="pageData.description" />
-            <div :class="$style.socials">
-                <v-social v-for="(social, i) in socials" :key="i" :social="social" />
-            </div>
-        </div>
+    <v-about-tags :class="$style.tags" />
+    <!--        <v-marquee-carousel :tags="tags"/>-->
+
+    <div :class="$style.left">
+
+      <PrismicRichText
+        v-if="settingsData.description"
+        class="text-h3"
+        :class="$style.tagline"
+        :field="settingsData.tagline"
+      />
+
+      <PrismicRichText class="text-h4" :class="$style.content" :field="pageData.description" />
+
+      <div :class="$style.socials">
+        <v-social v-for="(social, i) in socials" :key="i" :social="social" />
+      </div>
+
+
     </div>
+  </div>
 </template>
 
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
 import PageProvider from '~/mixins/PageProvider'
-import ProjectsMutation from "~/mixins/ProjectsMutation";
+import ProjectsMutation from '~/mixins/ProjectsMutation'
 
 export default mixins(PageProvider, ProjectsMutation).extend({
-    name: 'VAbout',
-    computed: {
-        settingsData() {
-          return this.$store.state.settings.data
-        },
-        socials() {
-            return this.settingsData.socials
-        },
-        tags(): string[] {
-          const tagGroup = this.projects.map((project) => project.data.tags).flat(2)
-
-          const labelList = tagGroup
-              .filter((tagGroup) => {
-                  return !!tagGroup?.label
-              }).map(tagGroup => tagGroup.label) as string[]
-
-          return [...new Set(labelList)]
-        }
+  name: 'VAbout',
+  computed: {
+    settingsData() {
+      return this.$store.state.settings.data
     },
+    socials() {
+      console.log(this.pageData.thumbnail)
+
+      return this.settingsData.socials
+    },
+    tags(): string[] {
+      const tagGroup = this.projects.map((project) => project.data.tags).flat(2)
+
+      const labelList = tagGroup
+        .filter((tagGroup) => {
+          return !!tagGroup?.label
+        })
+        .map((tagGroup) => tagGroup.label) as string[]
+
+      return [...new Set(labelList)]
+    },
+  },
 })
 </script>
 
@@ -60,7 +74,7 @@ export default mixins(PageProvider, ProjectsMutation).extend({
 }
 
 .left {
-    max-width: 60%;
+    max-width: rem(700);
     margin-top: 35vh;
     margin-left: 8vw;
 }
@@ -73,5 +87,15 @@ export default mixins(PageProvider, ProjectsMutation).extend({
     display: flex;
     flex-wrap: wrap;
     gap: rem(15);
+}
+
+.image {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 55%;
+  height: 100vh;
+  opacity: 0.1;
+  object-fit: cover;
 }
 </style>

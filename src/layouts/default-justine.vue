@@ -1,19 +1,19 @@
 <template>
-    <div :class="$style.root">
-        <nuxt-link v-if="siteName && isReady" to="/" :class="$style.title">
-            <h1>{{ siteName }}</h1>
-        </nuxt-link>
+  <div :class="$style.root">
+    <nuxt-link v-if="siteName && isReady" to="/" :class="$style.title">
+      <h1>{{ siteName }}</h1>
+    </nuxt-link>
 
-        <template v-if="splashScreenState !== 'hidden'">
-            <transition :name="$style['splash-screen']">
-                <v-splash-screen v-if="splashScreenState !== 'done'" v-model="splashScreenState" />
-            </transition>
-        </template>
+    <template v-if="splashScreenState !== 'hidden'">
+      <transition :name="$style['splash-screen']">
+        <v-splash-screen v-if="splashScreenState !== 'done'" v-model="splashScreenState" />
+      </transition>
+    </template>
 
-        <Nuxt v-show="isReady" />
+    <Nuxt v-show="isReady" />
 
-        <v-nav v-show="isReady" :class="$style.nav" />
-    </div>
+    <v-nav v-show="isReady" :class="$style.nav" />
+  </div>
 </template>
 
 <script lang="ts">
@@ -22,11 +22,11 @@ import Resize from '~/mixins/Resize'
 import SplashScreen from '~/mixins/SplashScreen'
 
 export default mixins(Resize, SplashScreen).extend({
-    computed: {
-        siteName(): string | undefined {
-            return this.$store.state.headData.siteName
-        },
+  computed: {
+    siteName(): string | undefined {
+      return this.$store.state.headData.siteName
     },
+  },
 })
 </script>
 

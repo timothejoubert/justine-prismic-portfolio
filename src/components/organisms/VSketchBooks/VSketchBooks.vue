@@ -1,7 +1,7 @@
 <template>
-    <div :class="rootClass">
-      <h1 v-if="pageData && pageData.title">{{pageData.title}}</h1>
-    </div>
+  <div :class="rootClass">
+    <h1 v-if="pageData && pageData.title">{{ pageData.title }}</h1>
+  </div>
 </template>
 
 <script lang="ts">
@@ -9,12 +9,12 @@ import mixins from 'vue-typed-mixins'
 import PageProvider from '~/mixins/PageProvider'
 
 export default mixins(PageProvider).extend({
-    name: 'VSketchBooks',
-    computed: {
-        rootClass(): (undefined | false | string)[] {
-            return [this.$style.root]
-        },
+  name: 'VSketchBooks',
+  computed: {
+    rootClass(): (undefined | false | string)[] {
+      return [this.$style.root]
     },
+  },
 })
 </script>
 

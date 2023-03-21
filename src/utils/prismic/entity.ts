@@ -44,7 +44,7 @@ export const isHomePage = (element?: Record<string, any> | string): boolean => {
 }
 
 export const isProjectListing = (document: PrismicDocument): boolean => {
-    return isPage(document) && isDocumentByUid(document, 'project-listing')
+    return isPage(document) && isDocumentByUid(document, 'projects')
 }
 
 export const isSketchBooks = (document: PrismicDocument): boolean => {

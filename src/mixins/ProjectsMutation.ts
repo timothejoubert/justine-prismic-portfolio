@@ -23,6 +23,7 @@ export default Vue.extend({
                     this.$prismic.predicates.at('document.type', 'project')
                 ).then((response) => response.results)
 
+
                 this.$store.commit(MutationType.SET_PROJECTS, projects)
                 console.log('set project in state', projects)
             } catch (error) {

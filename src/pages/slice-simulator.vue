@@ -12,10 +12,10 @@ import state from '~~/.slicemachine/libraries-state.json'
 
 export default {
   components: {
-    SliceSimulator
+    SliceSimulator,
   },
-  data () {
+  data() {
     return { state, components }
-  }
+  },
 }
 </script>

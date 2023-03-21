@@ -10,15 +10,20 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 ### TODO
 
 * **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_
-* **(ProjectListing && About)**: set tags in store if not already exist
-* **(Config)**: Set default page as Home (if no params go to => fetch uid === 'home-page')
-* **(Nav && Config)**: Configure nested route
-* **(VProjectListing)**: Rename uid by **_projects_** for use it in nested pages
 * **(Data)**: Sync prismic-repo data with local
-* **(Config)*: Add preview
+* **(Hydratation)**: fetch by data projects
+* **(Config)**: Add preview
+* **(Slice)**: CarouselMedia | RandomGridImage |
+* **(VButton)**: adapt for use it as VPill (ref: modelec || boegli)
+
+
+#### DONE
+* **(Config)**: Set esLint on save
+
 
 #### LATER  
-* I18n  
+* **(Config)**: I18n  
+* **(Nav && Config)**: Configure nested route
 
 
 #### RESOURCES

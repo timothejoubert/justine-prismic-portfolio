@@ -1,7 +1,6 @@
 // @ts-ignore
 import SpriteLoaderPlugin from 'svg-sprite-loader/plugin'
 import sm from './sm.json'
-import NodeUid from './src/constants/node-uid'
 import { version } from './package.json'
 import createSitemap from './src/utils/create-sitemap'
 // import { prismicHtmlSerializer } from './src/utils/prismic-html-serializer'
@@ -21,7 +20,7 @@ export default {
   head: {
     title: 'Prismic + Nuxt multi-page example',
     htmlAttrs: {
-      lang: 'fr'
+      lang: 'fr',
     },
     meta: [
       { charset: 'utf-8' },
@@ -29,12 +28,12 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'fallback description content'
+        content: 'fallback description content',
       },
       { name: 'format-detection', content: 'telephone=no' },
-      { hid: 'version', name: 'version', content: version || '' }
+      { hid: 'version', name: 'version', content: version || '' },
     ],
-    link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }]
+    link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
   },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
@@ -49,13 +48,13 @@ export default {
     // https://github.com/nuxt-community/svg-module
     '@nuxtjs/svg',
     // https://github.com/nuxt-community/style-resources-module#setup
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://sitemap.nuxtjs.org/guide/setup
-    '@nuxtjs/sitemap'
+    '@nuxtjs/sitemap',
   ],
 
   // https://sitemap.nuxtjs.org/guide/setup
@@ -66,9 +65,9 @@ export default {
     cacheTime: 1000 * 60 * 60 * 20,
     defaults: {
       changefreq: 'daily',
-      lastmod: new Date()
+      lastmod: new Date(),
     },
-    sitemaps: createSitemap()
+    sitemaps: createSitemap(),
   },
 
   // https://github.com/nuxt-community/svg-module
@@ -76,26 +75,24 @@ export default {
     svgSpriteLoader: {
       extract: true,
       runtimeGenerator: require.resolve('./src/utils/svg/sprite-component-generator.js'),
-      spriteFilename: 'image/sprite.[hash:8].svg'
-    }
+      spriteFilename: 'image/sprite.[hash:8].svg',
+    },
   },
 
   // https://nuxtjs.org/deployments/netlify/
   // Redirect to custom Error layout in SPA mode
   generate: {
-    fallback: true
+    fallback: true,
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    '@/scss/main'
-  ],
+  css: ['@/scss/main'],
 
   // https://github.com/nuxt-community/style-resources-module#setup
   // can access @include... in all files
   styleResources: {
     scss: ['@/scss/_style-resources.scss'],
-    hoistUseStatements: true
+    hoistUseStatements: true,
   },
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -104,14 +101,11 @@ export default {
   publicRuntimeConfig: {
     development: process.env.NODE_ENV === 'development',
     siteUrl: process.env.APP_URL,
-    apiUrl: sm.apiEndpoint || process.env.API_URL
+    apiUrl: sm.apiEndpoint || process.env.API_URL,
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '~/plugins/gsap.client.ts',
-    '~/plugins/prismic-utils.ts'
-  ],
+  plugins: ['~/plugins/gsap.client.ts', '~/plugins/prismic-utils.ts'],
 
   prismic: {
     endpoint: sm.apiEndpoint,
@@ -125,16 +119,22 @@ export default {
           return '/'
       }
     },
-    htmlSerializer(type, element, content, children) {
+    htmlSerializer(type, element, _content, children) {
       switch (type) {
         case 'heading1':
-          return /* html */ `<h1 class="font-semibold leading-tight tracking-tight md:leading-tight text-4xl md:text-5xl mb-7 mt-12 first:mt-0 last:mb-0">${children.join('')}</h1>`
+          return /* html */ `<h1 class="font-semibold leading-tight tracking-tight md:leading-tight text-4xl md:text-5xl mb-7 mt-12 first:mt-0 last:mb-0">${children.join(
+            ''
+          )}</h1>`
 
         case 'heading2':
-          return /* html */ `<h2 class="font-semibold leading-tight tracking-tight md:leading-tight text-3xl md:text-4xl mb-7 mt-12 first:mt-0 last:mb-0">${children.join('')}</h2>`
+          return /* html */ `<h2 class="font-semibold leading-tight tracking-tight md:leading-tight text-3xl md:text-4xl mb-7 mt-12 first:mt-0 last:mb-0">${children.join(
+            ''
+          )}</h2>`
 
         case 'heading3':
-          return /* html */ `<h3 class="font-semibold leading-tight tracking-tight md:leading-tight text-xl md:text-2xl mb-7 mt-12 first:mt-0 last:mb-0">${children.join('')}</h3>`
+          return /* html */ `<h3 class="font-semibold leading-tight tracking-tight md:leading-tight text-xl md:text-2xl mb-7 mt-12 first:mt-0 last:mb-0">${children.join(
+            ''
+          )}</h3>`
 
         case 'paragraph':
           return /* html */ `<p class="mb-7 last:mb-0">${children.join('')}</p>`
@@ -160,12 +160,14 @@ export default {
           return /* html */ `<strong class="font-semibold">${children.join('')}</strong>`
 
         case 'hyperlink':
-          return /* html */ `<a href="${element.data.url}" class="underline decoration-1 underline-offset-2">${children.join('')}</a>`
+          return /* html */ `<a href="${
+            element.data.url
+          }" class="underline decoration-1 underline-offset-2">${children.join('')}</a>`
 
         default:
           return null
       }
-    }
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -173,22 +175,22 @@ export default {
     loaders: {
       css: {
         modules: {
-          compileType: 'icss'
-        }
+          compileType: 'icss',
+        },
       },
       cssModules: {
         modules: {
-          localIdentName: isProduction ? '[local]_[hash:base64:5]' : '[name]__[local]--[hash:base64:5]'
-        }
-      }
+          localIdentName: isProduction ? '[local]_[hash:base64:5]' : '[name]__[local]--[hash:base64:5]',
+        },
+      },
     },
     plugins: [
       new SpriteLoaderPlugin({
         plainSprite: true,
         spriteAttrs: {
-          id: 'svg-sprite'
-        }
-      })
+          id: 'svg-sprite',
+        },
+      }),
     ],
     // fix broken styles during live editing into dev tools https://github.com/vuejs-templates/webpack/issues/1331
     cssSourceMap: false,
@@ -203,5 +205,5 @@ export default {
     //     type: 'javascript/auto'
     //   })
     // }
-  }
+  },
 }

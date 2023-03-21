@@ -57,7 +57,11 @@ select {
 }
 
 ::selection {
-    background-color: var(--theme-on-default);
-    color: var(--theme-default);
+    background-color: color(orange);
+    color: color(light);
     text-shadow: none;
+}
+
+img {
+    -webkit-user-drag: none;
 }

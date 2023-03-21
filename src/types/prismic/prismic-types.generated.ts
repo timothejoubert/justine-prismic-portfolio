@@ -93,6 +93,17 @@ interface PageDocumentData {
      */
     thumbnail: prismicT.ImageField<never>;
     /**
+     * parent page field in *Page*
+     *
+     * - **Field Type**: Content Relationship
+     * - **Placeholder**: Lien vers la page parente
+     * - **API ID Path**: page.parent_page
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    parent_page: prismicT.RelationField<"page">;
+    /**
      * type field in *Page*
      *
      * - **Field Type**: Select
@@ -114,13 +125,8 @@ interface PageDocumentData {
      * - **Documentation**: https://prismic.io/docs/core-concepts/slices
      *
      */
-    slices: prismicT.SliceZone<PageDocumentDataSlicesSlice>;
+    slices: prismicT.SliceZone;
 }
-/**
- * Slice for *Page → Slice Zone*
- *
- */
-type PageDocumentDataSlicesSlice = LoadingImageSlice;
 /**
  * Page document from Prismic
  *
@@ -228,6 +234,17 @@ interface SettingsDocumentData {
      *
      */
     siteTitle: prismicT.TitleField;
+    /**
+     * Tagline field in *settings*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: Tagline présente la page About
+     * - **API ID Path**: settings.tagline
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    tagline: prismicT.RichTextField;
     /**
      * Socials field in *settings*
      *
@@ -441,6 +458,6 @@ declare module "@prismicio/client" {
         (repositoryNameOrEndpoint?: string, options?: CustomTypesClientConfig): typeof CustomTypesClient;
     }
     namespace Content {
-        export type { MainMenuDocumentData, MainMenuDocumentDataLinksItem, MainMenuDocument, PageDocumentData, PageDocumentDataSlicesSlice, PageDocument, ProjectDocumentData, ProjectDocumentDataTagsItem, ProjectDocument, SettingsDocumentData, SettingsDocumentDataSocialsItem, SettingsDocument, AllDocumentTypes, LoadingImageSliceDefaultItem, LoadingImageSliceDefault, LoadingImageSliceVariation, LoadingImageSlice, SketchBookSliceDefaultPrimary, SketchBookSliceDefault, SketchBookSliceVariation, SketchBookSlice, SocialsSliceDefaultItem, SocialsSliceDefault, SocialsSliceVariation, SocialsSlice };
+        export type { MainMenuDocumentData, MainMenuDocumentDataLinksItem, MainMenuDocument, PageDocumentData, PageDocument, ProjectDocumentData, ProjectDocumentDataTagsItem, ProjectDocument, SettingsDocumentData, SettingsDocumentDataSocialsItem, SettingsDocument, AllDocumentTypes, LoadingImageSliceDefaultItem, LoadingImageSliceDefault, LoadingImageSliceVariation, LoadingImageSlice, SketchBookSliceDefaultPrimary, SketchBookSliceDefault, SketchBookSliceVariation, SketchBookSlice, SocialsSliceDefaultItem, SocialsSliceDefault, SocialsSliceVariation, SocialsSlice };
     }
 }

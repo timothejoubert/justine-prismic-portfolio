@@ -7,15 +7,15 @@
 const { generateSpritePlaceholder, stringify } = require('svg-sprite-loader/lib/utils')
 
 module.exports = function runtimeGenerator({ symbol, loaderContext }) {
-    const publicPath = loaderContext._compiler.options.output.publicPath
-    const spritePlaceholder = generateSpritePlaceholder(symbol.request.file)
-    const viewBoxParts = symbol.viewBox.split(' ')
-    const width = parseInt(viewBoxParts[2], 10)
-    const height = parseInt(viewBoxParts[3], 10)
-    const viewBox = stringify(symbol.viewBox)
-    const href = publicPath + spritePlaceholder
+  const publicPath = loaderContext._compiler.options.output.publicPath
+  const spritePlaceholder = generateSpritePlaceholder(symbol.request.file)
+  const viewBoxParts = symbol.viewBox.split(' ')
+  const width = parseInt(viewBoxParts[2], 10)
+  const height = parseInt(viewBoxParts[3], 10)
+  const viewBox = stringify(symbol.viewBox)
+  const href = publicPath + spritePlaceholder
 
-    return `
+  return `
         module.exports = {
           functional: true,
           viewBox: ${viewBox},

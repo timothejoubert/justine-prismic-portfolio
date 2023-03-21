@@ -1,7 +1,8 @@
-import {PrismicDocument, PrismicDocumentWithUID} from "@prismicio/types/src/value/document";
+import {PrismicDocument} from "@prismicio/types/src/value/document";
 import * as prismicT from "@prismicio/types";
 import {isInternalLinkFulled} from "~/types/prismic/prismic-guard";
 import NodeUid from "~/constants/node-uid";
+import {Route} from "vue-router";
 
 
 export const isDocumentWithSlices = (document: PrismicDocument): boolean => {
@@ -28,4 +29,14 @@ export const getInternalLinkUid = (link: prismicT.LinkField): string | undefined
 
 export const isHomeRoute = (routPath: string, uid?: string): boolean => {
     return routPath === '/' || uid === NodeUid.HOME
+}
+
+export const isNestedDocument = (document: PrismicDocument): boolean => {
+    return document.data.parent_page
+}
+
+export const getProjectUid = (route: Route['params']): string | false => {
+    const path = route?.pathMatch?.split('/')
+    const isProjectsRoute = path?.[0] === NodeUid.PROJECT_LISTING
+    return isProjectsRoute ? path?.[path?.length - 1] : false
 }

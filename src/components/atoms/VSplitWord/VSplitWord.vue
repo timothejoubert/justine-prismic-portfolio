@@ -5,151 +5,142 @@ import { AnimationState } from '~/components/organisms/VSplashScreen/VSplashScre
 // import { throttle } from 'throttle-debounce'
 
 interface SplitWordProps {
-    enabled: boolean
-    content: string
-    defaultHidden: boolean
-    breakWord: boolean
-    split: SplitItem[]
-    numberOfWordInLine: number
-    transitionState: AnimationState
+  enabled: boolean
+  content: string
+  defaultHidden: boolean
+  breakWord: boolean
+  split: SplitItem[]
+  numberOfWordInLine: number
+  transitionState: AnimationState
 }
 
 type SplitItem = 'letter' | 'word' | 'line'
 
 export default Vue.extend({
-    name: 'VSplitWord',
-    props: {
-        split: {
-            type: Array as PropType<SplitItem[]>,
-            default: () => ['letter'],
-        },
-        numberOfWordInLine: {
-            type: Number,
-            default: 2,
-        },
-        content: String,
-        enabled: { type: Boolean, default: true },
-        breakWord: { type: Boolean, default: true },
-        defaultHidden: { type: Boolean, default: false },
-        transitionState: String as PropType<AnimationState>,
+  name: 'VSplitWord',
+  props: {
+    split: {
+      type: Array as PropType<SplitItem[]>,
+      default: () => ['letter'],
     },
-    watch: {
-        transitionState(state: string) {
-            if (state === 'started' || state === 'revert') this.initTransitionListener()
-        },
+    numberOfWordInLine: {
+      type: Number,
+      default: 2,
     },
-    beforeDestroy() {
-        this.removeTransitionListener()
+    content: String,
+    enabled: { type: Boolean, default: true },
+    breakWord: { type: Boolean, default: true },
+    defaultHidden: { type: Boolean, default: false },
+    transitionState: String as PropType<AnimationState>,
+  },
+  watch: {
+    transitionState(state: string) {
+      if (state === 'started' || state === 'revert') this.initTransitionListener()
     },
-    methods: {
-        initTransitionListener() {
-            const letters = this.$el.querySelectorAll('.split-letter')
-            if (!letters) return
+  },
+  beforeDestroy() {
+    this.removeTransitionListener()
+  },
+  methods: {
+    initTransitionListener() {
+      const letters = this.$el.querySelectorAll('.split-letter')
+      if (!letters) return
 
-            letters[letters.length - 1].addEventListener('transitionend', this.onTransitionEnd, { once: true })
-        },
-        removeTransitionListener() {
-            const letters = this.$el.querySelectorAll('.split-letter')
-            if (!letters) return
-
-            letters[letters.length - 1].removeEventListener('transitionend', this.onTransitionEnd)
-        },
-        onTransitionEnd() {
-            this.$emit('transitionend')
-        },
+      letters[letters.length - 1].addEventListener('transitionend', this.onTransitionEnd, { once: true })
     },
-    render(createElement): VNode {
-        const { content, defaultHidden, enabled, split, numberOfWordInLine } = this.$props as SplitWordProps
+    removeTransitionListener() {
+      const letters = this.$el.querySelectorAll('.split-letter')
+      if (!letters) return
 
-        const displayLetter = split.includes('letter')
-        const displayWord = split.includes('word')
-        const displayLine = split.includes('line')
+      letters[letters.length - 1].removeEventListener('transitionend', this.onTransitionEnd)
+    },
+    onTransitionEnd() {
+      this.$emit('transitionend')
+    },
+  },
+  render(createElement): VNode {
+    const { content, defaultHidden, enabled, split, numberOfWordInLine } = this.$props as SplitWordProps
 
-        const wrapperData = {
-            ...this.$data,
-            class: [
-                this.$style.root,
-                enabled && this.$style['root--enable'],
-                split.map((displayedItem: string) => this.$style['root--display-' + displayedItem]),
-            ],
-        }
-        const slots = this.$slots && (this.$slots?.default?.[0] as VNode)
+    const displayLetter = split.includes('letter')
+    const displayWord = split.includes('word')
+    const displayLine = split.includes('line')
 
-        if (!enabled)
-            return ((slots || content) && createElement('div', wrapperData, [slots || content])) || createElement('')
+    const wrapperData = {
+      ...this.$data,
+      class: [
+        this.$style.root,
+        enabled && this.$style['root--enable'],
+        split.map((displayedItem: string) => this.$style['root--display-' + displayedItem]),
+      ],
+    }
+    const slots = this.$slots && (this.$slots?.default?.[0] as VNode)
 
-        let indexLetter = 0
+    if (!enabled)
+      return ((slots || content) && createElement('div', wrapperData, [slots || content])) || createElement('')
 
-        const parsedLetters = (word: string): VNode[] => {
-            const letters = word.split('')
-            return letters.map((letter: string, index: number) => {
-                indexLetter++
-                return createElement(
-                    'div',
-                    {
-                        class: [
-                            this.$style.letter,
-                            defaultHidden && this.$style['letter--hide'],
-                            letter === ' ' && this.$style['letter--last'],
-                            this.breakWord && this.$style['letter--break'],
-                            'split-letter',
-                        ],
-                        style: { '--index-letter-in-word': index, '--index-letter-total': indexLetter } as Record<
-                            string,
-                            any
-                        >,
-                    },
-                    letter
-                )
-            })
-        }
+    let indexLetter = 0
 
-        const words: string[] = content.split(' ')
-        const parsedWords = (line: string): VNode[] => {
-            const words = line.split(' ')
-            return words.map((word: string, wordIndex: number) => {
-                return createElement(
-                    'div',
-                    {
-                        class: [this.$style.word],
-                        style: { '--index-word': wordIndex } as Record<string, any>,
-                    },
-                    displayLetter ? parsedLetters(word) : word
-                )
-            })
-        }
-
-        const lineNodes = (): VNode[] => {
-            const lineLength = Math.ceil(words.length / numberOfWordInLine)
-            const lines = Array.from(Array(lineLength).keys()).map((count: number) => {
-                const indexOfFirstWord = count * numberOfWordInLine
-                return words.slice(indexOfFirstWord, indexOfFirstWord + numberOfWordInLine).join(' ')
-            })
-
-            return lines.map((line: string, lineIndex: number): VNode => {
-                return createElement(
-                    'div',
-                    {
-                        class: [this.$style.line],
-                        style: { '--index-line': lineIndex } as Record<string, any>,
-                    },
-                    displayWord ? parsedWords(line) : displayLetter ? parsedLetters(line) : line
-                )
-            })
-        }
-
+    const parsedLetters = (word: string): VNode[] => {
+      const letters = word.split('')
+      return letters.map((letter: string, index: number) => {
+        indexLetter++
         return createElement(
-            'div',
-            wrapperData,
-            displayLine
-                ? lineNodes()
-                : displayWord
-                ? parsedWords(content)
-                : displayLetter
-                ? parsedLetters(content)
-                : content
+          'div',
+          {
+            class: [
+              this.$style.letter,
+              defaultHidden && this.$style['letter--hide'],
+              letter === ' ' && this.$style['letter--last'],
+              this.breakWord && this.$style['letter--break'],
+              'split-letter',
+            ],
+            style: { '--index-letter-in-word': index, '--index-letter-total': indexLetter } as Record<string, any>,
+          },
+          letter
         )
-    },
+      })
+    }
+
+    const words: string[] = content.split(' ')
+    const parsedWords = (line: string): VNode[] => {
+      const words = line.split(' ')
+      return words.map((word: string, wordIndex: number) => {
+        return createElement(
+          'div',
+          {
+            class: [this.$style.word],
+            style: { '--index-word': wordIndex } as Record<string, any>,
+          },
+          displayLetter ? parsedLetters(word) : word
+        )
+      })
+    }
+
+    const lineNodes = (): VNode[] => {
+      const lineLength = Math.ceil(words.length / numberOfWordInLine)
+      const lines = Array.from(Array(lineLength).keys()).map((count: number) => {
+        const indexOfFirstWord = count * numberOfWordInLine
+        return words.slice(indexOfFirstWord, indexOfFirstWord + numberOfWordInLine).join(' ')
+      })
+
+      return lines.map((line: string, lineIndex: number): VNode => {
+        return createElement(
+          'div',
+          {
+            class: [this.$style.line],
+            style: { '--index-line': lineIndex } as Record<string, any>,
+          },
+          displayWord ? parsedWords(line) : displayLetter ? parsedLetters(line) : line
+        )
+      })
+    }
+
+    return createElement(
+      'div',
+      wrapperData,
+      displayLine ? lineNodes() : displayWord ? parsedWords(content) : displayLetter ? parsedLetters(content) : content
+    )
+  },
 })
 </script>
 

@@ -6,20 +6,20 @@
 import { components } from '~/../slices'
 
 export default {
-  async asyncData (context) {
+  async asyncData(context) {
     const page = await context.$prismic.api.getByUID('page', 'home')
     await context.store.dispatch('load')
     return {
-      page
+      page,
     }
   },
-  data () {
+  data() {
     return { components }
   },
-  head () {
+  head() {
     return {
-      title: this.$prismic.asText(this.page.data.title)
+      title: this.$prismic.asText(this.page.data.title),
     }
-  }
+  },
 }
 </script>

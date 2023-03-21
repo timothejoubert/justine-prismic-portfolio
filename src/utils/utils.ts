@@ -69,3 +69,5 @@ export const stringDateToYear = (date: string | null, position: number = 0, sepa
     const items = date.split(separator)
     return Number(items[position])
 }
+
+

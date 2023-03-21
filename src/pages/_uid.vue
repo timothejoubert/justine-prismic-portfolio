@@ -1,13 +1,13 @@
 <template>
-  <div :class="$style.root" v-if="pageData">
-    <lazy-v-home v-if="isHome" :page-data="pageData"/>
-    <lazy-v-sketch-books v-else-if="isSketchBook" :page-data="pageData"/>
-    <lazy-v-project-list v-else-if="isProjectListing" :page-data="pageData"/>
-    <lazy-v-about v-else-if="isAbout" :page-data="pageData"/>
-    <lazy-v-project v-else-if="isProjectPage" :page-data="pageData"/>
-    <lazy-v-default v-else :page-data="pageData"/>
+  <div v-if="pageData" :class="$style.root">
+    <lazy-v-home v-if="isHome" :page-data="pageData" />
+    <lazy-v-sketch-books v-else-if="isSketchBook" :page-data="pageData" />
+    <lazy-v-project-list v-else-if="isProjectListing" :page-data="pageData" />
+    <lazy-v-about v-else-if="isAbout" :page-data="pageData" />
+    <lazy-v-project v-else-if="isProjectPage" :page-data="pageData" />
+    <lazy-v-default v-else :page-data="pageData" />
 
-<!--    <slice-zone :slices="slices" :components="components" />-->
+    <!--    <slice-zone :slices="slices" :components="components" />-->
   </div>
   <div v-else>
     <p>pageData not find</p>
@@ -15,12 +15,12 @@
 </template>
 
 <script lang="ts">
+import mixins from 'vue-typed-mixins'
 import { components } from '~/../slices'
-import mixins from "vue-typed-mixins";
-import Page from "~/mixins/Page";
+import Page from '~/mixins/Page'
 
 export default mixins(Page).extend({
-  data () {
+  data() {
     return { components }
   },
 })

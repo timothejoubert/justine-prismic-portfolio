@@ -10,10 +10,10 @@
     "start": "nuxt start",
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
+    "lint": "yarn lint:js && yarn lint:style",
     "lint-fix": "yarn lint:js --fix && yarn lint:style --fix",
     "slicemachine": "start-slicemachine",
-    "types:ts": "npx prismic-ts-codegen",
-    "format": "prettier --write ."
+    "types:ts": "npx prismic-ts-codegen"
   },
   "dependencies": {
     "@nuxtjs/sitemap": "^2.4.0",

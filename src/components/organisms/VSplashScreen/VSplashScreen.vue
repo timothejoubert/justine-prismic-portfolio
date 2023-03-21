@@ -1,16 +1,16 @@
 <template>
-    <div :class="rootClass">
-        <div :class="$style.center">
-            <v-split-word
-                :class="[$style.title, 'text-h1']"
-                :content="titleSite"
-                :transition-state="animationState"
-                default-hidden
-                @transitionend="onTransitionEnd"
-            />
-            <div :class="$style.slider"></div>
-        </div>
+  <div :class="rootClass">
+    <div :class="$style.center">
+      <v-split-word
+        :class="[$style.title, 'text-h1']"
+        :content="titleSite"
+        :transition-state="animationState"
+        default-hidden
+        @transitionend="onTransitionEnd"
+      />
+      <div :class="$style.slider"></div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -21,32 +21,32 @@ import { SplashScreenState } from '~/mixins/SplashScreen'
 export type AnimationState = 'pending' | 'started' | 'revert'
 
 export default Vue.extend({
-    name: 'VSplashScreen',
-    props: {
-        value: String as PropType<SplashScreenState>,
+  name: 'VSplashScreen',
+  props: {
+    value: String as PropType<SplashScreenState>,
+  },
+  data() {
+    return {
+      animationState: 'pending' as AnimationState,
+    }
+  },
+  computed: {
+    rootClass(): (string | undefined | false)[] {
+      return [this.$style.root, this.value === 'starting' && 'load', this.animationState === 'revert' && 'revert']
     },
-    data() {
-        return {
-            animationState: 'pending' as AnimationState,
-        }
+    titleSite(): string {
+      return this.$store.state.headData.siteName
     },
-    computed: {
-        rootClass(): (string | undefined | false)[] {
-            return [this.$style.root, this.value === 'starting' && 'load', this.animationState === 'revert' && 'revert']
-        },
-        titleSite(): string {
-            return this.$store.state.headData.siteName
-        },
+  },
+  mounted() {
+    this.animationState = 'started'
+  },
+  methods: {
+    onTransitionEnd() {
+      if (this.animationState === 'revert') this.$emit('input', 'ended')
+      this.animationState = 'revert'
     },
-    mounted() {
-        this.animationState = 'started'
-    },
-    methods: {
-        onTransitionEnd() {
-            if (this.animationState === 'revert') this.$emit('input', 'ended')
-            this.animationState = 'revert'
-        },
-    },
+  },
 })
 </script>
 

@@ -6,23 +6,23 @@
 </template>
 
 <script>
-import { getSliceComponentProps } from "@prismicio/vue/components";
+import { getSliceComponentProps } from '@prismicio/vue/components'
 
 export default {
-  name: "LoadingImage",
+  name: 'LoadingImage',
   // The array passed to `getSliceComponentProps` is purely optional and acts as a visual hint for you
-  props: getSliceComponentProps(["slice", "index", "slices", "context"]),
+  props: getSliceComponentProps(['slice', 'index', 'slices', 'context']),
 }
 </script>
 
 <style scoped>
 .section {
-  background: #f7f7f7;
-  color: #111;
-  padding: 4em;
-  text-align: center;
+    padding: 4em;
+    background: #f7f7f7;
+    color: #111;
+    text-align: center;
 }
 .title {
-  margin-bottom: 2em;
+    margin-bottom: 2em;
 }
 </style>
