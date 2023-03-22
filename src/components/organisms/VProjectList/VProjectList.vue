@@ -1,15 +1,10 @@
 <template>
   <div :class="$style.root">
-    <p v-if="$fetchState.pending">Fetching Projects...</p>
-
-    <template v-if="projects && projects.length">
-      <v-carousel
-        v-model="slideIndex"
-        async-slides
-        :options="carouselOptions"
-        :class="$style.carousel"
-        wrapper-tag="ul"
-      >
+    <div v-if="$fetchState.pending" :class="$style['projects-placeholder']">
+      <div v-for="i in 6" :key="'placeholder-' + i" :class="$style.project" :style="{ '--placeholder-delay': i }"></div>
+    </div>
+    <template v-else>
+      <v-carousel v-model="slideIndex" async-slides :options="carouselOptions" :class="$style.list" wrapper-tag="ul">
         <li v-for="(project, i) in projectsData" :key="project.uid" :class="$style.project">
           <v-link :to="getProjectUrl(project.uid)">
             <v-project-card :index="i" :project="project" :length="projects.length" :class="$style.card" />
@@ -36,6 +31,9 @@ export default mixins(PageProvider, ProjectsMutation).extend({
     }
   },
   computed: {
+    hasProject(): boolean {
+      return !!this.projects?.length
+    },
     projectsData(): (ProjectData & { uid: string })[] {
       return this.projects.map((project) => {
         return {
@@ -73,12 +71,18 @@ export default mixins(PageProvider, ProjectsMutation).extend({
   width: 100%;
   height: 100vh;
 }
-.carousel {
+
+.projects-placeholder,
+.list {
   position: relative;
   display: flex;
   overflow: hidden;
   min-width: 100%;
   height: 100%;
+}
+
+.projects-placeholder {
+  align-items: center;
 }
 
 .root :global(.swiper-wrapper) {
@@ -90,12 +94,41 @@ export default mixins(PageProvider, ProjectsMutation).extend({
   width: max(300px, 25vw);
   height: 50vh;
   flex-shrink: 0;
-  //border-right: 1px solid rgba(#000, 0.1);
+
+  .projects-placeholder & {
+    position: relative;
+    background-color: #f3f1eb;
+
+    &::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      animation: placeholder-waiting 1s infinite calc(-40ms * var(--placeholder-delay, 1)) ease(in-out-cubic);
+      background-image: linear-gradient(
+        to top,
+        transparent 0%,
+        rgba(255, 255, 255, 0.8) 10%,
+        rgba(255, 255, 255, 0.8) 20%,
+        transparent 30%
+      );
+      background-position: 0 0;
+      background-size: 100% 120%;
+      content: '';
+    }
+  }
 }
 
 .card {
   display: flex;
   height: 100%;
   flex-direction: column;
+}
+
+@keyframes placeholder-waiting {
+  100% {
+    background-position: 0 60vh;
+  }
 }
 </style>

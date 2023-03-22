@@ -32,41 +32,29 @@ export default mixins(Resize, SplashScreen).extend({
 
 <style lang="scss" module>
 .root {
-    position: relative;
+  position: relative;
 }
 
 .title {
-    position: fixed;
-    z-index: 11;
-    top: rem(30);
-    left: 50%;
-    color: color(orange);
-    font-family: $dida;
-    transform: translateX(-50%);
+  position: fixed;
+  z-index: 11;
+  top: rem(30);
+  left: 50%;
+  color: color(orange);
+  font-family: $dida;
+  transform: translateX(-50%);
 
-    h1 {
-        font-weight: 300;
-    }
+  h1 {
+    font-weight: 300;
+  }
 }
 
 .nav {
-    .root & {
-        position: fixed;
-        z-index: 100;
-        bottom: rem(40);
-        width: 100%;
-    }
-}
-
-.splash-screen:global(#{'-enter-active'}),
-.splash-screen:global(#{'-leave-active'}) {
-    transition-delay: 1s;
-    transition-duration: 2s;
-    transition-property: opacity;
-}
-
-.splash-screen:global(#{'-enter'}),
-.splash-screen:global(#{'-leave-to'}) {
-    opacity: 0;
+  .root & {
+    position: fixed;
+    z-index: 100;
+    bottom: rem(40);
+    width: 100%;
+  }
 }
 </style>

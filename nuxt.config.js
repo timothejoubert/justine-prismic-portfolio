@@ -43,6 +43,8 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
+    // https://image.nuxtjs.org/getting-started/installation
+    '@nuxt/image',
     // https://github.com/nuxt/postcss8
     '@nuxt/postcss8',
     // https://github.com/nuxt-community/svg-module
@@ -108,6 +110,7 @@ export default {
   plugins: ['~/plugins/gsap.client.ts', '~/plugins/prismic-utils.ts'],
 
   prismic: {
+    preview: '/preview',
     endpoint: sm.apiEndpoint,
     modern: true,
     linkResolver: (doc) => {
@@ -115,6 +118,8 @@ export default {
         case 'page':
           // return doc.uid === 'home' ? '/' : `/${doc.uid}`
           return doc.uid === 'home-page' ? '/' : `/${doc.uid}`
+        case 'project':
+          return `/projects/${doc.uid}`
         default:
           return '/'
       }

@@ -2,7 +2,16 @@
   <div :class="$style.root">
     <v-marquee content="test">
       <div :class="$style.tags">
-        <v-pill v-for="(tag, i) in pageTags" :key="i" :label="tag" :class="$style.tag" />
+        <v-button
+          v-for="(tag, i) in pageTags"
+          :key="i"
+          tag="div"
+          filled
+          size="xl"
+          theme="orange"
+          :label="tag"
+          :class="$style.tag"
+        />
       </div>
     </v-marquee>
   </div>
@@ -29,6 +38,9 @@ export default Vue.extend({
   transform-origin: center;
 }
 .tag {
+  --theme-on-default: #{color(orange)} !important;
+  --theme-default: #f9e2de !important;
+
   margin-inline: rem(13);
 }
 </style>

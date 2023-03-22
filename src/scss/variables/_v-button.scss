@@ -5,6 +5,9 @@ $v-button-size-vars-by-variant: () !default;
 
 // root
 $v-button: (
+    xs: (
+        font-size: rem(10)
+    ),
     s: (
         font-size: rem(12)
     ),
@@ -15,11 +18,14 @@ $v-button: (
         font-size: rem(26)
     ),
     xl: (
-        font-size: rem(26)
+        font-size: rem(52)
     ),
 );
 
 $v-button-rounded: (
+    xs: (
+        border-radius: math.div(24px, 2),
+    ),
     s: (
         border-radius: math.div(32px, 2),
     ),
@@ -29,10 +35,18 @@ $v-button-rounded: (
     l: (
         border-radius: math.div(48px, 2),
     ),
+    xl: (
+        border-radius: math.div(92px, 2),
+    ),
 );
 
 // inner
 $v-button-inner: (
+    xs: (
+        min-width: 24px,
+        height: 24px,
+        padding: 0 7px,
+    ),
     s: (
         min-width: 32px,
         height: 32px,
@@ -47,6 +61,11 @@ $v-button-inner: (
         min-width: 68px,
         height: 50px,
         padding: 0 31px,
+    ),
+    xl: (
+        min-width: 220px,
+        height: 92px,
+        padding: 14px 50px,
     ),
 );
 
@@ -71,6 +90,9 @@ $v-button-icon: (
 
 // label
 $v-button-label: (
+    xs: (
+        padding-inline: 7px
+    ),
     s: (
         padding-inline: 4px 4px
     ),

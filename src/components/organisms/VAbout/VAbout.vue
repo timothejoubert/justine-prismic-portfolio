@@ -1,12 +1,11 @@
 <template>
   <div :class="$style.root">
-    <PrismicImage :field="pageData.thumbnail" :class="$style.image"/>
+    <PrismicImage :field="pageData.thumbnail" :class="$style.image" />
 
     <v-about-tags :class="$style.tags" />
     <!--        <v-marquee-carousel :tags="tags"/>-->
 
     <div :class="$style.left">
-
       <PrismicRichText
         v-if="settingsData.description"
         class="text-h3"
@@ -19,8 +18,6 @@
       <div :class="$style.socials">
         <v-social v-for="(social, i) in socials" :key="i" :social="social" />
       </div>
-
-
     </div>
   </div>
 </template>
@@ -58,35 +55,35 @@ export default mixins(PageProvider, ProjectsMutation).extend({
 
 <style lang="scss" module>
 .root {
-    position: relative;
+  position: relative;
 }
 
 .tags {
-    position: fixed;
-    top: rem(65);
-    left: rem(-30);
-    transform: rotate(-4deg);
-    transform-origin: center;
+  position: fixed;
+  top: rem(40);
+  left: rem(-30);
+  transform: rotate(-4deg);
+  transform-origin: center;
 }
 
 .tagline {
-    margin-bottom: rem(30);
+  margin-bottom: rem(30);
 }
 
 .left {
-    max-width: rem(700);
-    margin-top: 35vh;
-    margin-left: 8vw;
+  max-width: rem(700);
+  margin-top: 35vh;
+  margin-left: 8vw;
 }
 
 .content {
-    margin-bottom: rem(60);
+  margin-bottom: rem(60);
 }
 
 .socials {
-    display: flex;
-    flex-wrap: wrap;
-    gap: rem(15);
+  display: flex;
+  flex-wrap: wrap;
+  gap: rem(15);
 }
 
 .image {

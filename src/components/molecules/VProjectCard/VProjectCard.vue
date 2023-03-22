@@ -1,9 +1,11 @@
 <template>
   <div :class="$style.root">
-    <div :class="$style.counter">
-      <span :class="$style.current">{{ formatValue(index + 1) }}</span>
-      <div :class="$style.length">{{ formatValue(length) }}</div>
-    </div>
+    <v-button :class="$style.counter" tag="div" filled theme="orange" size="xs">
+      <template #default>
+        <span :class="$style.current">{{ formatValue(index + 1) }}</span>
+        <div :class="$style.length">{{ formatValue(length) }}</div>
+      </template>
+    </v-button>
     <PrismicImage v-if="project.thumbnail" :field="project.thumbnail" :class="$style.image" />
     <div :class="$style.body">
       <h2 :class="$style.title">{{ title }}</h2>
@@ -54,12 +56,13 @@ export default mixins(CarouselSlide).extend({
 
 .counter {
   position: absolute;
-  top: rem(20);
-  right: rem(20);
+  top: rem(12);
+  right: rem(12);
 }
 
 .current {
-  font-size: rem(15);
+  font-size: rem(14);
+  font-weight: 500;
 }
 
 .length {

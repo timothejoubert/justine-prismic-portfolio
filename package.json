@@ -16,6 +16,7 @@
     "types:ts": "npx prismic-ts-codegen"
   },
   "dependencies": {
+    "@nuxt/image": "^0.6.2",
     "@nuxtjs/sitemap": "^2.4.0",
     "@nuxtjs/svg": "^0.4.0",
     "gsap": "./packages/gsap-bonus.tgz",
@@ -49,7 +50,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^7.12.1",
     "include-media": "^1.4.10",
-    "postcss-loader": "^3",
+    "postcss": "8",
     "prettier": "^2.3.2",
     "prismic-ts-codegen": "^0.1.5",
     "sass": "^1.53.0",

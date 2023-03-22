@@ -27,5 +27,5 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 
 #### RESOURCES
-
+[Prismic nice tuto](https://www.hamedbahram.io/notes/prismic)
 [Import shim client type](https://github.com/prismicio/prismic-vue/issues/5#issuecomment-493795628)
