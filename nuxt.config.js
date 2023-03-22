@@ -7,6 +7,7 @@ import createSitemap from './src/utils/create-sitemap'
 // import { Configuration as WebpackConfiguration } from 'webpack'
 
 const isProduction = process.env.NODE_ENV === 'production'
+const defaultLocale = 'fr'
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
@@ -18,9 +19,9 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Prismic + Nuxt multi-page example',
+    title: process.env.APP_TITLE,
     htmlAttrs: {
-      lang: 'fr',
+      lang: defaultLocale,
     },
     meta: [
       { charset: 'utf-8' },
@@ -28,12 +29,25 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'fallback description content',
+        content: 'fallback description in nuxt.config.js',
       },
       { name: 'format-detection', content: 'telephone=no' },
       { hid: 'version', name: 'version', content: version || '' },
     ],
-    link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
+    link: [
+      // favicon
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon/apple-touch-icon.png' },
+      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon/favicon-32x32.png' },
+      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon/favicon-16x16.png' },
+      { rel: 'manifest', href: '/favicon/site.webmanifest' },
+      { rel: 'mask-icon', href: '/favicon/safari-pinned-tab.svg', color: '#5bbad5' },
+    ],
+    script: [
+      {
+        src: 'https://static.cdn.prismic.io/prismic.js?new=true&repo=justine-prismic-portfolio',
+        defer: true,
+      },
+    ],
   },
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
