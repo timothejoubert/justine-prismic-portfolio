@@ -36,39 +36,27 @@
           "label": "Thumbnail"
         }
       },
-      "parent_page": {
-        "type": "Link",
-        "config": {
-          "select": "document",
-          "customtypes": [
-            "page"
-          ],
-          "label": "parent page",
-          "placeholder": "Lien vers la page parente"
-        }
-      },
-      "type": {
-        "type": "Select",
-        "config": {
-          "options": [
-            "Default",
-            "Home",
-            "Sketchooks",
-            "Projects",
-            "Project",
-            "About"
-          ],
-          "default_value": "Default",
-          "label": "type",
-          "placeholder": "Définit l'apparence de la page"
-        }
-      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
         "config": {
           "choices": {
             "loading_image": {
+              "type": "SharedSlice"
+            },
+            "contact_block": {
+              "type": "SharedSlice"
+            },
+            "project_listing_block": {
+              "type": "SharedSlice"
+            },
+            "about_block": {
+              "type": "SharedSlice"
+            },
+            "project_push": {
+              "type": "SharedSlice"
+            },
+            "sketch_book": {
               "type": "SharedSlice"
             }
           }

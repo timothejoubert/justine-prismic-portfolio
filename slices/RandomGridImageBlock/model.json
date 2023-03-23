@@ -1,7 +1,7 @@
 {
   "id": "loading_image",
   "type": "SharedSlice",
-  "name": "LoadingImage",
+  "name": "RandomGridImageBlock",
   "description": "LoadingImage",
   "variations": [
     {

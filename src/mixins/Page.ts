@@ -5,18 +5,11 @@ import { Context } from '@nuxt/types'
 import { FacebookMetaOptions, PageMetaPropertyName, TwitterMetaOptions } from '~/types/meta'
 import { createFacebookMeta } from '~/utils/meta/facebook'
 import { createTwitterMeta } from '~/utils/meta/twitter'
-import { isAbout, isProjectPage, isProjectListing, isSketchBooks } from '~/utils/prismic/entity'
+import { isAbout, isProjectDocument, isProjectListing, isSketchBooks } from '~/utils/prismic/entity'
 import { MainPageData } from '~/types/prismic/app-prismic'
 import NodeUid from '~/constants/node-uid'
 import { getProjectUid, isHomeRoute } from '~/utils/prismic/utils'
-
-const MOCK_PAGE_DATA = {
-  title: 'mock page data fallBackTitle',
-  description: 'mock page data description ',
-  type: 'mock page data default',
-  slices: [],
-  thumbnail: '',
-}
+import mockData from '~/static/mock-data/page-data-fallback.json'
 
 export default Vue.extend({
   // middleware({ req, redirect }: Context) {
@@ -41,7 +34,7 @@ export default Vue.extend({
     }
 
     if (page) return { page }
-    return { page: MOCK_PAGE_DATA }
+    return { page: mockData }
 
     // await store.dispatch('load', 'second function argument to pass in load function')
   },
@@ -71,7 +64,7 @@ export default Vue.extend({
       return this.page?.data
     },
     appTitle(): string {
-      return this.$asText(this.$store.state.settings?.data?.sitename) || 'fallBack site name'
+      return this.$asText(this.$store.state.settings?.data?.site_name) || 'fallBack site name'
     },
     metaTitle(): string {
       if (this.isHome) return this.appTitle
@@ -104,7 +97,7 @@ export default Vue.extend({
       return isAbout(this.page)
     },
     isProjectPage(): boolean {
-      return isProjectPage(this.page)
+      return isProjectDocument(this.page)
     },
     slices(): prismicT.SliceZone | [] {
       return this.page.data?.slices

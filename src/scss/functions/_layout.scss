@@ -1,0 +1,12 @@
+@use 'sass:map';
+
+@function layout($key) {
+    @if map.has-key($layout, $key) {
+        @return map.get($layout, $key);
+    }
+
+    // stylelint-disable-next-line order/order
+    @warn 'Unkown #{$key} in $layout.';
+
+    @return null;
+}

@@ -32,15 +32,15 @@ export default Vue.extend({
 
 <style lang="scss" module>
 .root {
-  overflow: hidden;
+    overflow: hidden;
 }
 .tags {
-  transform-origin: center;
+    transform-origin: center;
 }
 .tag {
-  --theme-on-default: #{color(orange)} !important;
-  --theme-default: #f9e2de !important;
+    --theme-on-default: #{color(orange)} !important;
+    --theme-default: #f9e2de !important;
 
-  margin-inline: rem(13);
+    margin-inline: rem(13);
 }
 </style>

@@ -1,0 +1,4 @@
+@mixin full-width($width: null) {
+  width: calc(100% - layout(padding) * 2);
+  margin-inline: auto;
+}

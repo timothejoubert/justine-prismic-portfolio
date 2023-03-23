@@ -1,30 +1,30 @@
 {
-  "id": "socials",
+  "id": "sketch_book",
   "type": "SharedSlice",
-  "name": "Socials",
-  "description": "Socials",
+  "name": "SketchBookBlock",
+  "description": "SketchBook",
   "variations": [
     {
       "id": "default",
       "name": "Default",
       "docURL": "...",
       "version": "sktwi1xtmkfgx8626",
-      "description": "Socials",
+      "description": "SketchBook",
       "primary": {},
       "items": {
+        "media": {
+          "type": "Image",
+          "config": {
+            "label": "Media",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
         "name": {
           "type": "Text",
           "config": {
             "label": "Name",
             "placeholder": ""
-          }
-        },
-        "link": {
-          "type": "Link",
-          "config": {
-            "label": "Link",
-            "placeholder": "",
-            "select": null
           }
         }
       },

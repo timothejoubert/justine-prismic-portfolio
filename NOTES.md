@@ -6,19 +6,25 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 (repositoryNameOrEndpoint?: string, options?: CustomTypesClientConfig): typeof CustomTypesClient;
 ````
 
+### PRISMIC CLI
+[DOC](https://prismic.io/docs/technical-reference/prismic-cli)
+
 
 ### TODO
-
+* **(Setup)** Prettier vs EsLint conflict
 * **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_
-* **(Data)**: Sync prismic-repo data with local
-* **(Hydratation)**: fetch by data projects
-* **(Config)**: Add preview
 * **(Slice)**: CarouselMedia | RandomGridImage |
-* **(VButton)**: adapt for use it as VPill (ref: modelec || boegli)
 
 
 #### DONE
+* **(Data)**: Sync prismic-repo data with local
 * **(Config)**: Set esLint on save
+* **(Config)**: Add preview
+* **(VButton)**: adapt for use it as VPill (ref: modelec || boegli)
+
+
+#### ABANDONED
+* **(Hydratation)**: fetch by data projects
 
 
 #### LATER  

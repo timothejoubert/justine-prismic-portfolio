@@ -43,43 +43,44 @@ export default mixins(Resize, SplashScreen).extend({
   },
   computed: {
     siteName(): string {
-      return this.$store.state.settings.data.sitename
+      return this.$store.state.settings.data.site_name
     },
   },
 })
 </script>
 <style lang="scss" module>
 .root {
-    height: 100vh;
+  height: 100vh;
 }
 
 .nav {
-    position: fixed;
-    z-index: 101;
-    bottom: rem(40);
-    width: 100%;
+  position: fixed;
+  z-index: 101;
+  bottom: rem(20);
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .title {
-    position: fixed;
-    z-index: 101;
-    top: rem(40);
-    left: 50%;
-    color: color(orange);
-    font-family: $dida;
-    transform: translateX(-50%);
+  position: fixed;
+  z-index: 101;
+  top: rem(40);
+  left: 50%;
+  color: color(orange);
+  font-family: $dida;
+  transform: translateX(-50%);
 }
 
 .texture {
-    position: fixed;
-    overflow: hidden;
-    border-radius: rem(40);
-    inset: rem(20);
+  position: fixed;
+  overflow: hidden;
+  border-radius: rem(40);
+  inset: rem(20);
 }
 
 .texture__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>

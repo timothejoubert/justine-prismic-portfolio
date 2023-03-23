@@ -113,170 +113,170 @@ export default Vue.extend({
 @use 'sass:math';
 
 .root {
-  @include v-button-default-css-vars($v-button);
-  @include theme-variants;
+    @include v-button-default-css-vars($v-button);
+    @include theme-variants;
 
-  display: inline-block;
-  border: none;
-  color: inherit;
-  text-decoration: none;
-  transition: background-color 0.3s;
+    display: inline-block;
+    border: none;
+    color: inherit;
+    text-decoration: none;
+    transition: background-color 0.3s;
 
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-  }
-
-  &--disabled {
-    pointer-events: none; // prevents click on disabled link (<a> or <nuxt-link>)
-  }
-
-  &--rounded {
-    @include v-button-default-css-vars($v-button-rounded, 'rounded');
-  }
-
-  &--color-primary {
-    color: var(--theme-primary);
-  }
-
-  &--color-secondary {
-    color: var(--theme-secondary);
-  }
-
-  &--filled {
-    background-color: var(--theme-default);
-    color: var(--theme-on-default);
-  }
-
-  &--outlined {
-    color: var(--theme-default);
-  }
-
-  &--filled#{&}--disabled {
-    background-color: rgba(#000, 0.2);
-    color: rgba(#000, 0.7);
-  }
-
-  &:not(#{&}--filled)#{&}--disabled {
-    color: rgba(#000, 0.7);
-  }
-
-  &--outlined#{&}--disabled {
-    background-color: transparent;
-    color: rgba(#000, 0.3);
-  }
-
-  &--filled#{&}--color-primary {
-    background-color: var(--theme-primary);
-    color: var(--theme-on-primary);
-  }
-
-  &--filled#{&}--color-secondary {
-    background-color: var(--theme-secondary);
-    color: var(--theme-on-secondary);
-  }
-
-  &--elevated {
-    box-shadow: 0 2px 32px 0 rgba(#000, 0.1);
-  }
-
-  @media (hover: hover) {
-    &--filled:not(#{&}--disabled):hover {
-      background-color: var(--theme-button-background-hovered);
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
     }
-  }
 
-  // sizes
-  @each $key, $value in $v-button {
-    &--size-#{$key} {
-      @include v-button-size($key);
+    &--disabled {
+        pointer-events: none; // prevents click on disabled link (<a> or <nuxt-link>)
     }
-  }
+
+    &--rounded {
+        @include v-button-default-css-vars($v-button-rounded, 'rounded');
+    }
+
+    &--color-primary {
+        color: var(--theme-primary);
+    }
+
+    &--color-secondary {
+        color: var(--theme-secondary);
+    }
+
+    &--filled {
+        background-color: var(--theme-default);
+        color: var(--theme-on-default);
+    }
+
+    &--outlined {
+        color: var(--theme-default);
+    }
+
+    &--filled#{&}--disabled {
+        background-color: rgba(#000, 0.2);
+        color: rgba(#000, 0.7);
+    }
+
+    &:not(#{&}--filled)#{&}--disabled {
+        color: rgba(#000, 0.7);
+    }
+
+    &--outlined#{&}--disabled {
+        background-color: transparent;
+        color: rgba(#000, 0.3);
+    }
+
+    &--filled#{&}--color-primary {
+        background-color: var(--theme-primary);
+        color: var(--theme-on-primary);
+    }
+
+    &--filled#{&}--color-secondary {
+        background-color: var(--theme-secondary);
+        color: var(--theme-on-secondary);
+    }
+
+    &--elevated {
+        box-shadow: 0 2px 32px 0 rgba(#000, 0.1);
+    }
+
+    @media (hover: hover) {
+        &--filled:not(#{&}--disabled):hover {
+            background-color: var(--theme-button-background-hovered);
+        }
+    }
+
+    // sizes
+    @each $key, $value in $v-button {
+        &--size-#{$key} {
+            @include v-button-size($key);
+        }
+    }
 }
 
 .inner {
-  @include v-button-default-css-vars($v-button-inner, 'inner');
+    @include v-button-default-css-vars($v-button-inner, 'inner');
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
 
-  .root--outlined & {
-    border-width: var(--v-button-border-width, 1px);
-    border-style: solid;
-    border-color: var(--theme-button-outline-color);
-    border-radius: inherit;
-    transition: all 0.3s;
-  }
-
-  .root--outlined.root--color-primary & {
-    border-color: var(--theme-primary);
-  }
-
-  .root--outlined.root--color-secondary & {
-    border-color: var(--theme-secondary);
-  }
-
-  .root:not(.root--outlined):not(.root--filled) & {
-    padding: 0;
-  }
-
-  .root--has-icon:not(.root--has-label) & {
-    padding: 0;
-  }
-
-  .root--has-icon.root--has-label.root--icon-last & {
-    @include v-button-default-css-vars($v-button-inner-icon-last, 'inner');
-  }
-
-  @media (hover: hover) {
-    .root--outlined:not(.root--disabled):hover & {
-      border-color: var(--theme-default);
+    .root--outlined & {
+        border-width: var(--v-button-border-width, 1px);
+        border-style: solid;
+        border-color: var(--theme-button-outline-color);
+        border-radius: inherit;
+        transition: all 0.3s;
     }
-  }
+
+    .root--outlined.root--color-primary & {
+        border-color: var(--theme-primary);
+    }
+
+    .root--outlined.root--color-secondary & {
+        border-color: var(--theme-secondary);
+    }
+
+    .root:not(.root--outlined):not(.root--filled) & {
+        padding: 0;
+    }
+
+    .root--has-icon:not(.root--has-label) & {
+        padding: 0;
+    }
+
+    .root--has-icon.root--has-label.root--icon-last & {
+        @include v-button-default-css-vars($v-button-inner-icon-last, 'inner');
+    }
+
+    @media (hover: hover) {
+        .root--outlined:not(.root--disabled):hover & {
+            border-color: var(--theme-default);
+        }
+    }
 }
 
 .icon {
-  @include v-button-default-css-vars($v-button-icon, 'icon');
+    @include v-button-default-css-vars($v-button-icon, 'icon');
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 0;
-  transition: color 0.3s, transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    transition: color 0.3s, transform 0.3s;
 
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-  }
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
 
-  .root:not(.root--icon-last) & {
-    margin-left: 0;
-  }
+    .root:not(.root--icon-last) & {
+        margin-left: 0;
+    }
 
-  &:first-child:last-child {
-    margin: 0;
-  }
+    &:first-child:last-child {
+        margin: 0;
+    }
 
-  .root--icon-last & {
-    order: 2;
-    margin-right: 0;
-  }
+    .root--icon-last & {
+        order: 2;
+        margin-right: 0;
+    }
 }
 
 .label {
-  @include v-button-default-css-vars($v-button-label, 'label');
+    @include v-button-default-css-vars($v-button-label, 'label');
 
-  .root--outlined.root--icon-last.root--has-icon & {
-    padding-right: rem(8);
-  }
+    .root--outlined.root--icon-last.root--has-icon & {
+        padding-right: rem(8);
+    }
 
-  .root--outlined:not(.root--icon-last):not(.root--has-icon) & {
-    padding-left: 0;
-  }
+    .root--outlined:not(.root--icon-last):not(.root--has-icon) & {
+        padding-left: 0;
+    }
 
-  .root:not(.root--outlined) &,
-  .root:not(.root--has-icon) & {
-    padding: 0;
-  }
+    .root:not(.root--outlined) &,
+    .root:not(.root--has-icon) & {
+        padding: 0;
+    }
 }
 </style>

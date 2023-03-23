@@ -19,5 +19,37 @@
       }
     },
     "SketchBook": {}
+  },
+  "slices": {
+    "ProjectPush": {
+      "default": {
+        "primary": {}
+      }
+    },
+    "SketchBook": {
+      "default": {
+        "primary": {}
+      }
+    },
+    "ContactBlock": {
+      "default": {
+        "primary": {}
+      }
+    },
+    "AboutBlock": {
+      "default": {
+        "primary": {}
+      }
+    },
+    "ProjectListingBlock": {
+      "default": {
+        "primary": {}
+      }
+    },
+    "ProjectPushBlock": {
+      "default": {
+        "primary": {}
+      }
+    }
   }
 }

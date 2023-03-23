@@ -7,7 +7,7 @@
     <lazy-v-project v-else-if="isProjectPage" :page-data="pageData" />
     <lazy-v-default v-else :page-data="pageData" />
 
-    <!--    <slice-zone :slices="slices" :components="components" />-->
+    <slice-zone :slices="slices" :components="components" />
   </div>
   <div v-else>
     <p>pageData not find</p>
@@ -28,8 +28,8 @@ export default mixins(Page).extend({
 
 <style lang="scss" module>
 .root {
-    position: relative;
-    overflow: hidden;
-    height: 100vh;
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
 }
 </style>

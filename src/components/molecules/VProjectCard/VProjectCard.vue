@@ -46,59 +46,59 @@ export default mixins(CarouselSlide).extend({
 
 <style lang="scss" module>
 .root {
-  position: relative;
+    position: relative;
 }
 
 .head {
-  min-height: rem(70);
-  margin-left: rem(10);
+    min-height: rem(70);
+    margin-left: rem(10);
 }
 
 .counter {
-  position: absolute;
-  top: rem(12);
-  right: rem(12);
+    position: absolute;
+    top: rem(12);
+    right: rem(12);
 }
 
 .current {
-  font-size: rem(14);
-  font-weight: 500;
+    font-size: rem(14);
+    font-weight: 500;
 }
 
 .length {
-  display: inline-block;
-  font-size: rem(10);
+    display: inline-block;
+    font-size: rem(10);
 
-  &::before {
-    position: relative;
-    content: '/';
-  }
+    &::before {
+        position: relative;
+        content: '/';
+    }
 }
 
 .body {
-  margin-top: rem(12);
-  opacity: 0.8;
+    margin-top: rem(12);
+    opacity: 0.8;
 }
 
 .title {
-  font-size: rem(16);
-  text-transform: uppercase;
+    font-size: rem(16);
+    text-transform: uppercase;
 }
 
 .year {
-  margin-top: rem(4);
+    margin-top: rem(4);
 }
 
 .image {
-  width: 100%;
-  min-height: 100%;
-  background-color: lightgrey;
-  object-fit: cover;
-
-  img {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+    background-color: lightgrey;
     object-fit: cover;
-  }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 }
 </style>

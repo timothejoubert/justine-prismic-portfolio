@@ -43,10 +43,10 @@
 }
 
 @mixin over-title-l {
-    font-size: 21px;
-    font-weight: 700;
+    font-size: rem(24);
+    font-weight: 300;
     line-height: 1;
-    text-transform: uppercase;
+    font-style: italic;
 }
 
 @mixin over-title-m {

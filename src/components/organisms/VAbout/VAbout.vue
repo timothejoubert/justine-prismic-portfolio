@@ -55,44 +55,44 @@ export default mixins(PageProvider, ProjectsMutation).extend({
 
 <style lang="scss" module>
 .root {
-  position: relative;
+    position: relative;
 }
 
 .tags {
-  position: fixed;
-  top: rem(40);
-  left: rem(-30);
-  transform: rotate(-4deg);
-  transform-origin: center;
+    position: fixed;
+    top: rem(40);
+    left: rem(-30);
+    transform: rotate(-4deg);
+    transform-origin: center;
 }
 
 .tagline {
-  margin-bottom: rem(30);
+    margin-bottom: rem(30);
 }
 
 .left {
-  max-width: rem(700);
-  margin-top: 35vh;
-  margin-left: 8vw;
+    max-width: rem(700);
+    margin-top: 35vh;
+    margin-left: 8vw;
 }
 
 .content {
-  margin-bottom: rem(60);
+    margin-bottom: rem(60);
 }
 
 .socials {
-  display: flex;
-  flex-wrap: wrap;
-  gap: rem(15);
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(15);
 }
 
 .image {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  width: 55%;
-  height: 100vh;
-  opacity: 0.1;
-  object-fit: cover;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 55%;
+    height: 100vh;
+    object-fit: cover;
+    opacity: 0.1;
 }
 </style>

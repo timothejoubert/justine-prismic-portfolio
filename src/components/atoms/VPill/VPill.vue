@@ -28,11 +28,11 @@ export default Vue.extend({
 
 <style lang="scss" module>
 .root {
-  display: inline-block;
-  min-width: rem(220);
-  padding: rem(14) rem(50);
-  background-color: var(--color-main-soft);
-  border-radius: rem(75);
-  color: var(--color-main);
+    display: inline-block;
+    min-width: rem(220);
+    padding: rem(14) rem(50);
+    background-color: var(--color-main-soft);
+    border-radius: rem(75);
+    color: var(--color-main);
 }
 </style>

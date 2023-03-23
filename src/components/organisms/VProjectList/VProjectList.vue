@@ -67,68 +67,68 @@ export default mixins(PageProvider, ProjectsMutation).extend({
 
 <style lang="scss" module>
 .root {
-  position: fixed;
-  width: 100%;
-  height: 100vh;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
 }
 
 .projects-placeholder,
 .list {
-  position: relative;
-  display: flex;
-  overflow: hidden;
-  min-width: 100%;
-  height: 100%;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    min-width: 100%;
+    height: 100%;
 }
 
 .projects-placeholder {
-  align-items: center;
+    align-items: center;
 }
 
 .root :global(.swiper-wrapper) {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .project {
-  width: max(300px, 25vw);
-  height: 50vh;
-  flex-shrink: 0;
+    width: max(300px, 25vw);
+    height: 50vh;
+    flex-shrink: 0;
 
-  .projects-placeholder & {
-    position: relative;
-    background-color: #f3f1eb;
+    .projects-placeholder & {
+        position: relative;
+        background-color: #f3f1eb;
 
-    &::after {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      animation: placeholder-waiting 1s infinite calc(-40ms * var(--placeholder-delay, 1)) ease(in-out-cubic);
-      background-image: linear-gradient(
+        &::after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: placeholder-waiting 1s infinite calc(-40ms * var(--placeholder-delay, 1)) ease(in-out-cubic);
+            background-image: linear-gradient(
         to top,
         transparent 0%,
         rgba(255, 255, 255, 0.8) 10%,
         rgba(255, 255, 255, 0.8) 20%,
         transparent 30%
       );
-      background-position: 0 0;
-      background-size: 100% 120%;
-      content: '';
+            background-position: 0 0;
+            background-size: 100% 120%;
+            content: '';
+        }
     }
-  }
 }
 
 .card {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
 }
 
 @keyframes placeholder-waiting {
-  100% {
-    background-position: 0 60vh;
-  }
+    100% {
+        background-position: 0 60vh;
+    }
 }
 </style>

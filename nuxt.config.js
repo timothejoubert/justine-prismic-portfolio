@@ -129,11 +129,10 @@ export default {
     modern: true,
     linkResolver: (doc) => {
       switch (doc.type) {
-        case 'page':
-          // return doc.uid === 'home' ? '/' : `/${doc.uid}`
-          return doc.uid === 'home-page' ? '/' : `/${doc.uid}`
         case 'project':
           return `/projects/${doc.uid}`
+        case 'page':
+          return doc.uid === 'home-page' ? '/' : `/${doc.uid}`
         default:
           return '/'
       }

@@ -19,6 +19,6 @@ export default Vue.extend({
 
 <style lang="scss" module>
 .root {
-  position: relative;
+    position: relative;
 }
 </style>

@@ -92,29 +92,6 @@ interface PageDocumentData {
      */
     thumbnail: prismicT.ImageField<never>;
     /**
-     * parent page field in *Page*
-     *
-     * - **Field Type**: Content Relationship
-     * - **Placeholder**: Lien vers la page parente
-     * - **API ID Path**: page.parent_page
-     * - **Tab**: Main
-     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
-     *
-     */
-    parent_page: prismicT.RelationField<"page">;
-    /**
-     * type field in *Page*
-     *
-     * - **Field Type**: Select
-     * - **Placeholder**: Définit l'apparence de la page
-     * - **Default Value**: Default
-     * - **API ID Path**: page.type
-     * - **Tab**: Main
-     * - **Documentation**: https://prismic.io/docs/core-concepts/select
-     *
-     */
-    type: prismicT.SelectField<"Default" | "Home" | "Sketchooks" | "Projects" | "Project" | "About", "filled">;
-    /**
      * Slice Zone field in *Page*
      *
      * - **Field Type**: Slice Zone
@@ -130,7 +107,7 @@ interface PageDocumentData {
  * Slice for *Page → Slice Zone*
  *
  */
-type PageDocumentDataSlicesSlice = LoadingImageSlice;
+type PageDocumentDataSlicesSlice = LoadingImageSlice | ContactBlockSlice | ProjectListingBlockSlice | AboutBlockSlice | ProjectPushSlice | SketchBookSlice;
 /**
  * Page document from Prismic
  *
@@ -228,16 +205,16 @@ export type ProjectDocument<Lang extends string = string> = prismicT.PrismicDocu
 /** Content for settings documents */
 interface SettingsDocumentData {
     /**
-     * Site Title field in *settings*
+     * Site Name field in *settings*
      *
-     * - **Field Type**: Title
-     * - **Placeholder**: Title of the site
-     * - **API ID Path**: settings.siteTitle
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: settings.site_name
      * - **Tab**: Main
-     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
      *
      */
-    siteTitle: prismicT.TitleField;
+    site_name: prismicT.KeyTextField;
     /**
      * Tagline field in *settings*
      *
@@ -321,12 +298,296 @@ export interface SettingsDocumentDataSocialsItem {
 export type SettingsDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<Simplify<SettingsDocumentData>, "settings", Lang>;
 export type AllDocumentTypes = MainMenuDocument | PageDocument | ProjectDocument | SettingsDocument;
 /**
- * Item in LoadingImage → Items
+ * Primary content in AboutBlock → Primary
+ *
+ */
+interface AboutBlockSliceDefaultPrimary {
+    /**
+     * Title field in *AboutBlock → Primary*
+     *
+     * - **Field Type**: Title
+     * - **Placeholder**: This is where it all begins...
+     * - **API ID Path**: about_block.primary.title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    title: prismicT.TitleField;
+    /**
+     * Content field in *AboutBlock → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: A nice description of you
+     * - **API ID Path**: about_block.primary.content
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    content: prismicT.RichTextField;
+    /**
+     * Media field in *AboutBlock → Primary*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: about_block.primary.media
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    media: prismicT.ImageField<never>;
+    /**
+     * Link field in *AboutBlock → Primary*
+     *
+     * - **Field Type**: Content Relationship
+     * - **Placeholder**: *None*
+     * - **API ID Path**: about_block.primary.link
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    link: prismicT.RelationField<"page">;
+}
+/**
+ * Default variation for AboutBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `AboutBlock`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type AboutBlockSliceDefault = prismicT.SharedSliceVariation<"default", Simplify<AboutBlockSliceDefaultPrimary>, never>;
+/**
+ * Slice variation for *AboutBlock*
+ *
+ */
+type AboutBlockSliceVariation = AboutBlockSliceDefault;
+/**
+ * AboutBlock Shared Slice
+ *
+ * - **API ID**: `about_block`
+ * - **Description**: `AboutBlock`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type AboutBlockSlice = prismicT.SharedSlice<"about_block", AboutBlockSliceVariation>;
+/**
+ * Primary content in ContactBlock → Primary
+ *
+ */
+interface ContactBlockSliceDefaultPrimary {
+    /**
+     * Title field in *ContactBlock → Primary*
+     *
+     * - **Field Type**: Title
+     * - **Placeholder**: This is where it all begins...
+     * - **API ID Path**: contact_block.primary.title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    title: prismicT.TitleField;
+    /**
+     * Description field in *ContactBlock → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: Disponible actuellement pour...
+     * - **API ID Path**: contact_block.primary.description
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    description: prismicT.RichTextField;
+    /**
+     * Contact field in *ContactBlock → Primary*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: contact_block.primary.contact
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    contact: prismicT.KeyTextField;
+    /**
+     * Display socials field in *ContactBlock → Primary*
+     *
+     * - **Field Type**: Boolean
+     * - **Placeholder**: *None*
+     * - **Default Value**: false
+     * - **API ID Path**: contact_block.primary.display_socials
+     * - **Documentation**: https://prismic.io/docs/core-concepts/boolean
+     *
+     */
+    display_socials: prismicT.BooleanField;
+}
+/**
+ * Default variation for ContactBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `ContactBlock`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ContactBlockSliceDefault = prismicT.SharedSliceVariation<"default", Simplify<ContactBlockSliceDefaultPrimary>, never>;
+/**
+ * Slice variation for *ContactBlock*
+ *
+ */
+type ContactBlockSliceVariation = ContactBlockSliceDefault;
+/**
+ * ContactBlock Shared Slice
+ *
+ * - **API ID**: `contact_block`
+ * - **Description**: `ContactBlock`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ContactBlockSlice = prismicT.SharedSlice<"contact_block", ContactBlockSliceVariation>;
+/**
+ * Primary content in ProjectListingBlock → Primary
+ *
+ */
+interface ProjectListingBlockSliceDefaultPrimary {
+    /**
+     * Title field in *ProjectListingBlock → Primary*
+     *
+     * - **Field Type**: Title
+     * - **Placeholder**: This is where it all begins...
+     * - **API ID Path**: project_listing_block.primary.title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    title: prismicT.TitleField;
+    /**
+     * Description field in *ProjectListingBlock → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: A nice description of your product
+     * - **API ID Path**: project_listing_block.primary.description
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    description: prismicT.RichTextField;
+    /**
+     * Display all projects field in *ProjectListingBlock → Primary*
+     *
+     * - **Field Type**: Boolean
+     * - **Placeholder**: *None*
+     * - **Default Value**: false
+     * - **API ID Path**: project_listing_block.primary.display_all_projects
+     * - **Documentation**: https://prismic.io/docs/core-concepts/boolean
+     *
+     */
+    display_all_projects: prismicT.BooleanField;
+}
+/**
+ * Item in ProjectListingBlock → Items
+ *
+ */
+export interface ProjectListingBlockSliceDefaultItem {
+    /**
+     * project field in *ProjectListingBlock → Items*
+     *
+     * - **Field Type**: Content Relationship
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project_listing_block.items[].project
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    project: prismicT.RelationField;
+}
+/**
+ * Default variation for ProjectListingBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `ProjectListingBlock`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ProjectListingBlockSliceDefault = prismicT.SharedSliceVariation<"default", Simplify<ProjectListingBlockSliceDefaultPrimary>, Simplify<ProjectListingBlockSliceDefaultItem>>;
+/**
+ * Slice variation for *ProjectListingBlock*
+ *
+ */
+type ProjectListingBlockSliceVariation = ProjectListingBlockSliceDefault;
+/**
+ * ProjectListingBlock Shared Slice
+ *
+ * - **API ID**: `project_listing_block`
+ * - **Description**: `ProjectListingBlock`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ProjectListingBlockSlice = prismicT.SharedSlice<"project_listing_block", ProjectListingBlockSliceVariation>;
+/**
+ * Primary content in ProjectPushBlock → Primary
+ *
+ */
+interface ProjectPushSliceDefaultPrimary {
+    /**
+     * Title field in *ProjectPushBlock → Primary*
+     *
+     * - **Field Type**: Title
+     * - **Placeholder**: This is where it all begins...
+     * - **API ID Path**: project_push.primary.title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    title: prismicT.TitleField;
+    /**
+     * Description field in *ProjectPushBlock → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: A nice description of your product
+     * - **API ID Path**: project_push.primary.description
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    description: prismicT.RichTextField;
+    /**
+     * Project field in *ProjectPushBlock → Primary*
+     *
+     * - **Field Type**: Content Relationship
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project_push.primary.project
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    project: prismicT.RelationField<"project" | "page">;
+    /**
+     * Cta label field in *ProjectPushBlock → Primary*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: Voir mon projet
+     * - **API ID Path**: project_push.primary.cta_label
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    cta_label: prismicT.KeyTextField;
+}
+/**
+ * Default variation for ProjectPushBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: `ProjectPush`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ProjectPushSliceDefault = prismicT.SharedSliceVariation<"default", Simplify<ProjectPushSliceDefaultPrimary>, never>;
+/**
+ * Slice variation for *ProjectPushBlock*
+ *
+ */
+type ProjectPushSliceVariation = ProjectPushSliceDefault;
+/**
+ * ProjectPushBlock Shared Slice
+ *
+ * - **API ID**: `project_push`
+ * - **Description**: `ProjectPush`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ProjectPushSlice = prismicT.SharedSlice<"project_push", ProjectPushSliceVariation>;
+/**
+ * Item in RandomGridImageBlock → Items
  *
  */
 export interface LoadingImageSliceDefaultItem {
     /**
-     * Media field in *LoadingImage → Items*
+     * Media field in *RandomGridImageBlock → Items*
      *
      * - **Field Type**: Link to Media
      * - **Placeholder**: *None*
@@ -337,7 +598,7 @@ export interface LoadingImageSliceDefaultItem {
     media: prismicT.LinkToMediaField;
 }
 /**
- * Default variation for LoadingImage Slice
+ * Default variation for RandomGridImageBlock Slice
  *
  * - **API ID**: `default`
  * - **Description**: `LoadingImage`
@@ -346,12 +607,12 @@ export interface LoadingImageSliceDefaultItem {
  */
 export type LoadingImageSliceDefault = prismicT.SharedSliceVariation<"default", Record<string, never>, Simplify<LoadingImageSliceDefaultItem>>;
 /**
- * Slice variation for *LoadingImage*
+ * Slice variation for *RandomGridImageBlock*
  *
  */
 type LoadingImageSliceVariation = LoadingImageSliceDefault;
 /**
- * LoadingImage Shared Slice
+ * RandomGridImageBlock Shared Slice
  *
  * - **API ID**: `loading_image`
  * - **Description**: `LoadingImage`
@@ -360,47 +621,47 @@ type LoadingImageSliceVariation = LoadingImageSliceDefault;
  */
 export type LoadingImageSlice = prismicT.SharedSlice<"loading_image", LoadingImageSliceVariation>;
 /**
- * Primary content in SketchBook → Primary
+ * Item in SketchBookBlock → Items
  *
  */
-interface SketchBookSliceDefaultPrimary {
+export interface SketchBookSliceDefaultItem {
     /**
-     * Title field in *SketchBook → Primary*
+     * Media field in *SketchBookBlock → Items*
      *
-     * - **Field Type**: Title
-     * - **Placeholder**: This is where it all begins...
-     * - **API ID Path**: sketch_book.primary.title
-     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: sketch_book.items[].media
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
      *
      */
-    title: prismicT.TitleField;
+    media: prismicT.ImageField<never>;
     /**
-     * Description field in *SketchBook → Primary*
+     * Name field in *SketchBookBlock → Items*
      *
-     * - **Field Type**: Rich Text
-     * - **Placeholder**: A nice description of your product
-     * - **API ID Path**: sketch_book.primary.description
-     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: sketch_book.items[].name
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
      *
      */
-    description: prismicT.RichTextField;
+    name: prismicT.KeyTextField;
 }
 /**
- * Default variation for SketchBook Slice
+ * Default variation for SketchBookBlock Slice
  *
  * - **API ID**: `default`
  * - **Description**: `SketchBook`
  * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
  *
  */
-export type SketchBookSliceDefault = prismicT.SharedSliceVariation<"default", Simplify<SketchBookSliceDefaultPrimary>, never>;
+export type SketchBookSliceDefault = prismicT.SharedSliceVariation<"default", Record<string, never>, Simplify<SketchBookSliceDefaultItem>>;
 /**
- * Slice variation for *SketchBook*
+ * Slice variation for *SketchBookBlock*
  *
  */
 type SketchBookSliceVariation = SketchBookSliceDefault;
 /**
- * SketchBook Shared Slice
+ * SketchBookBlock Shared Slice
  *
  * - **API ID**: `sketch_book`
  * - **Description**: `SketchBook`
@@ -408,60 +669,11 @@ type SketchBookSliceVariation = SketchBookSliceDefault;
  *
  */
 export type SketchBookSlice = prismicT.SharedSlice<"sketch_book", SketchBookSliceVariation>;
-/**
- * Item in Socials → Items
- *
- */
-export interface SocialsSliceDefaultItem {
-    /**
-     * Name field in *Socials → Items*
-     *
-     * - **Field Type**: Text
-     * - **Placeholder**: *None*
-     * - **API ID Path**: socials.items[].name
-     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
-     *
-     */
-    name: prismicT.KeyTextField;
-    /**
-     * Link field in *Socials → Items*
-     *
-     * - **Field Type**: Link
-     * - **Placeholder**: *None*
-     * - **API ID Path**: socials.items[].link
-     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
-     *
-     */
-    link: prismicT.LinkField;
-}
-/**
- * Default variation for Socials Slice
- *
- * - **API ID**: `default`
- * - **Description**: `Socials`
- * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
- *
- */
-export type SocialsSliceDefault = prismicT.SharedSliceVariation<"default", Record<string, never>, Simplify<SocialsSliceDefaultItem>>;
-/**
- * Slice variation for *Socials*
- *
- */
-type SocialsSliceVariation = SocialsSliceDefault;
-/**
- * Socials Shared Slice
- *
- * - **API ID**: `socials`
- * - **Description**: `Socials`
- * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
- *
- */
-export type SocialsSlice = prismicT.SharedSlice<"socials", SocialsSliceVariation>;
 declare module "@prismicio/client" {
     interface CreateClient {
         (repositoryNameOrEndpoint: string, options?: prismic.ClientConfig): prismic.Client<AllDocumentTypes>;
     }
     namespace Content {
-        export type { MainMenuDocumentData, MainMenuDocumentDataLinksItem, MainMenuDocument, PageDocumentData, PageDocumentDataSlicesSlice, PageDocument, ProjectDocumentData, ProjectDocumentDataTagsItem, ProjectDocument, SettingsDocumentData, SettingsDocumentDataSocialsItem, SettingsDocument, AllDocumentTypes, LoadingImageSliceDefaultItem, LoadingImageSliceDefault, LoadingImageSliceVariation, LoadingImageSlice, SketchBookSliceDefaultPrimary, SketchBookSliceDefault, SketchBookSliceVariation, SketchBookSlice, SocialsSliceDefaultItem, SocialsSliceDefault, SocialsSliceVariation, SocialsSlice };
+        export type { MainMenuDocumentData, MainMenuDocumentDataLinksItem, MainMenuDocument, PageDocumentData, PageDocumentDataSlicesSlice, PageDocument, ProjectDocumentData, ProjectDocumentDataTagsItem, ProjectDocument, SettingsDocumentData, SettingsDocumentDataSocialsItem, SettingsDocument, AllDocumentTypes, AboutBlockSliceDefaultPrimary, AboutBlockSliceDefault, AboutBlockSliceVariation, AboutBlockSlice, ContactBlockSliceDefaultPrimary, ContactBlockSliceDefault, ContactBlockSliceVariation, ContactBlockSlice, ProjectListingBlockSliceDefaultPrimary, ProjectListingBlockSliceDefaultItem, ProjectListingBlockSliceDefault, ProjectListingBlockSliceVariation, ProjectListingBlockSlice, ProjectPushSliceDefaultPrimary, ProjectPushSliceDefault, ProjectPushSliceVariation, ProjectPushSlice, LoadingImageSliceDefaultItem, LoadingImageSliceDefault, LoadingImageSliceVariation, LoadingImageSlice, SketchBookSliceDefaultItem, SketchBookSliceDefault, SketchBookSliceVariation, SketchBookSlice };
     }
 }
