@@ -60,7 +60,6 @@ export default Vue.extend({
   },
   computed: {
     pageData(): MainPageData {
-      console.log('pageData: ', this.page)
       return this.page?.data
     },
     appTitle(): string {

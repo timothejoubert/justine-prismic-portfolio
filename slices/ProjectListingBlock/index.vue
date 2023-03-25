@@ -6,20 +6,20 @@
 </template>
 
 <script>
-import { getSliceComponentProps } from "@prismicio/vue/components";
+import { getSliceComponentProps } from '@prismicio/vue/components'
 
 export default {
-  name: "ProjectListingBlock",
+  name: 'ProjectListingBlock',
   // The array passed to `getSliceComponentProps` is purely optional and acts as a visual hint for you
-  props: getSliceComponentProps(["slice", "index", "slices", "context"]),
+  props: getSliceComponentProps(['slice', 'index', 'slices', 'context']),
 }
 </script>
 
 <style scoped>
 .section {
+  padding: 4em;
   background: #f7f7f7;
   color: #111;
-  padding: 4em;
   text-align: center;
 }
 .title {

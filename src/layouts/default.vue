@@ -7,7 +7,7 @@
     <!--    </template>-->
 
     <nuxt-link to="/" :class="$style.title">
-      <h1 class="text-h4">{{ siteName }}</h1>
+      <h1 :class="$style.logo">{{ siteName }}</h1>
     </nuxt-link>
 
     <v-nav :class="$style.nav" />
@@ -66,9 +66,14 @@ export default mixins(Resize, SplashScreen).extend({
   z-index: 101;
   top: rem(40);
   left: 50%;
+  transform: translateX(-50%);
+}
+
+.logo {
+  font-size: rem(22);
   color: color(orange);
   font-family: $dida;
-  transform: translateX(-50%);
+  font-weight: 300;
 }
 
 .texture {

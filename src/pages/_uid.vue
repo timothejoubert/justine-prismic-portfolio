@@ -7,7 +7,7 @@
     <lazy-v-project v-else-if="isProjectPage" :page-data="pageData" />
     <lazy-v-default v-else :page-data="pageData" />
 
-    <slice-zone :slices="slices" :components="components" />
+    <slice-zone v-if="slices" wrapper="main" :slices="slices" :components="components" :class="$style.main" />
   </div>
   <div v-else>
     <p>pageData not find</p>
@@ -16,6 +16,7 @@
 
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
+// import SliceZone from '@prismicio/vue/dist/prismic-vue'
 import { components } from '~/../slices'
 import Page from '~/mixins/Page'
 
@@ -30,6 +31,14 @@ export default mixins(Page).extend({
 .root {
   position: relative;
   overflow: hidden;
-  height: 100vh;
+  min-height: 100vh;
+}
+
+.main {
+  @include full-width();
+
+  & > * {
+    margin-block: rem(200);
+  }
 }
 </style>

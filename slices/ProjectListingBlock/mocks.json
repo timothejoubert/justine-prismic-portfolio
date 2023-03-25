@@ -47,5 +47,54 @@
         ]
       }
     ]
+  },
+  {
+    "__TYPE__": "SharedSliceContent",
+    "variation": "layoutGrid",
+    "primary": {
+      "title": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "heading2",
+            "content": {
+              "text": "Never"
+            }
+          }
+        ]
+      },
+      "description": {
+        "__TYPE__": "StructuredTextContent",
+        "value": [
+          {
+            "type": "paragraph",
+            "content": {
+              "text": "Ad deserunt adipisicing aute sint excepteur sit aliqua commodo adipisicing culpa nulla nulla cupidatat anim deserunt."
+            }
+          }
+        ]
+      },
+      "display_all_projects": {
+        "__TYPE__": "BooleanContent",
+        "value": false
+      }
+    },
+    "items": [
+      {
+        "__TYPE__": "GroupItemContent",
+        "value": [
+          [
+            "project",
+            {
+              "__TYPE__": "LinkContent",
+              "value": {
+                "__TYPE__": "DocumentLink",
+                "id": "mock_document_id"
+              }
+            }
+          ]
+        ]
+      }
+    ]
   }
 ]

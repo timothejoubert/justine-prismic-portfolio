@@ -305,13 +305,13 @@ interface AboutBlockSliceDefaultPrimary {
     /**
      * Title field in *AboutBlock → Primary*
      *
-     * - **Field Type**: Title
-     * - **Placeholder**: This is where it all begins...
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
      * - **API ID Path**: about_block.primary.title
-     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
      *
      */
-    title: prismicT.TitleField;
+    title: prismicT.KeyTextField;
     /**
      * Content field in *AboutBlock → Primary*
      *
@@ -499,10 +499,72 @@ export interface ProjectListingBlockSliceDefaultItem {
  */
 export type ProjectListingBlockSliceDefault = prismicT.SharedSliceVariation<"default", Simplify<ProjectListingBlockSliceDefaultPrimary>, Simplify<ProjectListingBlockSliceDefaultItem>>;
 /**
+ * Primary content in ProjectListingBlock → Primary
+ *
+ */
+interface ProjectListingBlockSliceLayoutGridPrimary {
+    /**
+     * Title field in *ProjectListingBlock → Primary*
+     *
+     * - **Field Type**: Title
+     * - **Placeholder**: This is where it all begins...
+     * - **API ID Path**: project_listing_block.primary.title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    title: prismicT.TitleField;
+    /**
+     * Description field in *ProjectListingBlock → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: A nice description of your product
+     * - **API ID Path**: project_listing_block.primary.description
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    description: prismicT.RichTextField;
+    /**
+     * Display all projects field in *ProjectListingBlock → Primary*
+     *
+     * - **Field Type**: Boolean
+     * - **Placeholder**: *None*
+     * - **Default Value**: false
+     * - **API ID Path**: project_listing_block.primary.display_all_projects
+     * - **Documentation**: https://prismic.io/docs/core-concepts/boolean
+     *
+     */
+    display_all_projects: prismicT.BooleanField;
+}
+/**
+ * Item in ProjectListingBlock → Items
+ *
+ */
+export interface ProjectListingBlockSliceLayoutGridItem {
+    /**
+     * project field in *ProjectListingBlock → Items*
+     *
+     * - **Field Type**: Content Relationship
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project_listing_block.items[].project
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    project: prismicT.RelationField;
+}
+/**
+ * Layout grid variation for ProjectListingBlock Slice
+ *
+ * - **API ID**: `layoutGrid`
+ * - **Description**: `ProjectListingBlock`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ProjectListingBlockSliceLayoutGrid = prismicT.SharedSliceVariation<"layoutGrid", Simplify<ProjectListingBlockSliceLayoutGridPrimary>, Simplify<ProjectListingBlockSliceLayoutGridItem>>;
+/**
  * Slice variation for *ProjectListingBlock*
  *
  */
-type ProjectListingBlockSliceVariation = ProjectListingBlockSliceDefault;
+type ProjectListingBlockSliceVariation = ProjectListingBlockSliceDefault | ProjectListingBlockSliceLayoutGrid;
 /**
  * ProjectListingBlock Shared Slice
  *
@@ -520,13 +582,13 @@ interface ProjectPushSliceDefaultPrimary {
     /**
      * Title field in *ProjectPushBlock → Primary*
      *
-     * - **Field Type**: Title
-     * - **Placeholder**: This is where it all begins...
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
      * - **API ID Path**: project_push.primary.title
-     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
      *
      */
-    title: prismicT.TitleField;
+    title: prismicT.KeyTextField;
     /**
      * Description field in *ProjectPushBlock → Primary*
      *
@@ -587,15 +649,15 @@ export type ProjectPushSlice = prismicT.SharedSlice<"project_push", ProjectPushS
  */
 export interface LoadingImageSliceDefaultItem {
     /**
-     * Media field in *RandomGridImageBlock → Items*
+     * Image field in *RandomGridImageBlock → Items*
      *
-     * - **Field Type**: Link to Media
+     * - **Field Type**: Image
      * - **Placeholder**: *None*
-     * - **API ID Path**: loading_image.items[].media
-     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     * - **API ID Path**: loading_image.items[].image
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
      *
      */
-    media: prismicT.LinkToMediaField;
+    image: prismicT.ImageField<never>;
 }
 /**
  * Default variation for RandomGridImageBlock Slice
@@ -674,6 +736,6 @@ declare module "@prismicio/client" {
         (repositoryNameOrEndpoint: string, options?: prismic.ClientConfig): prismic.Client<AllDocumentTypes>;
     }
     namespace Content {
-        export type { MainMenuDocumentData, MainMenuDocumentDataLinksItem, MainMenuDocument, PageDocumentData, PageDocumentDataSlicesSlice, PageDocument, ProjectDocumentData, ProjectDocumentDataTagsItem, ProjectDocument, SettingsDocumentData, SettingsDocumentDataSocialsItem, SettingsDocument, AllDocumentTypes, AboutBlockSliceDefaultPrimary, AboutBlockSliceDefault, AboutBlockSliceVariation, AboutBlockSlice, ContactBlockSliceDefaultPrimary, ContactBlockSliceDefault, ContactBlockSliceVariation, ContactBlockSlice, ProjectListingBlockSliceDefaultPrimary, ProjectListingBlockSliceDefaultItem, ProjectListingBlockSliceDefault, ProjectListingBlockSliceVariation, ProjectListingBlockSlice, ProjectPushSliceDefaultPrimary, ProjectPushSliceDefault, ProjectPushSliceVariation, ProjectPushSlice, LoadingImageSliceDefaultItem, LoadingImageSliceDefault, LoadingImageSliceVariation, LoadingImageSlice, SketchBookSliceDefaultItem, SketchBookSliceDefault, SketchBookSliceVariation, SketchBookSlice };
+        export type { MainMenuDocumentData, MainMenuDocumentDataLinksItem, MainMenuDocument, PageDocumentData, PageDocumentDataSlicesSlice, PageDocument, ProjectDocumentData, ProjectDocumentDataTagsItem, ProjectDocument, SettingsDocumentData, SettingsDocumentDataSocialsItem, SettingsDocument, AllDocumentTypes, AboutBlockSliceDefaultPrimary, AboutBlockSliceDefault, AboutBlockSliceVariation, AboutBlockSlice, ContactBlockSliceDefaultPrimary, ContactBlockSliceDefault, ContactBlockSliceVariation, ContactBlockSlice, ProjectListingBlockSliceDefaultPrimary, ProjectListingBlockSliceDefaultItem, ProjectListingBlockSliceDefault, ProjectListingBlockSliceLayoutGridPrimary, ProjectListingBlockSliceLayoutGridItem, ProjectListingBlockSliceLayoutGrid, ProjectListingBlockSliceVariation, ProjectListingBlockSlice, ProjectPushSliceDefaultPrimary, ProjectPushSliceDefault, ProjectPushSliceVariation, ProjectPushSlice, LoadingImageSliceDefaultItem, LoadingImageSliceDefault, LoadingImageSliceVariation, LoadingImageSlice, SketchBookSliceDefaultItem, SketchBookSliceDefault, SketchBookSliceVariation, SketchBookSlice };
     }
 }

@@ -12,12 +12,12 @@
       "description": "LoadingImage",
       "primary": {},
       "items": {
-        "media": {
-          "type": "Link",
+        "image": {
+          "type": "Image",
           "config": {
-            "label": "Media",
-            "placeholder": "",
-            "select": "media"
+            "label": "Image",
+            "constraint": {},
+            "thumbnails": []
           }
         }
       },

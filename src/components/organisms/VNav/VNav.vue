@@ -83,7 +83,7 @@ export default mixins(ThemeProvider).extend({
       this.openMenu()
     },
     closeMenu() {
-      this.isMenuOpen = false
+      // this.isMenuOpen = false
     },
     openMenu() {
       window.clearTimeout(this.timeoutId)
@@ -144,122 +144,123 @@ export default mixins(ThemeProvider).extend({
 $height: rem(34);
 
 .root {
-    @include theme-variants;
+  @include theme-variants;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .menu {
-    position: absolute;
-    top: 0;
-    margin-bottom: rem(12);
-    transform: translateY(calc(-100% - 8px));
+  position: absolute;
+  top: 0;
+  margin-bottom: rem(12);
+  transform: translateY(calc(-100% - 8px));
 }
 
 .list {
-    display: inline-flex;
-    padding: rem(4);
-    border: 1px solid var(--theme-default);
-    border-radius: $height;
+  display: inline-flex;
+  padding: rem(4);
+  border: 1px solid var(--theme-default);
+  border-radius: $height;
 
-    &::before {
-        position: absolute;
-        background-color: color(light);
-        border-radius: $height;
-        content: '';
-        inset: rem(4);
-    }
+  &::before {
+    position: absolute;
+    background-color: color(light);
+    border-radius: $height;
+    content: '';
+    inset: rem(4);
+  }
 }
 
 .item {
-    position: relative;
-    z-index: 2;
-    color: var(--theme-on-default);
-    white-space: nowrap;
+  position: relative;
+  z-index: 2;
+  color: var(--theme-on-default);
+  white-space: nowrap;
 }
 
 .item__link {
-    display: flex;
-    min-width: rem(68);
-    min-height: $height;
-    align-items: center;
-    justify-content: center;
-    padding-inline: rem(22);
+  display: flex;
+  min-width: rem(68);
+  min-height: $height;
+  align-items: center;
+  justify-content: center;
+  padding-inline: rem(22);
+  font-size: rem(12);
 }
 
 .slider {
-    position: absolute;
-    z-index: 1;
-    background: var(--theme-default);
-    border-radius: $height;
-    inset: rem(4);
-    pointer-events: none;
-    transform-origin: center;
-    user-select: none;
+  position: absolute;
+  z-index: 1;
+  background: var(--theme-default);
+  border-radius: $height;
+  inset: rem(4);
+  pointer-events: none;
+  transform-origin: center;
+  user-select: none;
 }
 
 .button {
-    text-transform: uppercase;
-    user-select: none;
+  text-transform: uppercase;
+  user-select: none;
 }
 
 .burger {
-    position: relative;
-    display: flex;
-    width: rem(12);
+  position: relative;
+  display: flex;
+  width: rem(12);
+  height: 1px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--theme-on-default);
+  transition: background-color 0.2s;
+
+  &::after,
+  &::before {
+    position: absolute;
+    display: block;
+    width: 100%;
     height: 1px;
-    align-items: center;
-    justify-content: space-between;
     background-color: var(--theme-on-default);
-    transition: background-color 0.2s;
+    content: '';
+    transform-origin: center;
+    transition: transform 0.3s;
+  }
 
-    &::after,
+  &::before {
+    width: 80%;
+    transform: translateY(4px);
+  }
+
+  &::after {
+    transform: translateY(-4px);
+  }
+
+  .root--open & {
+    background-color: transparent;
+
     &::before {
-        position: absolute;
-        display: block;
-        width: 100%;
-        height: 1px;
-        background-color: var(--theme-on-default);
-        content: '';
-        transform-origin: center;
-        transition: transform 0.3s;
+      width: 100%;
+      transform: rotate(-45deg);
     }
-
-    &::before {
-        width: 80%;
-        transform: translateY(4px);
-    }
-
     &::after {
-        transform: translateY(-4px);
+      transform: rotate(45deg);
     }
-
-    .root--open & {
-        background-color: transparent;
-
-        &::before {
-            width: 100%;
-            transform: rotate(-45deg);
-        }
-        &::after {
-            transform: rotate(45deg);
-        }
-    }
+  }
 }
 
 .menu:global(#{'-enter-active'}),
 .menu:global(#{'-leave-active'}) {
-    transition: 0.4s;
-    transition-property: opacity, transform;
+  transition: 0.4s;
+  transition-property: opacity, transform;
 }
 
 .menu:global(#{'-enter'}),
 .menu:global(#{'-leave-to'}) {
-    opacity: 0;
-    transform: translateY(-150%);
+  opacity: 0;
+  transform: translateY(-150%);
 }
 </style>

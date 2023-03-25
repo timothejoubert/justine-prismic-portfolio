@@ -3,6 +3,8 @@ import SpriteLoaderPlugin from 'svg-sprite-loader/plugin'
 import sm from './sm.json'
 import { version } from './package.json'
 import createSitemap from './src/utils/create-sitemap'
+import linkResolver from './src/utils/prismic/link-resolver'
+import htmlSerializer from './src/utils/prismic/html-serializer'
 // import { prismicHtmlSerializer } from './src/utils/prismic-html-serializer'
 // import { Configuration as WebpackConfiguration } from 'webpack'
 
@@ -125,67 +127,11 @@ export default {
 
   prismic: {
     preview: '/preview',
+    components: true,
     endpoint: sm.apiEndpoint,
     modern: true,
-    linkResolver: (doc) => {
-      switch (doc.type) {
-        case 'project':
-          return `/projects/${doc.uid}`
-        case 'page':
-          return doc.uid === 'home-page' ? '/' : `/${doc.uid}`
-        default:
-          return '/'
-      }
-    },
-    htmlSerializer(type, element, _content, children) {
-      switch (type) {
-        case 'heading1':
-          return /* html */ `<h1 class="font-semibold leading-tight tracking-tight md:leading-tight text-4xl md:text-5xl mb-7 mt-12 first:mt-0 last:mb-0">${children.join(
-            ''
-          )}</h1>`
-
-        case 'heading2':
-          return /* html */ `<h2 class="font-semibold leading-tight tracking-tight md:leading-tight text-3xl md:text-4xl mb-7 mt-12 first:mt-0 last:mb-0">${children.join(
-            ''
-          )}</h2>`
-
-        case 'heading3':
-          return /* html */ `<h3 class="font-semibold leading-tight tracking-tight md:leading-tight text-xl md:text-2xl mb-7 mt-12 first:mt-0 last:mb-0">${children.join(
-            ''
-          )}</h3>`
-
-        case 'paragraph':
-          return /* html */ `<p class="mb-7 last:mb-0">${children.join('')}</p>`
-
-        case 'group-o-list-item':
-          return /* html */ `<ol class="mb-7 pl-4 last:mb-0 md:pl-6">${children.join('')}</ol>`
-
-        case 'o-list-item':
-          return /* html */ `<li class="mb-1 list-decimal pl-1 last:mb-0 md:pl-2">${children.join('')}</li>`
-
-        case 'group-list-item':
-          return /* html */ `<ul class="mb-7 pl-4 last:mb-0 md:pl-6">${children.join('')}</ul>`
-
-        case 'list-item':
-          return /* html */ `<li class="mb-1 list-disc pl-1 last:mb-0 md:pl-2">${children.join('')}</li>`
-
-        case 'preformatted':
-          return /* html */ `<pre class="mb-7 rounded bg-slate-100 p-4 text-sm last:mb-0 md:p-8 md:text-lg">
-                <code>${children.join('')}</code>
-            </pre>`
-
-        case 'strong':
-          return /* html */ `<strong class="font-semibold">${children.join('')}</strong>`
-
-        case 'hyperlink':
-          return /* html */ `<a href="${
-            element.data.url
-          }" class="underline decoration-1 underline-offset-2">${children.join('')}</a>`
-
-        default:
-          return null
-      }
-    },
+    linkResolver,
+    htmlSerializer,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -213,7 +159,7 @@ export default {
     // fix broken styles during live editing into dev tools https://github.com/vuejs-templates/webpack/issues/1331
     cssSourceMap: false,
 
-    transpile: ['@prismicio/vue', 'gsap'],
+    transpile: ['@prismicio/vue', 'gsap', 'vue-slicezone'],
     // load files with mjs extension
     // https://github.com/vuejs/pinia/issues/675#issuecomment-945602370
     // extend(config: WebpackConfiguration) {

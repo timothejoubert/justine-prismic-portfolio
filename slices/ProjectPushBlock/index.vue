@@ -1,10 +1,10 @@
 <template>
   <section :class="$style.root">
     <v-link :url="internalLink">
-      <PrismicImage v-if="image" :field="image" :class="$style.image" />
+      <prismic-image v-if="image" :field="image" :class="$style.image" />
       <div :class="$style.content">
-        <PrismicRichText v-if="title" :field="slice.primary.title" :class="$style.title" class="text-h4" />
-        <PrismicRichText v-if="description" :field="slice.primary.description" class="over-title-l" />
+        <div v-if="title" :class="$style.title" class="text-h4">{{ title }}</div>
+        <prismic-rich-text v-if="description" :field="slice.primary.description" class="over-title-l" />
         <v-button :class="$style.cta" :label="linkLabel" theme="orange" size="l" filled />
       </div>
     </v-link>
@@ -20,7 +20,7 @@ import { isProjectDocument } from '~/utils/prismic/entity'
 import NodeUid from '~/constants/node-uid'
 
 export default Vue.extend({
-  name: 'ProjectPush',
+  name: 'ProjectPushBlock',
   // The array passed to `getSliceComponentProps` is purely optional and acts as a visual hint for you
   props: getSliceComponentProps(['slice', 'index', 'slices', 'context']),
   data() {
@@ -58,8 +58,6 @@ export default Vue.extend({
 
 <style lang="scss" module>
 .root {
-  @include full-width();
-
   position: relative;
   overflow: hidden;
   height: calc(100vh - #{layout(padding) * 2});

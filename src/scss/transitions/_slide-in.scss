@@ -1,0 +1,12 @@
+.slide-in-enter-active,
+.slide-in-leave-active {
+    transition-property: opacity, transform;
+    transition-duration: 0.5s;
+    transition-timing-function: ease(out-quad);
+}
+
+.slide-in-enter,
+.slide-in-leave-to {
+    transform: translateY(40px);
+    opacity: 0;
+}

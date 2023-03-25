@@ -11,9 +11,11 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 
 ### TODO
+* **(Setup)** Add storybook ? 
 * **(Setup)** Prettier vs EsLint conflict
 * **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_
-* **(Slice)**: CarouselMedia | RandomGridImage |
+* **(Slice)**: CarouselMedia | RandomGridImage | *ProjectListing (layout: carousel || grid)*
+* **(VLink && VButton)**: add PrismicLink && PrismicDocument
 
 
 #### DONE

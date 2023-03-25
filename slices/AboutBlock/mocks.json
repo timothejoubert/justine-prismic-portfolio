@@ -4,15 +4,9 @@
     "variation": "default",
     "primary": {
       "title": {
-        "__TYPE__": "StructuredTextContent",
-        "value": [
-          {
-            "type": "heading1",
-            "content": {
-              "text": "Exclaimed"
-            }
-          }
-        ]
+        "__TYPE__": "FieldContent",
+        "value": "beside",
+        "type": "Text"
       },
       "content": {
         "__TYPE__": "StructuredTextContent",
@@ -26,7 +20,6 @@
         ]
       },
       "media": {
-        "__TYPE__": "ImageContent",
         "origin": {
           "id": "main",
           "url": "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2",
@@ -44,6 +37,9 @@
           },
           "background": "transparent"
         },
+        "credits": null,
+        "alt": null,
+        "__TYPE__": "ImageContent",
         "thumbnails": {}
       },
       "link": {

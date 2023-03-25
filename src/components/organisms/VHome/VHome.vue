@@ -1,6 +1,5 @@
 <template>
   <div :class="rootClass">
-    <h1 v-if="pageData && pageData.title">{{ pageData.title }}</h1>
     <!--        <v-random-grid-images />-->
   </div>
 </template>
@@ -26,6 +25,6 @@ export default mixins(PageProvider).extend({
 
 <style lang="scss" module>
 .root {
-    position: relative;
+  position: relative;
 }
 </style>
