@@ -4,10 +4,10 @@ import type { PropType, VNode, VNodeData } from 'vue'
 import type { PrismicDocument } from '@prismicio/types'
 import { ContentRelationshipField } from '@prismicio/types/src/value/contentRelationship'
 import type { Document } from '@prismicio/client/types/documents'
-import { BasicDocumentData } from '~/types/prismic/app-prismic'
-import { hasType, hasUid, isInternalLinkFulled, isPrismicDocument } from '~/types/prismic/prismic-guard'
+import { hasUid, isPrismicDocument } from '~/types/prismic/prismic-guard'
 import { isProjectDocument } from '~/utils/prismic/entity'
 import NodeUid from '~/constants/node-uid'
+import { isInternalRelationLinkWithUidFulled } from '~/utils/prismic/fields'
 
 type CustomVNodeData = VNodeData & Required<Pick<VNodeData, 'props' | 'attrs'>>
 
@@ -24,12 +24,12 @@ export default Vue.extend({
             default: undefined,
         },
         href: String,
-        to: Object as PropType<PrismicDocumentLink>,
+        reference: Object as PropType<PrismicDocumentLink>,
     },
     render(createElement, context): VNode | VNode[] {
-        const { href, to } = context.props
+        const { href, reference } = context.props
 
-        if (!href && !to) {
+        if (!href && !reference) {
             return (
                 context.scopedSlots.default?.({ label: context.props.label }) ||
                 context.slots()?.default ||
@@ -38,14 +38,17 @@ export default Vue.extend({
             )
         }
 
-        const isProject = to && (isPrismicDocument(to) || isInternalLinkFulled(to as any)) && isProjectDocument(to)
-        const isDocument = to && hasUid(to)
+        const isProject =
+            reference &&
+            (isPrismicDocument(reference) || isInternalRelationLinkWithUidFulled(reference)) &&
+            isProjectDocument(reference)
+        const isDocument = reference && hasUid(reference)
 
         let url = ''
         if (isProject) {
-            url = `/${NodeUid.PROJECT_LISTING}/${to.uid}`
+            url = `/${NodeUid.PROJECT_LISTING}/${reference.uid}`
         } else if (isDocument) {
-            url = to.uid
+            url = reference.uid
         } else if (href) {
             url = href
         } else {

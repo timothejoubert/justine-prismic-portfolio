@@ -81,7 +81,7 @@ export default mixins(Carousel, Vue as VueConstructor<Component>).extend({
             this.intersectionObserver = null
         },
         init() {
-            this.slides = [...this.$el.children] as HTMLElement[]
+            this.slides = Array.from(this.$el.children) as HTMLElement[]
             this.timeline = horizontalLoop(this.slides, {
                 draggable: true,
                 onChange: this.onTimelineChange,

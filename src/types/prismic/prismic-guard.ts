@@ -4,12 +4,6 @@ import { PrismicDocument } from '@prismicio/types/src/value/document'
 import { PageDocument } from '~/types/prismic/prismic-types.generated'
 import NodeUid from '~/constants/node-uid'
 
-export const isInternalLinkFulled = (
-    link: unknown & { uid: string }
-): link is FilledContentRelationshipField & { uid: string } => {
-    return 'uid' in link && 'link_type' in link && 'id' in link && 'type' in link && 'tags' in link && 'lang' in link
-}
-
 export function isGroupFulled<T>(group: prismicT.GroupField): group is prismicT.GroupField<T | any, 'filled'> {
     return !!group?.length
 }

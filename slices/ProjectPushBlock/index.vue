@@ -1,10 +1,10 @@
 <template>
     <section :class="$style.root">
-        <v-link :to="slice.primary.project">
+        <v-link :reference="slice.primary.project">
             <prismic-image v-if="image" :field="image" :class="$style.image" />
             <div :class="$style.content">
-                <div v-if="title" :class="$style.title" class="text-h4">{{ title }}</div>
-                <prismic-rich-text v-if="description" :field="slice.primary.description" class="over-title-l" />
+                <v-text :class="$style.title" class="text-h4" :content="slice.primary.title" />
+                <v-text class="over-title-l" :content="slice.primary.description" />
                 <v-button :class="$style.cta" :label="linkLabel" theme="orange" size="l" filled />
             </div>
         </v-link>
@@ -17,45 +17,34 @@ import * as prismicT from '@prismicio/types'
 import Vue from 'vue'
 import { Document } from '@prismicio/client/types/documents'
 import { ProjectData } from '~/types/prismic/app-prismic'
-import { isProjectDocument } from '~/utils/prismic/entity'
-import NodeUid from '~/constants/node-uid'
 
 export default Vue.extend({
     name: 'ProjectPushBlock',
-    // The array passed to `getSliceComponentProps` is purely optional and acts as a visual hint for you
     props: getSliceComponentProps(['slice', 'index', 'slices', 'context']),
     data() {
         return {
             project: {} as Document<ProjectData>,
         }
     },
+    async fetch() {
+        let project = this.$store.getters.getProjectByUid(this.projectUid)
+        if (!project) project = await this.$prismic.api.getByUID('project', this.projectUid)
+
+        if (project) this.project = project
+    },
     computed: {
         projectUid(): string {
             return this.slice.primary.project.uid
         },
-        title(): boolean {
-            return !!this.slice.primary.title
-        },
         description(): boolean {
             return !!this.slice.primary.description
-        },
-        internalLink(): string {
-            const internalLink = this.slice.primary.project
-            return isProjectDocument(internalLink)
-                ? `/${NodeUid.PROJECT_LISTING}/${internalLink.uid}`
-                : internalLink.uid
         },
         linkLabel(): string {
             return this.slice.primary.cta_label || 'Voir mon projet'
         },
-
         image(): boolean | prismicT.ImageField<never> {
             return !!this.project?.data?.thumbnail && this.project.data.thumbnail
         },
-    },
-    async mounted() {
-        const project = await this.$prismic.api.getByUID('project', this.projectUid)
-        if (project) this.project = project
     },
 })
 </script>

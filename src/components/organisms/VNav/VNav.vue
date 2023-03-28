@@ -37,9 +37,11 @@ import ThemeProvider from '~/mixins/ThemeProvider'
 import { getCSSVarFromTheme } from '~/utils/get-theme'
 import { getMenuLinkList } from '~/utils/prismic/parse-api-data'
 import { MenuItem } from '~/types/prismic/app-prismic'
-import { getInternalLinkUid, getProjectUid, isHomeRoute } from '~/utils/prismic/utils'
 import NodeUid from '~/constants/node-uid'
-import { isHomePage } from '~/utils/prismic/entity'
+import { isHomeRoute } from '~/utils/prismic/type-check'
+import { isHomePage } from '~/utils/prismic/document'
+import { getProjectUid } from '~/utils/prismic/project'
+import { getRelationLinkUid } from '~/utils/prismic/fields'
 
 export default mixins(ThemeProvider).extend({
     name: 'VNav',
@@ -104,7 +106,7 @@ export default mixins(ThemeProvider).extend({
             const currentPageUid = this.$route.params?.uid || (projectUid ? NodeUid.PROJECT_LISTING : NodeUid.HOME)
 
             const pageIndex = this.pages?.findIndex((page) => {
-                return getInternalLinkUid(page.link) === currentPageUid
+                return getRelationLinkUid(page.link) === currentPageUid
             })
 
             this.updateSelectedIndex(pageIndex)

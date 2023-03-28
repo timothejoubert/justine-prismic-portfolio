@@ -1,7 +1,7 @@
 <template>
     <section :class="$style.root">
-        <prismic-rich-text :field="slice.primary.title" class="title" />
-        <prismic-rich-text :field="slice.primary.description" />
+        <v-text :content="slice.primary.title" class="title" />
+        <v-text :content="slice.primary.description" />
         <ul :class="$style.projects">
             <v-project-card-slide
                 v-for="project in projects"

@@ -1,20 +1,20 @@
 <template>
-  <component
-    :is="internalTag"
-    :class="classNames"
-    :disabled="internalTag === 'button' && disabled"
-    v-bind="linkProps"
-    @click="onClick"
-  >
-    <span ref="inner" :class="$style.inner">
-      <span v-if="$slots.icon || $scopedSlots.icon" :class="$style.icon">
-        <slot name="icon" />
-      </span>
-      <span v-if="$slots.default || $scopedSlots.default || label" :class="$style.label">
-        <slot>{{ label }}</slot>
-      </span>
-    </span>
-  </component>
+    <component
+        :is="internalTag"
+        :class="classNames"
+        :disabled="internalTag === 'button' && disabled"
+        v-bind="linkProps"
+        @click="onClick"
+    >
+        <span ref="inner" :class="$style.inner">
+            <span v-if="$slots.icon || $scopedSlots.icon" :class="$style.icon">
+                <slot name="icon" />
+            </span>
+            <span v-if="$slots.default || $scopedSlots.default || label" :class="$style.label">
+                <slot>{{ label }}</slot>
+            </span>
+        </span>
+    </component>
 </template>
 
 <script lang="ts">
@@ -27,85 +27,85 @@ type Color = 'primary' | 'secondary'
 export type Variant = 'navigation'
 
 function isRelativePath(path: string): boolean {
-  return path.charAt(0) === '/'
+    return path.charAt(0) === '/'
 }
 
 export default Vue.extend({
-  name: 'VButton',
-  props: {
-    filled: Boolean,
-    label: [String, Boolean] as PropType<string | false>,
-    size: [String, Boolean] as PropType<Size | false>,
-    elevated: Boolean,
-    rounded: {
-      type: Boolean,
-      default: true,
+    name: 'VButton',
+    props: {
+        filled: Boolean,
+        label: [String, Boolean] as PropType<string | false>,
+        size: [String, Boolean] as PropType<Size | false>,
+        elevated: Boolean,
+        rounded: {
+            type: Boolean,
+            default: true,
+        },
+        theme: {
+            type: [String, Boolean] as PropType<Theme | false>,
+            default: 'dark',
+        },
+        outlined: Boolean,
+        disabled: Boolean,
+        tag: [String, Boolean] as PropType<string | false>,
+        color: [String, Boolean] as PropType<Color | false>,
+        iconLast: {
+            type: Boolean,
+            default: true,
+        },
+        href: [String, Boolean] as PropType<string | false>, // external (absolute) or internal (relative) link
+        to: [String, Object, Boolean], // internal link (use NuxtLink)
+        variant: [String, Boolean] as PropType<Variant | false>,
     },
-    theme: {
-      type: [String, Boolean] as PropType<Theme | false>,
-      default: 'dark',
-    },
-    outlined: Boolean,
-    disabled: Boolean,
-    tag: [String, Boolean] as PropType<string | false>,
-    color: [String, Boolean] as PropType<Color | false>,
-    iconLast: {
-      type: Boolean,
-      default: true,
-    },
-    href: [String, Boolean] as PropType<string | false>, // external (absolute) or internal (relative) link
-    to: [String, Object, Boolean], // internal link (use NuxtLink)
-    variant: [String, Boolean] as PropType<Variant | false>,
-  },
-  computed: {
-    classNames(): (string | boolean | undefined)[] {
-      return [
-        this.$style.root,
-        this.outlined && this.$style['root--outlined'],
-        this.filled && this.$style['root--filled'],
-        this.elevated && this.$style['root--elevated'],
-        this.disabled && this.$style['root--disabled'],
-        this.rounded && this.$style['root--rounded'],
-        (this.$slots.icon || this.$scopedSlots.icon) && this.$style['root--has-icon'],
-        (this.$slots.default || this.$scopedSlots.default || this.label) && this.$style['root--has-label'],
-        this.iconLast && this.$style['root--icon-last'],
-        typeof this.size === 'string' && this.$style['root--size-' + this.size],
-        typeof this.theme === 'string' && this.$style['root--theme-' + this.theme],
-        typeof this.color === 'string' && this.$style['root--color-' + this.color],
-        typeof this.variant === 'string' && this.$style['root--variant-' + this.variant],
-      ]
-    },
-    internalTag(): string {
-      if (typeof this.tag === 'string') return this.tag
+    computed: {
+        classNames(): (string | boolean | undefined)[] {
+            return [
+                this.$style.root,
+                this.outlined && this.$style['root--outlined'],
+                this.filled && this.$style['root--filled'],
+                this.elevated && this.$style['root--elevated'],
+                this.disabled && this.$style['root--disabled'],
+                this.rounded && this.$style['root--rounded'],
+                (this.$slots.icon || this.$scopedSlots.icon) && this.$style['root--has-icon'],
+                (this.$slots.default || this.$scopedSlots.default || this.label) && this.$style['root--has-label'],
+                this.iconLast && this.$style['root--icon-last'],
+                typeof this.size === 'string' && this.$style['root--size-' + this.size],
+                typeof this.theme === 'string' && this.$style['root--theme-' + this.theme],
+                typeof this.color === 'string' && this.$style['root--color-' + this.color],
+                typeof this.variant === 'string' && this.$style['root--variant-' + this.variant],
+            ]
+        },
+        internalTag(): string {
+            if (typeof this.tag === 'string') return this.tag
 
-      if (this.to || (typeof this.href === 'string' && isRelativePath(this.href))) return 'nuxt-link'
-      else if (this.href) return 'a'
-      else return 'button'
-    },
-    linkProps(): Record<string, any> {
-      const props: Record<string, any> = {}
+            if (this.to || (typeof this.href === 'string' && isRelativePath(this.href))) return 'nuxt-link'
+            else if (this.href) return 'a'
+            else return 'button'
+        },
+        linkProps(): Record<string, any> {
+            const props: Record<string, any> = {}
 
-      if (this.to) {
-        props.to = this.to
-      } else if (typeof this.href === 'string' && isRelativePath(this.href)) {
-        props.to = this.href
-      } else if (this.href) {
-        props.href = this.isEmail(this.href) ? 'mailto:' + this.href : this.href
-        props.target = '_blank'
-      }
+            if (this.to) {
+                props.to = this.to
+            } else if (typeof this.href === 'string' && isRelativePath(this.href)) {
+                props.to = this.href
+            } else if (this.href) {
+                props.href = this.isEmail(this.href) ? 'mailto:' + this.href : this.href
+                props.target = '_blank'
+            }
 
-      return props
+            return props
+        },
     },
-  },
-  methods: {
-    onClick(event: MouseEvent) {
-      this.$emit('click', event)
+    methods: {
+        onClick(event: MouseEvent) {
+            this.$emit('click', event)
+        },
+        isEmail(url: string): boolean {
+            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+            return !!url.match(emailRegex)
+        },
     },
-    isEmail(url: string): boolean {
-      const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-      return !!url.match(emailRegex)
-    },
-  },
 })
 </script>
 
@@ -156,7 +156,7 @@ export default Vue.extend({
         color: rgba(#000, 0.7);
     }
 
-    &:not(#{&}--filled)#{&}--disabled {
+    &:not(#{&}--filled)#{&} --disabled {
         color: rgba(#000, 0.7);
     }
 

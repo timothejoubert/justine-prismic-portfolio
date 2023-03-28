@@ -1,10 +1,9 @@
-import { Document } from "@prismicio/client/types/documents";
+import { Document } from '@prismicio/client/types/documents'
 import type * as GeneratedTypes from '~/types/prismic/prismic-types.generated'
-import { PageDocument, ProjectDocument } from "~/types/prismic/prismic-types.generated";
-import { MenuItem } from "~/types/prismic/app-prismic";
+import { PageDocument, ProjectDocument } from '~/types/prismic/prismic-types.generated'
+import { MenuItem } from '~/types/prismic/app-prismic'
 
-
-export function getDocumentData<T> (document: Document): T {
+export function getDocumentData<T>(document: Document): T {
     return document.data
 }
 

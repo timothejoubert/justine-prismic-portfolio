@@ -1,5 +1,5 @@
 <template>
-    <v-link :to="project" :class="$style.root">
+    <v-link :reference="project" :class="$style.root">
         <prismic-image v-if="project.data.thumbnail" :field="project.data.thumbnail" :class="$style.image" />
         <div :class="$style.body">
             <h2 :class="$style.title">{{ project.data.title }}</h2>

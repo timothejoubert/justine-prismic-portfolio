@@ -49,7 +49,7 @@ export default mixins(PageProvider, ProjectsMutation).extend({
             return this.projects.map((project) => {
                 return {
                     ...project.data,
-                    uid: project.uid,
+                    uid: project.uid || '',
                 }
             })
         },
