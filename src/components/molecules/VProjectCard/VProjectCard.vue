@@ -1,17 +1,17 @@
 <template>
-  <div :class="$style.root">
-    <v-button :class="$style.counter" tag="div" filled theme="orange" size="xs">
-      <template #default>
-        <span :class="$style.current">{{ formatValue(index + 1) }}</span>
-        <div :class="$style.length">{{ formatValue(length) }}</div>
-      </template>
-    </v-button>
-    <PrismicImage v-if="project.thumbnail" :field="project.thumbnail" :class="$style.image" />
-    <div :class="$style.body">
-      <h2 :class="$style.title">{{ title }}</h2>
-      <div v-if="year" :class="$style.year">{{ year }}</div>
+    <div :class="$style.root">
+        <v-button :class="$style.counter" tag="div" filled theme="orange" size="xs">
+            <template #default>
+                <span :class="$style.current">{{ formatValue(index + 1) }}</span>
+                <div :class="$style.length">{{ formatValue(length) }}</div>
+            </template>
+        </v-button>
+        <PrismicImage v-if="project.thumbnail" :field="project.thumbnail" :class="$style.image" />
+        <div :class="$style.body">
+            <h2 :class="$style.title">{{ title }}</h2>
+            <div v-if="year" :class="$style.year">{{ year }}</div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -22,25 +22,25 @@ import { ProjectData } from '~/types/prismic/app-prismic'
 import CarouselSlide from '~/mixins/CarouselSlide'
 
 export default mixins(CarouselSlide).extend({
-  name: 'VProjectCard',
-  props: {
-    project: Object as PropType<ProjectData>,
-    length: Number,
-    index: Number,
-  },
-  computed: {
-    year(): number | null {
-      return stringDateToYear(this.project?.date)
+    name: 'VProjectCard',
+    props: {
+        project: Object as PropType<ProjectData>,
+        length: Number,
+        index: Number,
     },
-    title(): string {
-      return this.$asText(this.project.title) || 'add a project title'
+    computed: {
+        year(): number | null {
+            return stringDateToYear(this.project?.date)
+        },
+        title(): string {
+            return this.$asText(this.project.title) || 'add a project title'
+        },
     },
-  },
-  methods: {
-    formatValue(value: number): string {
-      return ('0' + (value || 0)).substr(-2)
+    methods: {
+        formatValue(value: number): string {
+            return ('0' + (value || 0)).substr(-2)
+        },
     },
-  },
 })
 </script>
 

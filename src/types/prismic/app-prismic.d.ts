@@ -1,9 +1,12 @@
+import { AnyRegularField } from '@prismicio/types/src/value/types'
+import { GroupField } from '@prismicio/types/src/value/group'
+import { SliceZone } from '@prismicio/types/src/value/sliceZone'
+import { AllDocumentTypes, MainMenuDocumentDataLinksItem } from '~/types/prismic/prismic-types.generated'
 import type * as GeneratedTypes from '~/types/prismic/prismic-types.generated'
-import { AllDocumentTypes, MainMenuDocumentDataLinksItem } from "~/types/prismic/prismic-types.generated";
-
 
 // GLOBAL
-export type CustomTypeName = Pick<AllDocumentTypes, "type">["type"]
+export type BasicDocumentData = Record<string, AnyRegularField | GroupField | SliceZone>
+export type CustomTypeName = Pick<AllDocumentTypes, 'type'>['type']
 export type MainPageData = PageData | ProjectData
 
 // PAGE
@@ -14,6 +17,7 @@ export type PageData = GeneratedTypes.ProjectDocument['data']
 export type ProjectDocument = GeneratedTypes.ProjectDocument
 export type ProjectData = GeneratedTypes.ProjectDocument['data']
 export type ProjectTag = ProjectData['tags']
+export type ProjectCardData = ProjectData & { uid: string }
 
 // MENU
 export type MainMenuLinks = GeneratedTypes.MainMenuDocument

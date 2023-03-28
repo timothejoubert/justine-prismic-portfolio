@@ -21,6 +21,7 @@
     "@nuxtjs/svg": "^0.4.0",
     "gsap": "./packages/gsap-bonus.tgz",
     "nuxt": "^2.15.8",
+    "nuxt-i18n": "^6.27.2",
     "portal-vue": "^2.1.7",
     "swiper": "^9.0.2",
     "throttle-debounce": "^3.0.1",

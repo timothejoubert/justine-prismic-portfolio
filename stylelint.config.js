@@ -10,7 +10,7 @@ module.exports = {
   // https://stylelint.io/user-guide/configuration
   rules: {
     'no-descending-specificity': null,
-    indentation: [4, { ignore: ['value'] }],
+    indentation: 4,
     'at-rule-no-unknown': null,
     'scss/at-rule-no-unknown': true,
     // sass context: @use + @import

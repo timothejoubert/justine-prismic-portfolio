@@ -38,7 +38,7 @@ button {
     }
 }
 
-input{
+input {
     color: inherit;
     font-size: inherit;
     line-height: inherit;
@@ -64,4 +64,5 @@ select {
 
 img {
     -webkit-user-drag: none;
+    max-width: 100%;
 }

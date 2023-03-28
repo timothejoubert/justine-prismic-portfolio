@@ -1,7 +1,7 @@
 <template>
-  <div :class="rootClass">
-    <!--        <v-random-grid-images />-->
-  </div>
+    <div :class="rootClass">
+        <!--        <v-random-grid-images />-->
+    </div>
 </template>
 
 <script lang="ts">
@@ -11,20 +11,20 @@ import PageProvider from '~/mixins/PageProvider'
 import { MainPageData } from '~/types/prismic/app-prismic'
 
 export default mixins(PageProvider).extend({
-  name: 'VHome',
-  props: {
-    page: Object as PropType<MainPageData>,
-  },
-  computed: {
-    rootClass(): (undefined | false | string)[] {
-      return [this.$style.root]
+    name: 'VHome',
+    props: {
+        page: Object as PropType<MainPageData>,
     },
-  },
+    computed: {
+        rootClass(): (undefined | false | string)[] {
+            return [this.$style.root]
+        },
+    },
 })
 </script>
 
 <style lang="scss" module>
 .root {
-  position: relative;
+    position: relative;
 }
 </style>

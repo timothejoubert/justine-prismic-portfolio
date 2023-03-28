@@ -1,28 +1,44 @@
 <template>
-  <section class="section">
-    <PrismicRichText :field="slice.primary.title" class="title" />
-    <PrismicRichText :field="slice.primary.description" />
-  </section>
+    <section :class="$style.root">
+        <prismic-rich-text :field="slice.primary.title" class="title" />
+        <prismic-rich-text :field="slice.primary.description" />
+        <ul :class="$style.projects">
+            <v-project-card-slide
+                v-for="project in projects"
+                :key="project.uid"
+                :project="project"
+                :class="$style.slide"
+            />
+        </ul>
+    </section>
 </template>
 
-<script>
+<script lang="ts">
+import mixins from 'vue-typed-mixins'
 import { getSliceComponentProps } from '@prismicio/vue/components'
+import ProjectsMutation from '~/mixins/ProjectsMutation'
 
-export default {
-  name: 'ProjectListingBlock',
-  // The array passed to `getSliceComponentProps` is purely optional and acts as a visual hint for you
-  props: getSliceComponentProps(['slice', 'index', 'slices', 'context']),
-}
+export default mixins(ProjectsMutation).extend({
+    name: 'ProjectListingBlock',
+    props: getSliceComponentProps(['slice', 'index', 'slices', 'context']),
+})
 </script>
 
-<style scoped>
-.section {
-  padding: 4em;
-  background: #f7f7f7;
-  color: #111;
-  text-align: center;
+<style lang="scss" module>
+.root {
+    padding: 4em;
+    background: #f7f7f7;
+    color: #111;
+    text-align: center;
 }
-.title {
-  margin-bottom: 2em;
+
+.projects {
+    display: flex;
+}
+
+.slide {
+    margin-bottom: 2em;
+    width: 400px;
+    flex-shrink: 0;
 }
 </style>

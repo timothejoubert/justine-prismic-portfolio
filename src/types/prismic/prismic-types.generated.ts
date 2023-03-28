@@ -4,48 +4,51 @@ import type * as prismicT from '@prismicio/types'
 import CustomTypesClient, { CustomTypesClientConfig } from '@prismicio/custom-types-client/dist/index'
 
 type Simplify<T> = {
-  [KeyType in keyof T]: T[KeyType]
+    [KeyType in keyof T]: T[KeyType]
 }
+
 /** Content for Main menu documents */
 interface MainMenuDocumentData {
-  /**
-   * Links field in *Main menu*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: main_menu.links[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/group
-   *
-   */
-  links: prismicT.GroupField<Simplify<MainMenuDocumentDataLinksItem>>
+    /**
+     * Links field in *Main menu*
+     *
+     * - **Field Type**: Group
+     * - **Placeholder**: *None*
+     * - **API ID Path**: main_menu.links[]
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/group
+     *
+     */
+    links: prismicT.GroupField<Simplify<MainMenuDocumentDataLinksItem>>
 }
+
 /**
  * Item in Main menu → Links
  *
  */
 export interface MainMenuDocumentDataLinksItem {
-  /**
-   * Label field in *Main menu → Links*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Label affiché dans le menu
-   * - **API ID Path**: main_menu.links[].label
-   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
-   *
-   */
-  label: prismicT.KeyTextField
-  /**
-   * Link field in *Main menu → Links*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: Lien vers une page
-   * - **API ID Path**: main_menu.links[].link
-   * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
-   *
-   */
-  link: prismicT.RelationField<'page' | 'project'>
+    /**
+     * Label field in *Main menu → Links*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: Label affiché dans le menu
+     * - **API ID Path**: main_menu.links[].label
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    label: prismicT.KeyTextField
+    /**
+     * Link field in *Main menu → Links*
+     *
+     * - **Field Type**: Content Relationship
+     * - **Placeholder**: Lien vers une page
+     * - **API ID Path**: main_menu.links[].link
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    link: prismicT.RelationField<'page' | 'project'>
 }
+
 /**
  * Main menu document from Prismic
  *
@@ -56,68 +59,70 @@ export interface MainMenuDocumentDataLinksItem {
  * @typeParam Lang - Language API ID of the document.
  */
 export type MainMenuDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<
-  Simplify<MainMenuDocumentData>,
-  'main_menu',
-  Lang
+    Simplify<MainMenuDocumentData>,
+    'main_menu',
+    Lang
 >
+
 /** Content for Page documents */
 interface PageDocumentData {
-  /**
-   * Title field in *Page*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Titre de la page
-   * - **API ID Path**: page.title
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
-   *
-   */
-  title: prismicT.KeyTextField
-  /**
-   * Description field in *Page*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Description de la page
-   * - **API ID Path**: page.description
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
-   *
-   */
-  description: prismicT.RichTextField
-  /**
-   * Thumbnail field in *Page*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: page.thumbnail
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/image
-   *
-   */
-  thumbnail: prismicT.ImageField<never>
-  /**
-   * Slice Zone field in *Page*
-   *
-   * - **Field Type**: Slice Zone
-   * - **Placeholder**: *None*
-   * - **API ID Path**: page.slices[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/slices
-   *
-   */
-  slices: prismicT.SliceZone<PageDocumentDataSlicesSlice>
+    /**
+     * Title field in *Page*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: Titre de la page
+     * - **API ID Path**: page.title
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    title: prismicT.KeyTextField
+    /**
+     * Description field in *Page*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: Description de la page
+     * - **API ID Path**: page.description
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    description: prismicT.RichTextField
+    /**
+     * Thumbnail field in *Page*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: page.thumbnail
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    thumbnail: prismicT.ImageField<never>
+    /**
+     * Slice Zone field in *Page*
+     *
+     * - **Field Type**: Slice Zone
+     * - **Placeholder**: *None*
+     * - **API ID Path**: page.slices[]
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/slices
+     *
+     */
+    slices: prismicT.SliceZone<PageDocumentDataSlicesSlice>
 }
+
 /**
  * Slice for *Page → Slice Zone*
  *
  */
 type PageDocumentDataSlicesSlice =
-  | LoadingImageSlice
-  | ContactBlockSlice
-  | ProjectListingBlockSlice
-  | AboutBlockSlice
-  | ProjectPushSlice
-  | SketchBookSlice
+    | LoadingImageSlice
+    | ContactBlockSlice
+    | ProjectListingBlockSlice
+    | AboutBlockSlice
+    | ProjectPushSlice
+    | SketchBookSlice
 /**
  * Page document from Prismic
  *
@@ -128,84 +133,87 @@ type PageDocumentDataSlicesSlice =
  * @typeParam Lang - Language API ID of the document.
  */
 export type PageDocument<Lang extends string = string> = prismicT.PrismicDocumentWithUID<
-  Simplify<PageDocumentData>,
-  'page',
-  Lang
+    Simplify<PageDocumentData>,
+    'page',
+    Lang
 >
+
 /** Content for Project documents */
 interface ProjectDocumentData {
-  /**
-   * Title field in *Project*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Titre du projet
-   * - **API ID Path**: project.title
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
-   *
-   */
-  title: prismicT.KeyTextField
-  /**
-   * Description field in *Project*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Description du projet
-   * - **API ID Path**: project.description
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
-   *
-   */
-  description: prismicT.RichTextField
-  /**
-   * Date field in *Project*
-   *
-   * - **Field Type**: Date
-   * - **Placeholder**: Date du projet
-   * - **API ID Path**: project.date
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/date
-   *
-   */
-  date: prismicT.DateField
-  /**
-   * Thumbnail field in *Project*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: project.thumbnail
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/image
-   *
-   */
-  thumbnail: prismicT.ImageField<never>
-  /**
-   * Tags field in *Project*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: project.tags[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/group
-   *
-   */
-  tags: prismicT.GroupField<Simplify<ProjectDocumentDataTagsItem>>
+    /**
+     * Title field in *Project*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: Titre du projet
+     * - **API ID Path**: project.title
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    title: prismicT.KeyTextField
+    /**
+     * Description field in *Project*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: Description du projet
+     * - **API ID Path**: project.description
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    description: prismicT.RichTextField
+    /**
+     * Date field in *Project*
+     *
+     * - **Field Type**: Date
+     * - **Placeholder**: Date du projet
+     * - **API ID Path**: project.date
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/date
+     *
+     */
+    date: prismicT.DateField
+    /**
+     * Thumbnail field in *Project*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project.thumbnail
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    thumbnail: prismicT.ImageField<never>
+    /**
+     * Tags field in *Project*
+     *
+     * - **Field Type**: Group
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project.tags[]
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/group
+     *
+     */
+    tags: prismicT.GroupField<Simplify<ProjectDocumentDataTagsItem>>
 }
+
 /**
  * Item in Project → Tags
  *
  */
 export interface ProjectDocumentDataTagsItem {
-  /**
-   * Label field in *Project → Tags*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: Label du tag
-   * - **API ID Path**: project.tags[].label
-   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
-   *
-   */
-  label: prismicT.KeyTextField
+    /**
+     * Label field in *Project → Tags*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: Label du tag
+     * - **API ID Path**: project.tags[].label
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    label: prismicT.KeyTextField
 }
+
 /**
  * Project document from Prismic
  *
@@ -216,94 +224,97 @@ export interface ProjectDocumentDataTagsItem {
  * @typeParam Lang - Language API ID of the document.
  */
 export type ProjectDocument<Lang extends string = string> = prismicT.PrismicDocumentWithUID<
-  Simplify<ProjectDocumentData>,
-  'project',
-  Lang
+    Simplify<ProjectDocumentData>,
+    'project',
+    Lang
 >
+
 /** Content for settings documents */
 interface SettingsDocumentData {
-  /**
-   * Site Name field in *settings*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: settings.site_name
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
-   *
-   */
-  site_name: prismicT.KeyTextField
-  /**
-   * Tagline field in *settings*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Tagline présente la page About
-   * - **API ID Path**: settings.tagline
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
-   *
-   */
-  tagline: prismicT.RichTextField
-  /**
-   * Socials field in *settings*
-   *
-   * - **Field Type**: Group
-   * - **Placeholder**: *None*
-   * - **API ID Path**: settings.socials[]
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/group
-   *
-   */
-  socials: prismicT.GroupField<Simplify<SettingsDocumentDataSocialsItem>>
-  /**
-   * Description field in *settings*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Meta description de la page
-   * - **API ID Path**: settings.description
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
-   *
-   */
-  description: prismicT.RichTextField
-  /**
-   * Thumbnail field in *settings*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: settings.thumbnail
-   * - **Tab**: Main
-   * - **Documentation**: https://prismic.io/docs/core-concepts/image
-   *
-   */
-  thumbnail: prismicT.ImageField<never>
+    /**
+     * Site Name field in *settings*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: settings.site_name
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    site_name: prismicT.KeyTextField
+    /**
+     * Tagline field in *settings*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: Tagline présente la page About
+     * - **API ID Path**: settings.tagline
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    tagline: prismicT.RichTextField
+    /**
+     * Socials field in *settings*
+     *
+     * - **Field Type**: Group
+     * - **Placeholder**: *None*
+     * - **API ID Path**: settings.socials[]
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/group
+     *
+     */
+    socials: prismicT.GroupField<Simplify<SettingsDocumentDataSocialsItem>>
+    /**
+     * Description field in *settings*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: Meta description de la page
+     * - **API ID Path**: settings.description
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    description: prismicT.RichTextField
+    /**
+     * Thumbnail field in *settings*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: settings.thumbnail
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    thumbnail: prismicT.ImageField<never>
 }
+
 /**
  * Item in settings → Socials
  *
  */
 export interface SettingsDocumentDataSocialsItem {
-  /**
-   * Name field in *settings → Socials*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: settings.socials[].name
-   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
-   *
-   */
-  name: prismicT.KeyTextField
-  /**
-   * Link field in *settings → Socials*
-   *
-   * - **Field Type**: Link
-   * - **Placeholder**: *None*
-   * - **API ID Path**: settings.socials[].link
-   * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
-   *
-   */
-  link: prismicT.LinkField
+    /**
+     * Name field in *settings → Socials*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: settings.socials[].name
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    name: prismicT.KeyTextField
+    /**
+     * Link field in *settings → Socials*
+     *
+     * - **Field Type**: Link
+     * - **Placeholder**: *None*
+     * - **API ID Path**: settings.socials[].link
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    link: prismicT.LinkField
 }
+
 /**
  * settings document from Prismic
  *
@@ -314,57 +325,59 @@ export interface SettingsDocumentDataSocialsItem {
  * @typeParam Lang - Language API ID of the document.
  */
 export type SettingsDocument<Lang extends string = string> = prismicT.PrismicDocumentWithoutUID<
-  Simplify<SettingsDocumentData>,
-  'settings',
-  Lang
+    Simplify<SettingsDocumentData>,
+    'settings',
+    Lang
 >
 export type AllDocumentTypes = MainMenuDocument | PageDocument | ProjectDocument | SettingsDocument
+
 /**
  * Primary content in AboutBlock → Primary
  *
  */
 interface AboutBlockSliceDefaultPrimary {
-  /**
-   * Title field in *AboutBlock → Primary*
-   *
-   * - **Field Type**: Title
-   * - **Placeholder**: This is where it all begins...
-   * - **API ID Path**: about_block.primary.title
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
-   *
-   */
-  title: prismicT.TitleField
-  /**
-   * Content field in *AboutBlock → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: A nice description of you
-   * - **API ID Path**: about_block.primary.content
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
-   *
-   */
-  content: prismicT.RichTextField
-  /**
-   * Media field in *AboutBlock → Primary*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: about_block.primary.media
-   * - **Documentation**: https://prismic.io/docs/core-concepts/image
-   *
-   */
-  media: prismicT.ImageField<never>
-  /**
-   * Link field in *AboutBlock → Primary*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: about_block.primary.link
-   * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
-   *
-   */
-  link: prismicT.RelationField<'page'>
+    /**
+     * Title field in *AboutBlock → Primary*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: about_block.primary.title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    title: prismicT.KeyTextField
+    /**
+     * Content field in *AboutBlock → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: A nice description of you
+     * - **API ID Path**: about_block.primary.content
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    content: prismicT.RichTextField
+    /**
+     * Media field in *AboutBlock → Primary*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: about_block.primary.media
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    media: prismicT.ImageField<never>
+    /**
+     * Link field in *AboutBlock → Primary*
+     *
+     * - **Field Type**: Content Relationship
+     * - **Placeholder**: *None*
+     * - **API ID Path**: about_block.primary.link
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    link: prismicT.RelationField<'page'>
 }
+
 /**
  * Default variation for AboutBlock Slice
  *
@@ -374,9 +387,9 @@ interface AboutBlockSliceDefaultPrimary {
  *
  */
 export type AboutBlockSliceDefault = prismicT.SharedSliceVariation<
-  'default',
-  Simplify<AboutBlockSliceDefaultPrimary>,
-  never
+    'default',
+    Simplify<AboutBlockSliceDefaultPrimary>,
+    never
 >
 /**
  * Slice variation for *AboutBlock*
@@ -392,53 +405,55 @@ type AboutBlockSliceVariation = AboutBlockSliceDefault
  *
  */
 export type AboutBlockSlice = prismicT.SharedSlice<'about_block', AboutBlockSliceVariation>
+
 /**
  * Primary content in ContactBlock → Primary
  *
  */
 interface ContactBlockSliceDefaultPrimary {
-  /**
-   * Title field in *ContactBlock → Primary*
-   *
-   * - **Field Type**: Title
-   * - **Placeholder**: This is where it all begins...
-   * - **API ID Path**: contact_block.primary.title
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
-   *
-   */
-  title: prismicT.TitleField
-  /**
-   * Description field in *ContactBlock → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: Disponible actuellement pour...
-   * - **API ID Path**: contact_block.primary.description
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
-   *
-   */
-  description: prismicT.RichTextField
-  /**
-   * Contact field in *ContactBlock → Primary*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: contact_block.primary.contact
-   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
-   *
-   */
-  contact: prismicT.KeyTextField
-  /**
-   * Display socials field in *ContactBlock → Primary*
-   *
-   * - **Field Type**: Boolean
-   * - **Placeholder**: *None*
-   * - **Default Value**: false
-   * - **API ID Path**: contact_block.primary.display_socials
-   * - **Documentation**: https://prismic.io/docs/core-concepts/boolean
-   *
-   */
-  display_socials: prismicT.BooleanField
+    /**
+     * Title field in *ContactBlock → Primary*
+     *
+     * - **Field Type**: Title
+     * - **Placeholder**: This is where it all begins...
+     * - **API ID Path**: contact_block.primary.title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    title: prismicT.TitleField
+    /**
+     * Description field in *ContactBlock → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: Disponible actuellement pour...
+     * - **API ID Path**: contact_block.primary.description
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    description: prismicT.RichTextField
+    /**
+     * Contact field in *ContactBlock → Primary*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: contact_block.primary.contact
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    contact: prismicT.KeyTextField
+    /**
+     * Display socials field in *ContactBlock → Primary*
+     *
+     * - **Field Type**: Boolean
+     * - **Placeholder**: *None*
+     * - **Default Value**: false
+     * - **API ID Path**: contact_block.primary.display_socials
+     * - **Documentation**: https://prismic.io/docs/core-concepts/boolean
+     *
+     */
+    display_socials: prismicT.BooleanField
 }
+
 /**
  * Default variation for ContactBlock Slice
  *
@@ -448,9 +463,9 @@ interface ContactBlockSliceDefaultPrimary {
  *
  */
 export type ContactBlockSliceDefault = prismicT.SharedSliceVariation<
-  'default',
-  Simplify<ContactBlockSliceDefaultPrimary>,
-  never
+    'default',
+    Simplify<ContactBlockSliceDefaultPrimary>,
+    never
 >
 /**
  * Slice variation for *ContactBlock*
@@ -466,22 +481,24 @@ type ContactBlockSliceVariation = ContactBlockSliceDefault
  *
  */
 export type ContactBlockSlice = prismicT.SharedSlice<'contact_block', ContactBlockSliceVariation>
+
 /**
  * Item in RandomGridImageBlock → Items
  *
  */
 export interface LoadingImageSliceDefaultItem {
-  /**
-   * Media field in *RandomGridImageBlock → Items*
-   *
-   * - **Field Type**: Link to Media
-   * - **Placeholder**: *None*
-   * - **API ID Path**: loading_image.items[].media
-   * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
-   *
-   */
-  media: prismicT.LinkToMediaField
+    /**
+     * Image field in *RandomGridImageBlock → Items*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: loading_image.items[].image
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    image: prismicT.ImageField<never>
 }
+
 /**
  * Default variation for RandomGridImageBlock Slice
  *
@@ -491,9 +508,9 @@ export interface LoadingImageSliceDefaultItem {
  *
  */
 export type LoadingImageSliceDefault = prismicT.SharedSliceVariation<
-  'default',
-  Record<string, never>,
-  Simplify<LoadingImageSliceDefaultItem>
+    'default',
+    Record<string, never>,
+    Simplify<LoadingImageSliceDefaultItem>
 >
 /**
  * Slice variation for *RandomGridImageBlock*
@@ -509,59 +526,62 @@ type LoadingImageSliceVariation = LoadingImageSliceDefault
  *
  */
 export type LoadingImageSlice = prismicT.SharedSlice<'loading_image', LoadingImageSliceVariation>
+
 /**
  * Primary content in ProjectListingBlock → Primary
  *
  */
 interface ProjectListingBlockSliceDefaultPrimary {
-  /**
-   * Title field in *ProjectListingBlock → Primary*
-   *
-   * - **Field Type**: Title
-   * - **Placeholder**: This is where it all begins...
-   * - **API ID Path**: project_listing_block.primary.title
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
-   *
-   */
-  title: prismicT.TitleField
-  /**
-   * Description field in *ProjectListingBlock → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: A nice description of your product
-   * - **API ID Path**: project_listing_block.primary.description
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
-   *
-   */
-  description: prismicT.RichTextField
-  /**
-   * Display all projects field in *ProjectListingBlock → Primary*
-   *
-   * - **Field Type**: Boolean
-   * - **Placeholder**: *None*
-   * - **Default Value**: false
-   * - **API ID Path**: project_listing_block.primary.display_all_projects
-   * - **Documentation**: https://prismic.io/docs/core-concepts/boolean
-   *
-   */
-  display_all_projects: prismicT.BooleanField
+    /**
+     * Title field in *ProjectListingBlock → Primary*
+     *
+     * - **Field Type**: Title
+     * - **Placeholder**: This is where it all begins...
+     * - **API ID Path**: project_listing_block.primary.title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    title: prismicT.TitleField
+    /**
+     * Description field in *ProjectListingBlock → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: A nice description of your product
+     * - **API ID Path**: project_listing_block.primary.description
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    description: prismicT.RichTextField
+    /**
+     * Display all projects field in *ProjectListingBlock → Primary*
+     *
+     * - **Field Type**: Boolean
+     * - **Placeholder**: *None*
+     * - **Default Value**: false
+     * - **API ID Path**: project_listing_block.primary.display_all_projects
+     * - **Documentation**: https://prismic.io/docs/core-concepts/boolean
+     *
+     */
+    display_all_projects: prismicT.BooleanField
 }
+
 /**
  * Item in ProjectListingBlock → Items
  *
  */
 export interface ProjectListingBlockSliceDefaultItem {
-  /**
-   * project field in *ProjectListingBlock → Items*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: project_listing_block.items[].project
-   * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
-   *
-   */
-  project: prismicT.RelationField
+    /**
+     * project field in *ProjectListingBlock → Items*
+     *
+     * - **Field Type**: Content Relationship
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project_listing_block.items[].project
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    project: prismicT.RelationField
 }
+
 /**
  * Default variation for ProjectListingBlock Slice
  *
@@ -571,15 +591,84 @@ export interface ProjectListingBlockSliceDefaultItem {
  *
  */
 export type ProjectListingBlockSliceDefault = prismicT.SharedSliceVariation<
-  'default',
-  Simplify<ProjectListingBlockSliceDefaultPrimary>,
-  Simplify<ProjectListingBlockSliceDefaultItem>
+    'default',
+    Simplify<ProjectListingBlockSliceDefaultPrimary>,
+    Simplify<ProjectListingBlockSliceDefaultItem>
+>
+
+/**
+ * Primary content in ProjectListingBlock → Primary
+ *
+ */
+interface ProjectListingBlockSliceLayoutGridPrimary {
+    /**
+     * Title field in *ProjectListingBlock → Primary*
+     *
+     * - **Field Type**: Title
+     * - **Placeholder**: This is where it all begins...
+     * - **API ID Path**: project_listing_block.primary.title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    title: prismicT.TitleField
+    /**
+     * Description field in *ProjectListingBlock → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: A nice description of your product
+     * - **API ID Path**: project_listing_block.primary.description
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    description: prismicT.RichTextField
+    /**
+     * Display all projects field in *ProjectListingBlock → Primary*
+     *
+     * - **Field Type**: Boolean
+     * - **Placeholder**: *None*
+     * - **Default Value**: false
+     * - **API ID Path**: project_listing_block.primary.display_all_projects
+     * - **Documentation**: https://prismic.io/docs/core-concepts/boolean
+     *
+     */
+    display_all_projects: prismicT.BooleanField
+}
+
+/**
+ * Item in ProjectListingBlock → Items
+ *
+ */
+export interface ProjectListingBlockSliceLayoutGridItem {
+    /**
+     * project field in *ProjectListingBlock → Items*
+     *
+     * - **Field Type**: Content Relationship
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project_listing_block.items[].project
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    project: prismicT.RelationField
+}
+
+/**
+ * Layout grid variation for ProjectListingBlock Slice
+ *
+ * - **API ID**: `layoutGrid`
+ * - **Description**: `ProjectListingBlock`
+ * - **Documentation**: https://prismic.io/docs/core-concepts/reusing-slices
+ *
+ */
+export type ProjectListingBlockSliceLayoutGrid = prismicT.SharedSliceVariation<
+    'layoutGrid',
+    Simplify<ProjectListingBlockSliceLayoutGridPrimary>,
+    Simplify<ProjectListingBlockSliceLayoutGridItem>
 >
 /**
  * Slice variation for *ProjectListingBlock*
  *
  */
-type ProjectListingBlockSliceVariation = ProjectListingBlockSliceDefault
+type ProjectListingBlockSliceVariation = ProjectListingBlockSliceDefault | ProjectListingBlockSliceLayoutGrid
 /**
  * ProjectListingBlock Shared Slice
  *
@@ -589,42 +678,54 @@ type ProjectListingBlockSliceVariation = ProjectListingBlockSliceDefault
  *
  */
 export type ProjectListingBlockSlice = prismicT.SharedSlice<'project_listing_block', ProjectListingBlockSliceVariation>
+
 /**
  * Primary content in ProjectPushBlock → Primary
  *
  */
 interface ProjectPushSliceDefaultPrimary {
-  /**
-   * Title field in *ProjectPushBlock → Primary*
-   *
-   * - **Field Type**: Title
-   * - **Placeholder**: This is where it all begins...
-   * - **API ID Path**: project_push.primary.title
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
-   *
-   */
-  title: prismicT.TitleField
-  /**
-   * Description field in *ProjectPushBlock → Primary*
-   *
-   * - **Field Type**: Rich Text
-   * - **Placeholder**: A nice description of your product
-   * - **API ID Path**: project_push.primary.description
-   * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
-   *
-   */
-  description: prismicT.RichTextField
-  /**
-   * Project field in *ProjectPushBlock → Primary*
-   *
-   * - **Field Type**: Content Relationship
-   * - **Placeholder**: *None*
-   * - **API ID Path**: project_push.primary.project
-   * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
-   *
-   */
-  project: prismicT.RelationField<'project' | 'page'>
+    /**
+     * Title field in *ProjectPushBlock → Primary*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project_push.primary.title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    title: prismicT.KeyTextField
+    /**
+     * Description field in *ProjectPushBlock → Primary*
+     *
+     * - **Field Type**: Rich Text
+     * - **Placeholder**: A nice description of your product
+     * - **API ID Path**: project_push.primary.description
+     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     *
+     */
+    description: prismicT.RichTextField
+    /**
+     * Project field in *ProjectPushBlock → Primary*
+     *
+     * - **Field Type**: Content Relationship
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project_push.primary.project
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    project: prismicT.RelationField<'project' | 'page'>
+    /**
+     * Cta label field in *ProjectPushBlock → Primary*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: Voir mon projet
+     * - **API ID Path**: project_push.primary.cta_label
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    cta_label: prismicT.KeyTextField
 }
+
 /**
  * Default variation for ProjectPushBlock Slice
  *
@@ -634,9 +735,9 @@ interface ProjectPushSliceDefaultPrimary {
  *
  */
 export type ProjectPushSliceDefault = prismicT.SharedSliceVariation<
-  'default',
-  Simplify<ProjectPushSliceDefaultPrimary>,
-  never
+    'default',
+    Simplify<ProjectPushSliceDefaultPrimary>,
+    never
 >
 /**
  * Slice variation for *ProjectPushBlock*
@@ -652,32 +753,34 @@ type ProjectPushSliceVariation = ProjectPushSliceDefault
  *
  */
 export type ProjectPushSlice = prismicT.SharedSlice<'project_push', ProjectPushSliceVariation>
+
 /**
  * Item in SketchBookBlock → Items
  *
  */
 export interface SketchBookSliceDefaultItem {
-  /**
-   * Media field in *SketchBookBlock → Items*
-   *
-   * - **Field Type**: Image
-   * - **Placeholder**: *None*
-   * - **API ID Path**: sketch_book.items[].media
-   * - **Documentation**: https://prismic.io/docs/core-concepts/image
-   *
-   */
-  media: prismicT.ImageField<never>
-  /**
-   * Name field in *SketchBookBlock → Items*
-   *
-   * - **Field Type**: Text
-   * - **Placeholder**: *None*
-   * - **API ID Path**: sketch_book.items[].name
-   * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
-   *
-   */
-  name: prismicT.KeyTextField
+    /**
+     * Media field in *SketchBookBlock → Items*
+     *
+     * - **Field Type**: Image
+     * - **Placeholder**: *None*
+     * - **API ID Path**: sketch_book.items[].media
+     * - **Documentation**: https://prismic.io/docs/core-concepts/image
+     *
+     */
+    media: prismicT.ImageField<never>
+    /**
+     * Name field in *SketchBookBlock → Items*
+     *
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
+     * - **API ID Path**: sketch_book.items[].name
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
+     *
+     */
+    name: prismicT.KeyTextField
 }
+
 /**
  * Default variation for SketchBookBlock Slice
  *
@@ -687,9 +790,9 @@ export interface SketchBookSliceDefaultItem {
  *
  */
 export type SketchBookSliceDefault = prismicT.SharedSliceVariation<
-  'default',
-  Record<string, never>,
-  Simplify<SketchBookSliceDefaultItem>
+    'default',
+    Record<string, never>,
+    Simplify<SketchBookSliceDefaultItem>
 >
 /**
  * Slice variation for *SketchBookBlock*
@@ -706,49 +809,53 @@ type SketchBookSliceVariation = SketchBookSliceDefault
  */
 export type SketchBookSlice = prismicT.SharedSlice<'sketch_book', SketchBookSliceVariation>
 declare module '@prismicio/client' {
-  interface CreateClient {
-    (repositoryNameOrEndpoint?: string, options?: CustomTypesClientConfig): typeof CustomTypesClient
-  }
-  namespace Content {
-    export type {
-      MainMenuDocumentData,
-      MainMenuDocumentDataLinksItem,
-      MainMenuDocument,
-      PageDocumentData,
-      PageDocumentDataSlicesSlice,
-      PageDocument,
-      ProjectDocumentData,
-      ProjectDocumentDataTagsItem,
-      ProjectDocument,
-      SettingsDocumentData,
-      SettingsDocumentDataSocialsItem,
-      SettingsDocument,
-      AllDocumentTypes,
-      AboutBlockSliceDefaultPrimary,
-      AboutBlockSliceDefault,
-      AboutBlockSliceVariation,
-      AboutBlockSlice,
-      ContactBlockSliceDefaultPrimary,
-      ContactBlockSliceDefault,
-      ContactBlockSliceVariation,
-      ContactBlockSlice,
-      LoadingImageSliceDefaultItem,
-      LoadingImageSliceDefault,
-      LoadingImageSliceVariation,
-      LoadingImageSlice,
-      ProjectListingBlockSliceDefaultPrimary,
-      ProjectListingBlockSliceDefaultItem,
-      ProjectListingBlockSliceDefault,
-      ProjectListingBlockSliceVariation,
-      ProjectListingBlockSlice,
-      ProjectPushSliceDefaultPrimary,
-      ProjectPushSliceDefault,
-      ProjectPushSliceVariation,
-      ProjectPushSlice,
-      SketchBookSliceDefaultItem,
-      SketchBookSliceDefault,
-      SketchBookSliceVariation,
-      SketchBookSlice,
+    interface CreateClient {
+        (repositoryNameOrEndpoint?: string, options?: CustomTypesClientConfig): typeof CustomTypesClient
     }
-  }
+
+    namespace Content {
+        export type {
+            MainMenuDocumentData,
+            MainMenuDocumentDataLinksItem,
+            MainMenuDocument,
+            PageDocumentData,
+            PageDocumentDataSlicesSlice,
+            PageDocument,
+            ProjectDocumentData,
+            ProjectDocumentDataTagsItem,
+            ProjectDocument,
+            SettingsDocumentData,
+            SettingsDocumentDataSocialsItem,
+            SettingsDocument,
+            AllDocumentTypes,
+            AboutBlockSliceDefaultPrimary,
+            AboutBlockSliceDefault,
+            AboutBlockSliceVariation,
+            AboutBlockSlice,
+            ContactBlockSliceDefaultPrimary,
+            ContactBlockSliceDefault,
+            ContactBlockSliceVariation,
+            ContactBlockSlice,
+            LoadingImageSliceDefaultItem,
+            LoadingImageSliceDefault,
+            LoadingImageSliceVariation,
+            LoadingImageSlice,
+            ProjectListingBlockSliceDefaultPrimary,
+            ProjectListingBlockSliceDefaultItem,
+            ProjectListingBlockSliceDefault,
+            ProjectListingBlockSliceLayoutGridPrimary,
+            ProjectListingBlockSliceLayoutGridItem,
+            ProjectListingBlockSliceLayoutGrid,
+            ProjectListingBlockSliceVariation,
+            ProjectListingBlockSlice,
+            ProjectPushSliceDefaultPrimary,
+            ProjectPushSliceDefault,
+            ProjectPushSliceVariation,
+            ProjectPushSlice,
+            SketchBookSliceDefaultItem,
+            SketchBookSliceDefault,
+            SketchBookSliceVariation,
+            SketchBookSlice,
+        }
+    }
 }

@@ -1,64 +1,89 @@
 <script lang="ts">
 import Vue from 'vue'
-import type { VNode, VNodeData } from 'vue'
+import type { PropType, VNode, VNodeData } from 'vue'
+import type { PrismicDocument } from '@prismicio/types'
+import { ContentRelationshipField } from '@prismicio/types/src/value/contentRelationship'
+import type { Document } from '@prismicio/client/types/documents'
+import { BasicDocumentData } from '~/types/prismic/app-prismic'
+import { hasType, hasUid, isInternalLinkFulled, isPrismicDocument } from '~/types/prismic/prismic-guard'
+import { isProjectDocument } from '~/utils/prismic/entity'
+import NodeUid from '~/constants/node-uid'
 
 type CustomVNodeData = VNodeData & Required<Pick<VNodeData, 'props' | 'attrs'>>
+
+type PrismicDocumentLink = Document | PrismicDocument | ContentRelationshipField | { [key: string]: any }
 
 const DEFAULT_LABEL = 'En voir plus'
 
 export default Vue.extend({
-  name: 'VLink',
-  functional: true,
-  props: {
-    label: {
-      type: [String, Boolean],
-      default: undefined,
+    name: 'VLink',
+    functional: true,
+    props: {
+        label: {
+            type: [String, Boolean],
+            default: undefined,
+        },
+        href: String,
+        to: Object as PropType<PrismicDocumentLink>,
     },
-    url: String,
-  },
-  render(createElement, context): VNode | VNode[] {
-    const url = context.props.url
+    render(createElement, context): VNode | VNode[] {
+        const { href, to } = context.props
 
-    if (!url) {
-      return (
-        context.scopedSlots.default?.({ label: context.props.label }) ||
-        context.slots()?.default ||
-        (context.props.label && createElement('span', [context.props.label])) ||
-        createElement('')
-      )
-    }
+        if (!href && !to) {
+            return (
+                context.scopedSlots.default?.({ label: context.props.label }) ||
+                context.slots()?.default ||
+                (context.props.label && createElement('span', [context.props.label])) ||
+                createElement('')
+            )
+        }
 
-    const data: CustomVNodeData = Object.assign({ props: {}, attrs: {} }, context.data)
-    const isRelative = url?.charAt(0) === '/'
-    const isInternal = (isRelative || url?.charAt(0) === '#') && !context.data.attrs?.target
-    const isExternal = !isInternal && !!url
-    const isDownload = !isInternal && !isExternal
-    let label: string | undefined | boolean = context.props.label
+        const isProject = to && (isPrismicDocument(to) || isInternalLinkFulled(to as any)) && isProjectDocument(to)
+        const isDocument = to && hasUid(to)
 
-    if (!label) {
-      label = DEFAULT_LABEL
-    }
+        let url = ''
+        if (isProject) {
+            url = `/${NodeUid.PROJECT_LISTING}/${to.uid}`
+        } else if (isDocument) {
+            url = to.uid
+        } else if (href) {
+            url = href
+        } else {
+            url = context.parent.$config.homePath
+        }
 
-    if (isInternal) {
-      data.props.to = url
-    } else if (isExternal) {
-      data.attrs = {
-        ...data.attrs,
-        href: url,
-        target: context.data.attrs?.target || '_blank',
-        rel: !isRelative && 'noopener',
-      }
-    }
+        const data: CustomVNodeData = Object.assign({ props: {}, attrs: {} }, context.data)
 
-    if (!data.attrs!.href && !data.props!.to) {
-      return context.slots()?.default || (label ? createElement('span', String(label)) : createElement(''))
-    }
+        const isRelative = isProject || isDocument
+        const isInternal = (isRelative || url?.charAt(0) === '#') && !context.data.attrs?.target
+        const isExternal = !isInternal && !!url
+        const isDownload = !isInternal && !isExternal
+        let label: string | undefined | boolean = context.props.label
 
-    return createElement(
-      isExternal || isDownload ? 'a' : 'nuxt-link',
-      data,
-      context.slots()?.default || (label && String(label)) || ''
-    )
-  },
+        if (!label) {
+            label = DEFAULT_LABEL
+        }
+
+        if (isInternal) {
+            data.props.to = url
+        } else if (isExternal) {
+            data.attrs = {
+                ...data.attrs,
+                href: url,
+                target: context.data.attrs?.target || '_blank',
+                rel: !isRelative && 'noopener',
+            }
+        }
+
+        if (!data.attrs!.href && !data.props!.to) {
+            return context.slots()?.default || (label ? createElement('span', String(label)) : createElement(''))
+        }
+
+        return createElement(
+            isExternal || isDownload ? 'a' : 'nuxt-link',
+            data,
+            context.slots()?.default || (label && String(label)) || ''
+        )
+    },
 })
 </script>

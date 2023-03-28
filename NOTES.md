@@ -11,7 +11,10 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 
 ### TODO
-* **(Setup)** Add storybook ? 
+* **(VCarousel)**: Add VCarouselLoop from modelec 
+* **(Config)** Register Prismic component (ex: PrismicRichText | SliceZone')
+* **(Config)** Fix "Could not find a declaration file for module '@prismicio/vue/components'." on build
+* **(Setup)** Add storybook ?
 * **(Setup)** Prettier vs EsLint conflict
 * **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_
 * **(Slice)**: CarouselMedia | RandomGridImage | *ProjectListing (layout: carousel || grid)*
