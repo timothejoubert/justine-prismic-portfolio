@@ -16,9 +16,14 @@
                 :class="$style.list"
                 wrapper-tag="ul"
             >
-                <li v-for="(project, i) in projectsData" :key="project.uid" :class="$style.project">
-                    <v-link :url="getProjectUrl(project.uid)">
-                        <v-project-card :index="i" :project="project" :length="projects.length" :class="$style.card" />
+                <li v-for="(project, i) in projects" :key="project.uid" :class="$style.project">
+                    <v-link :reference="project">
+                        <v-project-card
+                            :index="i"
+                            :project="project.data"
+                            :length="projects.length"
+                            :class="$style.card"
+                        />
                     </v-link>
                 </li>
             </v-carousel>
@@ -31,8 +36,6 @@ import mixins from 'vue-typed-mixins'
 import { CarouselOptions } from '~/components/organisms/VCarousel/VCarousel.vue'
 import PageProvider from '~/mixins/PageProvider'
 import ProjectsMutation from '~/mixins/ProjectsMutation'
-import { ProjectCardData } from '~/types/prismic/app-prismic'
-import NodeUid from '~/constants/node-uid'
 
 export default mixins(PageProvider, ProjectsMutation).extend({
     name: 'VProjectList',
@@ -44,14 +47,6 @@ export default mixins(PageProvider, ProjectsMutation).extend({
     computed: {
         hasProject(): boolean {
             return !!this.projects?.length
-        },
-        projectsData(): ProjectCardData[] {
-            return this.projects.map((project) => {
-                return {
-                    ...project.data,
-                    uid: project.uid || '',
-                }
-            })
         },
         carouselOptions(): CarouselOptions {
             return {
@@ -66,11 +61,6 @@ export default mixins(PageProvider, ProjectsMutation).extend({
                 },
                 loop: true,
             }
-        },
-    },
-    methods: {
-        getProjectUrl(uid: string) {
-            return `/${NodeUid.PROJECT_LISTING}/${uid}`
         },
     },
 })

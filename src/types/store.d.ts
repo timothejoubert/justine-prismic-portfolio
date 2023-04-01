@@ -7,6 +7,7 @@ interface RootState {
     settings: SettingsDocument | null
     mainMenu: MainMenuDocument | null
     projects: PrismicDocument[] | null
+    currentPageData: PrismicDocument | null
 
     // Global
     windowWidth: number

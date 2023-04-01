@@ -1,4 +1,4 @@
-import NodeUid from "~/constants/node-uid";
+import NodeUid from '~/constants/node-uid'
 
 export const slugify = (text: string | null | undefined): string => {
     return text
@@ -14,8 +14,8 @@ export const slugify = (text: string | null | undefined): string => {
     // .replace(/\-\-+/g, '-') // Replace multiple - with single -
 }
 
-export const clamp = (number: number, min: number, max: number): number => {
-    return Math.max(min, Math.min(number, max))
+export const clamp = (value: number, min: number, max: number): number => {
+    return Math.max(min, Math.min(value, max))
 }
 
 export const mapRange = (value: number, a: number, b: number, c: number, d: number): number => {
@@ -69,5 +69,3 @@ export const stringDateToYear = (date: string | null, position: number = 0, sepa
     const items = date.split(separator)
     return Number(items[position])
 }
-
-

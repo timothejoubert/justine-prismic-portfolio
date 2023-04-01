@@ -3,8 +3,7 @@ enum MutationType {
     SET_MAIN_MENU = 'setMainMenu',
     SET_SETTINGS = 'setSettings',
     SET_PROJECTS = 'setProjects',
-    // data
-    HEAD_DATA = 'headData',
+    CURRENT_PAGE_DATA = 'setCurrentPageData',
     // loading
     SPLASH_SCREEN_FINISH = 'splashScreenFinish',
     ANIMATION_ENTER = 'animationEnter',
@@ -13,7 +12,7 @@ enum MutationType {
     WINDOW_WIDTH = 'windowWidth',
     WINDOW_HEIGHT = 'windowHeight',
     ERROR_PAGE = 'errorPage',
-    PREFERS_REDUCED_MOTION = 'prefersReducedMotion'
+    PREFERS_REDUCED_MOTION = 'prefersReducedMotion',
 }
 
 export default MutationType

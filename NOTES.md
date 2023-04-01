@@ -10,19 +10,25 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 [DOC](https://prismic.io/docs/technical-reference/prismic-cli)
 
+### IN PROGRESS
+
+* **(Slice)**: RandomGridImage
+* **(Project)**: Project link or url path don't work
+* **(Setup)**: Clean prismic/utils files and methods names
+* **(VLink && VButton)**: add PrismicLink && PrismicDocument
+* **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_
+
 ### TODO
 
-* **(VCarousel)**: Add VCarouselLoop from modelec
-* **(Config)** Fix TS error type on build
 * **(Config)** Register Prismic component (ex: PrismicRichText | SliceZone')
 * **(Setup)** Add storybook ?
-* **(Setup)** Prettier vs EsLint conflict
-* **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_
-* **(Slice)**: CarouselMedia | RandomGridImage | *ProjectListing (layout: carousel || grid)*
-* **(VLink && VButton)**: add PrismicLink && PrismicDocument
+* **(Slice)**: CarouselMedia | RandomGridImage | ProjectListing (layout: carousel && grid)
+* **(VCarousel)**: Add VCarouselLoop from modelec
 
 #### DONE
 
+* **(Setup)** Prettier vs EsLint conflict
+* **(Config)** Fix TS error type on build
 * **(Config)** Fix "Could not find a declaration file for module '@prismicio/vue/components'." on build
 * **(Data)**: Sync prismic-repo data with local
 * **(Config)**: Set esLint on save

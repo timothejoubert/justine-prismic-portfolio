@@ -7,7 +7,7 @@ import EventType from '~/constants/event-type'
 export default Vue.extend({
     data() {
         return {
-            resizeCallback: throttle(200, (this as any).onResize),
+            resizeCallback: throttle(200, this.onResize),
         }
     },
     beforeMount() {

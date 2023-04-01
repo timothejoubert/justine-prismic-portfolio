@@ -16,7 +16,7 @@ export default Vue.extend({
         // TODO: Ordering project by date
         // https://prismic.io/docs/technical-reference/prismicio-client?version=v5#query-options
 
-        if (projects?.length) console.log('projects already in state', projects)
+        // if (projects?.length) console.log('projects already in state', projects)
 
         if (!projects) {
             try {
@@ -25,7 +25,7 @@ export default Vue.extend({
                     .then((response) => response.results)
 
                 this.$store.commit(MutationType.SET_PROJECTS, projects)
-                console.log('set project in state', projects)
+                // console.log('set project in state', projects)
             } catch (error) {
                 console.log('error when loading projects', error)
             }

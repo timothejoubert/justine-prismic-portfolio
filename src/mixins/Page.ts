@@ -1,16 +1,13 @@
 import type { MetaInfo } from 'vue-meta'
 import Vue from 'vue'
-import * as prismicT from '@prismicio/types'
 import { Context } from '@nuxt/types'
 import { FacebookMetaOptions, PageMetaPropertyName, TwitterMetaOptions } from '~/types/meta'
 import { createFacebookMeta } from '~/utils/meta/facebook'
 import { createTwitterMeta } from '~/utils/meta/twitter'
-import { isProjectDocument } from '~/utils/prismic/entity'
 import { MainPageData } from '~/types/prismic/app-prismic'
 import NodeUid from '~/constants/node-uid'
 import mockData from '~/static/mock-data/page-data-fallback.json'
 import { getProjectUid } from '~/utils/prismic/project'
-import { isAbout, isHomePage, isProjectListing, isSketchBooks } from '~/utils/prismic/document'
 
 export default Vue.extend({
     // middleware({ req, redirect }: Context) {
@@ -19,13 +16,16 @@ export default Vue.extend({
     //     const slugifyPath = req.url.replace(/\s+/g, '-').toLowerCase();
     //     if (slugifyPath !== req.url) return redirect(slugifyPath)
     // },
-    async asyncData({ $prismic, params }: Context) {
+    async asyncData({ $prismic, params, store }: Context) {
         let page
 
         const projectUid = getProjectUid(params)
         const parameter = params?.uid || projectUid
 
-        console.log(params)
+        console.log('params', parameter, getProjectUid(params))
+        console.log('fetch page in async data mixin')
+
+        // TODO: if project => check if already store in state
 
         try {
             if (parameter) page = await $prismic.api.getByUID('page', parameter)
@@ -35,6 +35,8 @@ export default Vue.extend({
             console.log('failed on asyncData page', error)
         }
 
+        await store.dispatch('updatePageData', page)
+        console.log('current page', page)
         if (page) return { page }
         return { page: mockData }
 
@@ -84,24 +86,6 @@ export default Vue.extend({
                 this.$asText(this.$store.state.settings?.data?.description) ||
                 'fallback description in page'
             )
-        },
-        isHome(): boolean {
-            return isHomePage(this.page)
-        },
-        isProjectListing(): boolean {
-            return isProjectListing(this.page)
-        },
-        isSketchBook(): boolean {
-            return isSketchBooks(this.page)
-        },
-        isAbout(): boolean {
-            return isAbout(this.page)
-        },
-        isProjectPage(): boolean {
-            return isProjectDocument(this.page)
-        },
-        slices(): prismicT.SliceZone | [] {
-            return this.page.data?.slices
         },
     },
     methods: {

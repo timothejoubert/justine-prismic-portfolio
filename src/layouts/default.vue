@@ -6,7 +6,7 @@
         <!--      </transition>-->
         <!--    </template>-->
 
-        <nuxt-link to="/" :class="$style.title">
+        <nuxt-link v-if="!isHomePage" to="/" :class="$style.title">
             <h1 :class="$style.logo">{{ siteName }}</h1>
         </nuxt-link>
 
@@ -32,6 +32,7 @@ import mixins from 'vue-typed-mixins'
 import Resize from '~/mixins/Resize'
 import MutationType from '~/constants/mutation-type'
 import SplashScreen from '~/mixins/SplashScreen'
+import { isHomePage } from '~/utils/prismic/document'
 
 export default mixins(Resize, SplashScreen).extend({
     name: 'default',
@@ -44,6 +45,9 @@ export default mixins(Resize, SplashScreen).extend({
     computed: {
         siteName(): string {
             return this.$store.state.settings.data.site_name
+        },
+        isHomePage(): boolean {
+            return isHomePage(this.$store.state.currentPageData)
         },
     },
 })
@@ -64,7 +68,7 @@ export default mixins(Resize, SplashScreen).extend({
 .title {
     position: fixed;
     z-index: 101;
-    top: rem(40);
+    top: layout(top-bar-top);
     left: 50%;
     transform: translateX(-50%);
 }
