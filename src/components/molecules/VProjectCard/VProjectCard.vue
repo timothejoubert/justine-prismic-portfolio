@@ -1,6 +1,6 @@
 <template>
     <div :class="$style.root">
-        <v-button :class="$style.counter" tag="div" filled theme="orange" size="xs">
+        <v-button v-if="displayNumber" :class="$style.counter" tag="div" filled theme="orange" size="xs">
             <template #default>
                 <span :class="$style.current">{{ formatValue(index + 1) }}</span>
                 <div :class="$style.length">{{ formatValue(length) }}</div>
@@ -27,6 +27,7 @@ export default mixins(CarouselSlide).extend({
         project: Object as PropType<ProjectData>,
         length: Number,
         index: Number,
+        displayNumber: Boolean,
     },
     computed: {
         year(): number | null {

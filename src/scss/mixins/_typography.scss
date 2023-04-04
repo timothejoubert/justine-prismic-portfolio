@@ -26,14 +26,9 @@
 }
 
 @mixin text-h5 {
-    font-size: rem(58);
+    font-size: rem(48);
     line-height: 1;
-    font-weight: 600;
-}
-
-@mixin text-h6 {
-    font-size: 24px;
-    line-height: 1;
+    font-weight: 550;
 }
 
 @mixin text-accent {
@@ -52,10 +47,10 @@
 }
 
 @mixin over-title-m {
-    font-size: 15px;
-    font-weight: 900;
+    font-size: rem(20);
+    font-weight: 300;
     line-height: 1;
-    text-transform: uppercase;
+    //text-transform: uppercase;
 }
 
 @mixin over-title-s {
@@ -89,7 +84,7 @@
 }
 
 @mixin text-body-s {
-    font-size: 12px;
+    font-size: rem(19);
     font-weight: 300;
     line-height: 1.4;
 }

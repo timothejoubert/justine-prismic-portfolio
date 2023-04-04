@@ -54,10 +54,10 @@ export default Vue.extend({
     overflow: hidden;
     width: clamp(400px, 40%, 620px);
     flex-shrink: 0;
-    border-radius: layout(border-radius);
+    border-radius: app(border-radius);
 
     @include media('>=md') {
-        margin-right: layout(gutter) * 2;
+        margin-right: app(gutter) * 2;
     }
 }
 

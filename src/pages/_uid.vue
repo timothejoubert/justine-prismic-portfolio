@@ -17,36 +17,12 @@
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
 // import SliceZone from '@prismicio/vue/dist/prismic-vue'
-import * as prismicT from '@prismicio/types'
 import { components } from '~/../slices'
 import Page from '~/mixins/Page'
-import { isAbout, isHomePage, isProjectListing, isSketchBooks } from '~/utils/prismic/document'
-import { isProjectDocument } from '~/utils/prismic/entity'
 
 export default mixins(Page).extend({
     data() {
         return { components }
-    },
-    computed: {
-        isHome(): boolean {
-            return !!this.page && isHomePage(this.page)
-        },
-        isProjectListing(): boolean {
-            return !!this.page && isProjectListing(this.page)
-        },
-        isSketchBook(): boolean {
-            return !!this.page && isSketchBooks(this.page)
-        },
-        isAbout(): boolean {
-            return !!this.page && isAbout(this.page)
-        },
-        isProjectPage(): boolean {
-            console.log('check project page, zehbfhzebf jzeh')
-            return !!this.page && isProjectDocument(this.page)
-        },
-        slices(): prismicT.SliceZone | [] {
-            return !!this.page && this.page.data?.slices
-        },
     },
 })
 </script>

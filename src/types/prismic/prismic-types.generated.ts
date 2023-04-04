@@ -195,6 +195,17 @@ interface ProjectDocumentData {
      *
      */
     tags: prismicT.GroupField<Simplify<ProjectDocumentDataTagsItem>>
+    /**
+     * gallery field in *Project*
+     *
+     * - **Field Type**: Group
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project.gallery[]
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/group
+     *
+     */
+    gallery: prismicT.GroupField<Simplify<ProjectDocumentDataGalleryItem>>
 }
 
 /**
@@ -212,6 +223,23 @@ export interface ProjectDocumentDataTagsItem {
      *
      */
     label: prismicT.KeyTextField
+}
+
+/**
+ * Item in Project → gallery
+ *
+ */
+export interface ProjectDocumentDataGalleryItem {
+    /**
+     * media field in *Project → gallery*
+     *
+     * - **Field Type**: Link to Media
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project.gallery[].media
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    media: prismicT.LinkToMediaField
 }
 
 /**
@@ -823,6 +851,7 @@ declare module '@prismicio/client' {
             PageDocument,
             ProjectDocumentData,
             ProjectDocumentDataTagsItem,
+            ProjectDocumentDataGalleryItem,
             ProjectDocument,
             SettingsDocumentData,
             SettingsDocumentDataSocialsItem,

@@ -7,7 +7,7 @@ import type { Document } from '@prismicio/client/types/documents'
 import { hasUid, isPrismicDocument } from '~/types/prismic/prismic-guard'
 import { isProjectDocument } from '~/utils/prismic/entity'
 import NodeUid from '~/constants/node-uid'
-import { isInternalRelationLinkWithUidFulled } from '~/utils/prismic/fields'
+import { isInternalRelationLinkWithUidFulled } from '~/utils/prismic/field-relation'
 
 type CustomVNodeData = VNodeData & Required<Pick<VNodeData, 'props' | 'attrs'>>
 

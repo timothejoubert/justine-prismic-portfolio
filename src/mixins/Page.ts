@@ -1,6 +1,7 @@
 import type { MetaInfo } from 'vue-meta'
 import Vue from 'vue'
 import { Context } from '@nuxt/types'
+import * as prismicT from '@prismicio/types'
 import { FacebookMetaOptions, PageMetaPropertyName, TwitterMetaOptions } from '~/types/meta'
 import { createFacebookMeta } from '~/utils/meta/facebook'
 import { createTwitterMeta } from '~/utils/meta/twitter'
@@ -8,6 +9,8 @@ import { MainPageData } from '~/types/prismic/app-prismic'
 import NodeUid from '~/constants/node-uid'
 import mockData from '~/static/mock-data/page-data-fallback.json'
 import { getProjectUid } from '~/utils/prismic/project'
+import { isAbout, isHomePage, isProjectListing, isSketchBooks } from '~/utils/prismic/document'
+import { isProjectDocument } from '~/utils/prismic/entity'
 
 export default Vue.extend({
     // middleware({ req, redirect }: Context) {
@@ -86,6 +89,24 @@ export default Vue.extend({
                 this.$asText(this.$store.state.settings?.data?.description) ||
                 'fallback description in page'
             )
+        },
+        isHome(): boolean {
+            return !!this.page && isHomePage(this.page)
+        },
+        isProjectListing(): boolean {
+            return !!this.page && isProjectListing(this.page)
+        },
+        isSketchBook(): boolean {
+            return !!this.page && isSketchBooks(this.page)
+        },
+        isAbout(): boolean {
+            return !!this.page && isAbout(this.page)
+        },
+        isProjectPage(): boolean {
+            return !!this.page && isProjectDocument(this.page)
+        },
+        slices(): prismicT.SliceZone | [] {
+            return !!this.page && this.page.data?.slices
         },
     },
     methods: {

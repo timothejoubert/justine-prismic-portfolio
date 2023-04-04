@@ -95,27 +95,33 @@ export default mixins(Carousel, Vue as VueConstructor<Component>).extend({
             this.autoplay = mediaIsMin('md') && !this.prefersReducedMotion
 
             if (this.autoplay) {
-                if (this.isVisible && !this.hadInteraction) this.timeline?.resume()
+                if (this.isVisible && !this.hadInteraction) this.resume()
             } else {
-                this.timeline?.pause()
+                this.pause()
             }
         },
         onTimelineChange(_item: HTMLElement, index: number) {
             this.$emit('input', index)
         },
         onMouseEnter() {
-            this.timeline?.pause()
+            this.pause()
         },
         onMouseLeave() {
-            if (!this.hadInteraction && this.autoplay) this.timeline?.resume()
+            if (this.autoplay) this.resume()
         },
-        // onTouchStart() {
-        //     this.hadInteraction = true
-        //     this.timeline?.pause()
-        // },
-        // onTouchEnd() {
-        //     if (!this.hadInteraction) this.timeline?.resume()
-        // },
+        onTouchStart() {
+            this.hadInteraction = true
+            this.timeline?.pause()
+        },
+        onTouchEnd() {
+            if (!this.hadInteraction) this.resume()
+        },
+        resume() {
+            this.timeline?.resume()
+        },
+        pause() {
+            this.timeline?.pause()
+        },
         onIntersectionObserverChange(entries: IntersectionObserverEntry[]) {
             this.isVisible = entries[0].isIntersecting
         },
@@ -130,7 +136,6 @@ export default mixins(Carousel, Vue as VueConstructor<Component>).extend({
 <style lang="scss" module>
 .root {
     display: flex;
-    overflow: hidden;
     margin-inline: calc(var(--gutter) * -1);
     padding-inline: var(--gutter);
     user-select: none;

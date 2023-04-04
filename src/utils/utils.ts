@@ -64,7 +64,11 @@ export function generateId(): string {
     ).replace(/\./g, '')
 }
 
-export const stringDateToYear = (date: string | null, position: number = 0, separator: string = '-'): number | null => {
+export const stringDateToYear = (
+    date: string | null | undefined,
+    position: number = 0,
+    separator: string = '-'
+): number | null => {
     if (!date) return null
     const items = date.split(separator)
     return Number(items[position])

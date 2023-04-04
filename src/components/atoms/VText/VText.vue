@@ -13,7 +13,7 @@ export default Vue.extend({
     // functional: true,
     props: {
         tag: { type: String, default: 'div' },
-        content: [String, Array] as PropType<String | prismicT.RichTextField[]>,
+        content: [String, Array] as PropType<String | prismicT.RichTextField>,
     },
 })
 </script>

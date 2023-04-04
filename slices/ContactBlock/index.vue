@@ -1,7 +1,12 @@
 <template>
     <section :class="$style.root">
-        <div v-if="slice.primary.title" :class="$style.title">{{ slice.primary.title }}</div>
-        <prismic-rich-text :field="slice.primary.description" :class="$style.description" class="text-body-m" />
+        <v-text v-if="slice.primary.title" :class="$style.title" :content="slice.primary.title" />
+        <v-text
+            v-if="slice.primary.description"
+            :content="slice.primary.description"
+            :class="$style.description"
+            class="text-body-m"
+        />
         <div v-if="contactContent" :class="$style.contact" class="text-h5" @click="onClick">
             {{ contactContent }}
         </div>

@@ -54,7 +54,7 @@ export default mixins(Resize, SplashScreen).extend({
 </script>
 <style lang="scss" module>
 .root {
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .nav {
@@ -68,7 +68,7 @@ export default mixins(Resize, SplashScreen).extend({
 .title {
     position: fixed;
     z-index: 101;
-    top: layout(top-bar-top);
+    top: app(top-bar-top);
     left: 50%;
     transform: translateX(-50%);
 }

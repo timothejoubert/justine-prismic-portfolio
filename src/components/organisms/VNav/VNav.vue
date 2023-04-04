@@ -41,7 +41,7 @@ import NodeUid from '~/constants/node-uid'
 import { isHomeRoute } from '~/utils/prismic/type-check'
 import { isHomePage } from '~/utils/prismic/document'
 import { getProjectUid } from '~/utils/prismic/project'
-import { getRelationLinkUid } from '~/utils/prismic/fields'
+import { getRelationLinkUid } from '~/utils/prismic/field-relation'
 
 export default mixins(ThemeProvider).extend({
     name: 'VNav',

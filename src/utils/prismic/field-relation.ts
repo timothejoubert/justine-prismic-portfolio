@@ -3,7 +3,7 @@ import {
     ContentRelationshipField,
     FilledContentRelationshipField,
 } from '@prismicio/types/src/value/contentRelationship'
-import { FilledLinkToWebField, LinkField } from '@prismicio/types/src/value/link'
+import { FilledLinkToWebField } from '@prismicio/types/src/value/link'
 import { LinkToMediaField } from '@prismicio/types/src/value/linkToMedia'
 
 type GlobalLinkFulled = {

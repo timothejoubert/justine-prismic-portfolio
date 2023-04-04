@@ -1,10 +1,10 @@
 <template>
     <section :class="$style.root">
         <v-link :reference="slice.primary.project">
-            <prismic-image v-if="image" :field="image" :class="$style.image" />
+            <prismic-image v-if="image" ref="image" :field="image" :class="$style.image" />
             <div :class="$style.content">
-                <v-text :class="$style.title" class="text-h4" :content="slice.primary.title" />
-                <v-text class="over-title-l" :content="slice.primary.description" />
+                <v-text :class="$style.title" class="text-h5" :content="slice.primary.title" />
+                <v-text class="over-title-m" :content="slice.primary.description" />
                 <v-button :class="$style.cta" :label="linkLabel" theme="orange" size="l" filled />
             </div>
         </v-link>
@@ -16,6 +16,8 @@ import { getSliceComponentProps } from '@prismicio/vue/components'
 import * as prismicT from '@prismicio/types'
 import Vue from 'vue'
 import { Document } from '@prismicio/client/types/documents'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ProjectData } from '~/types/prismic/app-prismic'
 
 export default Vue.extend({
@@ -46,6 +48,29 @@ export default Vue.extend({
             return !!this.project?.data?.thumbnail && this.project.data.thumbnail
         },
     },
+    mounted() {
+        this.initScrollAnimation()
+    },
+    methods: {
+        initScrollAnimation() {
+            gsap.registerPlugin(ScrollTrigger)
+            const root = this.$el as HTMLElement
+            const image = this.$refs.image as HTMLElement
+
+            if (!root || !image) return
+            gsap.to(image, {
+                scrollTrigger: {
+                    markers: true,
+                    trigger: root,
+                    scrub: true,
+                    start: 'top bottom',
+                    end: 'top',
+                },
+                scale: 1.1,
+                ease: 'none',
+            })
+        },
+    },
 })
 </script>
 
@@ -53,17 +78,31 @@ export default Vue.extend({
 .root {
     position: relative;
     overflow: hidden;
-    height: calc(100vh - #{layout(padding) * 2});
+    height: calc(100vh - #{rem(170)});
     margin-bottom: rem(200);
     background: #f7f7f7;
-    border-radius: layout(border-radius);
+    border-radius: app(border-radius);
+    margin-inline: app(gutter);
 
-    &::before {
+    &::before,
+    &::after {
         position: absolute;
-        background: linear-gradient(transparent 60%, rgba(#000, 0.15));
         content: '';
         inset: 0;
         pointer-events: none;
+    }
+
+    &::before {
+        background: linear-gradient(to top, rgba(#000, 0.25), transparent 30%);
+    }
+
+    &::after {
+        background: linear-gradient(to top, rgba(#000, 0), rgba(#000, 0.1));
+        transition: opacity 0.6s;
+    }
+
+    &:hover::after {
+        opacity: 0;
     }
 }
 
@@ -74,7 +113,7 @@ export default Vue.extend({
 }
 
 .content {
-    $space: #{calc(layout(padding) * 1.5)};
+    $space: #{calc(app(padding) * 1)};
 
     position: absolute;
     inset: inherit $space $space $space;
@@ -86,7 +125,7 @@ export default Vue.extend({
 
 .description,
 .title {
-    width: clamp(375px, 35%, 650px);
+    width: clamp(#{rem(360), 40%, rem(450)});
 }
 
 .cta {

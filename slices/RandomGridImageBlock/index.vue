@@ -151,14 +151,14 @@ $rowHeight: var(--height-row, 140px);
 
 .root {
     position: relative;
-    left: calc(#{layout(padding) * -1});
+    left: calc(#{app(padding) * -1});
     display: grid;
-    width: calc(100% + #{layout(padding) * 2});
-    height: calc(100vh - #{layout(padding) * 2});
+    width: calc(100% + #{app(padding) * 2});
+    height: calc(100vh - #{app(padding) * 2});
     align-items: center;
     justify-content: center;
-    padding: layout(padding);
-    margin-top: layout(padding);
+    padding: app(padding);
+    margin-top: app(padding);
     grid-template-columns: repeat(var(--column-length), minmax(0, $columnWidth));
     grid-template-rows: repeat(var(--row-length), minmax(0, $rowHeight));
 
@@ -167,7 +167,7 @@ $rowHeight: var(--height-row, 140px);
     //    position: absolute;
     //    z-index: -1;
     //    width: 100%;
-    //    min-height: calc(100vh - #{layout(padding) * 2});
+    //    min-height: calc(100vh - #{app(padding) * 2});
     //    background-color: #ececec;
     //    content: '';
     //    grid-column: 1 / -1;

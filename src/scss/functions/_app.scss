@@ -1,8 +1,8 @@
 @use 'sass:map';
 
-@function layout($key) {
-    @if map.has-key($layout, $key) {
-        @return map.get($layout, $key);
+@function app($key) {
+    @if map.has-key($app, $key) {
+        @return map.get($app, $key);
     }
 
     // stylelint-disable-next-line order/order

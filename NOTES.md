@@ -46,6 +46,7 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 #### RESOURCES
 
+[Augmenting Global Properties | Vue type](https://vuejs.org/guide/typescript/options-api.html#augmenting-global-properties)
 [Push changes to prismic](https://prismic.io/docs/slice-machine#push-changes-to-prismic)
 [Prismic nice tuto](https://www.hamedbahram.io/notes/prismic)
 [Import shim client type](https://github.com/prismicio/prismic-vue/issues/5#issuecomment-493795628)

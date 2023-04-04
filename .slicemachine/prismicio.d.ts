@@ -175,6 +175,17 @@ interface ProjectDocumentData {
      *
      */
     tags: prismicT.GroupField<Simplify<ProjectDocumentDataTagsItem>>;
+    /**
+     * gallery field in *Project*
+     *
+     * - **Field Type**: Group
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project.gallery[]
+     * - **Tab**: Main
+     * - **Documentation**: https://prismic.io/docs/core-concepts/group
+     *
+     */
+    gallery: prismicT.GroupField<Simplify<ProjectDocumentDataGalleryItem>>;
 }
 /**
  * Item in Project → Tags
@@ -191,6 +202,22 @@ export interface ProjectDocumentDataTagsItem {
      *
      */
     label: prismicT.KeyTextField;
+}
+/**
+ * Item in Project → gallery
+ *
+ */
+export interface ProjectDocumentDataGalleryItem {
+    /**
+     * media field in *Project → gallery*
+     *
+     * - **Field Type**: Link to Media
+     * - **Placeholder**: *None*
+     * - **API ID Path**: project.gallery[].media
+     * - **Documentation**: https://prismic.io/docs/core-concepts/link-content-relationship
+     *
+     */
+    media: prismicT.LinkToMediaField;
 }
 /**
  * Project document from Prismic
@@ -736,6 +763,6 @@ declare module "@prismicio/client" {
         (repositoryNameOrEndpoint: string, options?: prismic.ClientConfig): prismic.Client<AllDocumentTypes>;
     }
     namespace Content {
-        export type { MainMenuDocumentData, MainMenuDocumentDataLinksItem, MainMenuDocument, PageDocumentData, PageDocumentDataSlicesSlice, PageDocument, ProjectDocumentData, ProjectDocumentDataTagsItem, ProjectDocument, SettingsDocumentData, SettingsDocumentDataSocialsItem, SettingsDocument, AllDocumentTypes, AboutBlockSliceDefaultPrimary, AboutBlockSliceDefault, AboutBlockSliceVariation, AboutBlockSlice, ContactBlockSliceDefaultPrimary, ContactBlockSliceDefault, ContactBlockSliceVariation, ContactBlockSlice, ProjectListingBlockSliceDefaultPrimary, ProjectListingBlockSliceDefaultItem, ProjectListingBlockSliceDefault, ProjectListingBlockSliceLayoutGridPrimary, ProjectListingBlockSliceLayoutGridItem, ProjectListingBlockSliceLayoutGrid, ProjectListingBlockSliceVariation, ProjectListingBlockSlice, ProjectPushSliceDefaultPrimary, ProjectPushSliceDefault, ProjectPushSliceVariation, ProjectPushSlice, LoadingImageSliceDefaultItem, LoadingImageSliceDefault, LoadingImageSliceVariation, LoadingImageSlice, SketchBookSliceDefaultItem, SketchBookSliceDefault, SketchBookSliceVariation, SketchBookSlice };
+        export type { MainMenuDocumentData, MainMenuDocumentDataLinksItem, MainMenuDocument, PageDocumentData, PageDocumentDataSlicesSlice, PageDocument, ProjectDocumentData, ProjectDocumentDataTagsItem, ProjectDocumentDataGalleryItem, ProjectDocument, SettingsDocumentData, SettingsDocumentDataSocialsItem, SettingsDocument, AllDocumentTypes, AboutBlockSliceDefaultPrimary, AboutBlockSliceDefault, AboutBlockSliceVariation, AboutBlockSlice, ContactBlockSliceDefaultPrimary, ContactBlockSliceDefault, ContactBlockSliceVariation, ContactBlockSlice, ProjectListingBlockSliceDefaultPrimary, ProjectListingBlockSliceDefaultItem, ProjectListingBlockSliceDefault, ProjectListingBlockSliceLayoutGridPrimary, ProjectListingBlockSliceLayoutGridItem, ProjectListingBlockSliceLayoutGrid, ProjectListingBlockSliceVariation, ProjectListingBlockSlice, ProjectPushSliceDefaultPrimary, ProjectPushSliceDefault, ProjectPushSliceVariation, ProjectPushSlice, LoadingImageSliceDefaultItem, LoadingImageSliceDefault, LoadingImageSliceVariation, LoadingImageSlice, SketchBookSliceDefaultItem, SketchBookSliceDefault, SketchBookSliceVariation, SketchBookSlice };
     }
 }
