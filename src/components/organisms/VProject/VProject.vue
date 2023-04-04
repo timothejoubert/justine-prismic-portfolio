@@ -56,7 +56,7 @@ export default Vue.extend({
         },
         gallery(): FilledLinkToMediaField[] | undefined {
             if (!this.project.gallery?.length || !isGroupFulled(this.project.gallery)) return
-
+            // @ts-ignore
             return filteredMediaGroupByKey<FilledLinkToMediaField>(this.project.gallery, 'media')
         },
     },
@@ -75,15 +75,15 @@ export default Vue.extend({
 }
 
 .medias {
+    position: relative;
+    left: calc(#{app(gutter) * -1});
     max-width: 50%;
     height: 100vh;
-    left: calc(#{app(gutter) * -1});
-    position: relative;
 }
 
 .image {
-    object-fit: contain;
     height: 100%;
+    object-fit: contain;
 }
 
 .body {

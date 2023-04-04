@@ -8,7 +8,11 @@ export function isGroupFulled<T extends BasicFieldContent>(group: unknown): grou
 }
 
 export function filteredMediaGroupByKey<Field = BasicFieldContent>(group: Record<string, Field>, key: string): Field[] {
-    return isGroupFulled<Field>(group)
-        ? group.filter((groupKey) => key in groupKey).map((groupKey) => groupKey[key])
-        : []
+    // @ts-ignore
+    if (isGroupFulled<Field>(group)) {
+        // @ts-ignore
+        return group.filter((groupKey) => key in groupKey).map((groupKey) => groupKey[key]) // @ts-ignore
+    } else {
+        return []
+    }
 }
