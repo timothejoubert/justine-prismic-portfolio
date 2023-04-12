@@ -29,6 +29,7 @@ export default Vue.extend({
         console.log('fetch page in async data mixin')
 
         // TODO: if project => check if already store in state
+        // TODO fetch data from dispatch actions
 
         try {
             if (parameter) page = await $prismic.api.getByUID('page', parameter)

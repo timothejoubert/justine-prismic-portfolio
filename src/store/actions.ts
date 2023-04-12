@@ -16,7 +16,7 @@ const actions: ActionTree<RootState, RootState> = {
                 commit(MutationType.SET_MAIN_MENU, mainMenu)
                 commit(MutationType.SET_SETTINGS, settings)
             })
-            .catch((fetchError: any) => {
+            .catch((fetchError: Error) => {
                 console.log('failed to fetch mainMenu or setting', fetchError)
             })
     },
@@ -27,7 +27,6 @@ const actions: ActionTree<RootState, RootState> = {
         const mainMenu = context.$prismic.api.getSingle('main_menu' as CustomTypeName, {})
         const settings = context.$prismic.api.getSingle('settings' as CustomTypeName, {})
 
-        console.log('fetch Common content', mainMenu, settings)
         return Promise.all([mainMenu, settings])
     },
     updatePageData({ commit }: ActionContext<RootState, RootState>, data: PrismicDocument) {

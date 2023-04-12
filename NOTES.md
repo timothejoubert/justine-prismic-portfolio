@@ -12,6 +12,7 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 ### IN PROGRESS
 
+* **(Bug)**: PageProject error => mixin page not load when try to access project/slug.html ?
 * **(Slice)**: RandomGridImage
 * **(Project)**: Project link or url path don't work
 * **(Setup)**: Clean prismic/utils files and methods names

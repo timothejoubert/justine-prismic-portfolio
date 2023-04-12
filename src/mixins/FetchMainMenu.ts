@@ -8,9 +8,14 @@ export default Vue.extend({
         const pages = context.store.state.mainMenu
 
         if (!pages) {
-            await this.store.dispatch('getCommonContent', context).then(([mainMenu]: Array<MainMenu | Settings>) => {
-                context.store.commit(MutationType.SET_MAIN_MENU, mainMenu)
-            })
+            await this.store
+                .dispatch('getCommonContent', context)
+                .then(([mainMenu]: Array<MainMenu | Settings>) => {
+                    context.store.commit(MutationType.SET_MAIN_MENU, mainMenu)
+                })
+                .catch((fetchError: Error) => {
+                    console.log('error on FetchMainMenu mixin', fetchError)
+                })
         }
     },
 })
