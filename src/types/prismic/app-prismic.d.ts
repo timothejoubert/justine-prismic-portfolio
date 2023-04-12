@@ -1,7 +1,11 @@
 import { AnyRegularField } from '@prismicio/types/src/value/types'
 import { GroupField } from '@prismicio/types/src/value/group'
 import { SliceZone } from '@prismicio/types/src/value/sliceZone'
-import { AllDocumentTypes, MainMenuDocumentDataLinksItem } from '~/types/prismic/prismic-types.generated'
+import {
+    AllDocumentTypes,
+    MainMenuDocument,
+    MainMenuDocumentDataLinksItem,
+} from '~/types/prismic/prismic-types.generated'
 import type * as GeneratedTypes from '~/types/prismic/prismic-types.generated'
 
 // GLOBAL
@@ -23,3 +27,7 @@ export type ProjectCardData = ProjectData & { uid: string }
 export type MainMenuLinks = GeneratedTypes.MainMenuDocument
 export type MenuItemList = GeneratedTypes.MainMenuDocument['data']['links']
 export type MenuItem = MainMenuDocumentDataLinksItem
+
+// COMMON CONTENT
+export type Settings = GeneratedTypes.SettingsDocument
+export type MainMenu = GeneratedTypes.MainMenuDocument

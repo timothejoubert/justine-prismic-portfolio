@@ -1,9 +1,11 @@
 import Vue from 'vue'
-import type { PropType } from 'vue'
-import { MainPageData } from '~/types/prismic/app-prismic'
+import { PageData, ProjectData } from '~/types/prismic/app-prismic'
+import { getDocumentData } from '~/utils/prismic/parse-api-data'
 
 export default Vue.extend({
-    props: {
-        pageData: Object as PropType<MainPageData>,
+    computed: {
+        pageData(): PageData | ProjectData {
+            return getDocumentData<PageData | ProjectData>(this.$store.state.currentPageData)
+        },
     },
 })

@@ -1,6 +1,6 @@
 <template>
     <div :class="$style.root">
-        <nuxt-link :to="$config.homePath">
+        <nuxt-link v-if="pageData.title" :to="$config.homePath">
             <v-text ref="title" class="text-h1" :class="$style.title" :content="pageData.title" />
         </nuxt-link>
     </div>
@@ -16,7 +16,7 @@ import PageProvider from '~/mixins/PageProvider'
 export default mixins(PageProvider).extend({
     name: 'VHome',
     mounted() {
-        this.initScrollAnimation()
+        if (this.$refs.title) this.initScrollAnimation()
     },
     methods: {
         initScrollAnimation() {
