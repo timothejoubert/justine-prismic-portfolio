@@ -41,6 +41,8 @@ import { isHomePage } from '~/utils/prismic/document'
 import { getProjectUid } from '~/utils/prismic/project'
 import { getRelationLinkUid } from '~/utils/prismic/field-relation'
 import FetchMainMenu from '~/mixins/FetchMainMenu'
+import { getMenuLinkList } from '~/utils/prismic/parse-api-data'
+import { MenuItem } from '~/types/prismic/app-prismic'
 
 export default mixins(ThemeProvider, FetchMainMenu).extend({
     name: 'VNav',
@@ -54,7 +56,6 @@ export default mixins(ThemeProvider, FetchMainMenu).extend({
             timeoutId: -1,
         }
     },
-
     computed: {
         rootClass(): (undefined | false | string)[] {
             return [
@@ -63,13 +64,16 @@ export default mixins(ThemeProvider, FetchMainMenu).extend({
                 typeof this.theme === 'string' && this.$style[`root--theme-${this.theme}`],
             ]
         },
+        pages(): MenuItem[] {
+            return getMenuLinkList(this.$store.state.mainMenu)
+        },
         isHome(): boolean {
             return isHomeRoute(this.$route.fullPath, this.$route.params?.uid)
         },
     },
     watch: {
-        selectedIndex(newIndex: number, oldIndex: number) {
-            this.updateIndicatorPosition(newIndex, oldIndex)
+        selectedIndex(newIndex: number) {
+            this.updateIndicatorPosition(newIndex)
         },
         value(isOpen) {
             if (isOpen) this.openMenu()
@@ -114,9 +118,10 @@ export default mixins(ThemeProvider, FetchMainMenu).extend({
             this.updateSelectedIndexByRoute()
             setTimeout(() => this.updateIndicatorPosition(this.selectedIndex || 0), 200)
         },
-        updateIndicatorPosition(newIndex: number, oldIndex?: number) {
+        updateIndicatorPosition(newIndex: number) {
             const targets = this.$refs.link as HTMLElement[]
-            const selectedTarget = targets?.[newIndex] || targets?.[0]
+            const selectedTarget = targets[newIndex] || targets[0]
+            const blurLinkList = targets.filter((target) => target !== selectedTarget)
             const slider = this.$refs.slider
 
             if (!selectedTarget || !slider) return
@@ -126,19 +131,13 @@ export default mixins(ThemeProvider, FetchMainMenu).extend({
                 width: selectedTarget.offsetWidth + 2,
             })
 
-            this.resetLinkColor(targets, selectedTarget, oldIndex)
+            this.resetLinkColor(selectedTarget, blurLinkList)
         },
-        resetLinkColor(targets: HTMLElement[], selectedTarget: HTMLElement, oldIndex?: number) {
+        resetLinkColor(selectedTarget: HTMLElement, blurLinkList: HTMLElement[]) {
             const theme = getCSSVarFromTheme(this.theme || 'orange')
 
             gsap.to(selectedTarget, 0.3, { color: theme['--theme-on-default'], ease: 'none' })
-
-            if (oldIndex) {
-                gsap.to(targets[Math.max(oldIndex || 0)], 0.3, { color: theme['--theme-default'], ease: 'none' })
-            } else {
-                const notSelectedLinks = targets.filter((_, i) => i !== this.selectedIndex)
-                gsap.to(notSelectedLinks, 0.3, { color: theme['--theme-default'], ease: 'none' })
-            }
+            gsap.to(blurLinkList, 0.3, { color: theme['--theme-default'], ease: 'none' })
         },
     },
 })

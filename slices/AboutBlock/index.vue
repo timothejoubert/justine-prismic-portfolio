@@ -3,7 +3,7 @@
         <prismic-image :field="slice.primary.media" :class="$style.media" />
         <div :class="$style.content">
             <div v-if="title" :class="$style.title" class="text-h4">{{ title }}</div>
-            <prismic-rich-text :class="$style.content" :field="slice.primary.content" class="text-body-l" />
+            <v-text :class="$style.content" :content="slice.primary.content" class="text-body-l" />
             <v-button
                 v-if="internalLink"
                 :class="$style.cta"
@@ -22,11 +22,9 @@ import Vue from 'vue'
 import { getSliceComponentProps } from '@prismicio/vue/components'
 import { isProjectDocument } from '~/utils/prismic/entity'
 import NodeUid from '~/constants/node-uid'
-// import PrismicRichText from '@prismicio/vue/src/components/RichText'
 
 export default Vue.extend({
     name: 'AboutBlock',
-    // components: { PrismicRichText },
     props: getSliceComponentProps(['slice', 'index', 'slices', 'context']),
     computed: {
         title(): string | null {

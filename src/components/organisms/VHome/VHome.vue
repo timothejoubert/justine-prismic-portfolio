@@ -1,7 +1,7 @@
 <template>
     <div :class="$style.root">
-        <nuxt-link v-if="pageData.title" :to="$config.homePath">
-            <v-text ref="title" class="text-h1" :class="$style.title" :content="pageData.title" />
+        <nuxt-link :to="$config.homePath">
+            <v-text ref="title" class="text-h1" :class="$style.title" :content="title" />
         </nuxt-link>
     </div>
 </template>
@@ -40,6 +40,11 @@ export default mixins(PageProvider).extend({
                 y: -500,
                 ease: 'none',
             })
+        },
+    },
+    computed: {
+        title(): string {
+            return this.pageData.title || 'justine'
         },
     },
 })

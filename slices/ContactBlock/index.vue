@@ -36,8 +36,8 @@ export default Vue.extend({
         }
     },
     computed: {
-        socials(): Social[] | false {
-            return this.slice.primary.display_socials && this.$store.state.settings.data.socials
+        socials(): Social[] | false | undefined {
+            return this.slice.primary.display_socials && this.$store.state.settings?.data?.socials
         },
         contactContent(): null | string {
             return this.slice.primary.contact

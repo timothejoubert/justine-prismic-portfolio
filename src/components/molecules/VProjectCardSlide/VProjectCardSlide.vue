@@ -19,11 +19,6 @@ export default Vue.extend({
     props: {
         project: Object as PropType<Document<ProjectData>>,
     },
-    computed: {},
-    mounted() {
-        // console.log(this.project)
-    },
-    methods: {},
 })
 </script>
 
