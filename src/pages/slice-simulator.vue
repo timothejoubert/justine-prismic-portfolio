@@ -1,7 +1,7 @@
 <template>
-  <SliceSimulator v-slot="{ slices }" :state="state">
-    <SliceZone :slices="slices" :components="components" />
-  </SliceSimulator>
+    <SliceSimulator v-slot="{ slices }" :state="state">
+        <SliceZone :slices="slices" :components="components" />
+    </SliceSimulator>
 </template>
 
 <script>
@@ -11,11 +11,11 @@ import { components } from '~/../slices'
 import state from '~~/.slicemachine/libraries-state.json'
 
 export default {
-  components: {
-    SliceSimulator,
-  },
-  data() {
-    return { state, components }
-  },
+    components: {
+        SliceSimulator,
+    },
+    data() {
+        return { state, components }
+    },
 }
 </script>

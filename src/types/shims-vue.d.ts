@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import { DefaultProps } from 'vue/types/options'
 
 declare module '*.vue' {
     export default Vue
@@ -9,10 +8,18 @@ declare module '*.vue' {
  * fix CSS module
  * @see https://stackoverflow.com/a/53999913
  */
+
 declare module 'vue/types/vue' {
     interface Vue {
         $style: { [key: string]: string }
-        $asText(value: any): string | undefined
+
+        $asHtml(richText: any | undefined, linkResolver: any, htmlSerializer: any): string | undefined
+
+        $asText(richText?: any, joinString?: string): string
+
+        $asLink(link: any, linkResolver: any): string | undefined
+
+        $asDate(date: any): string | undefined
     }
 }
 

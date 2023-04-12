@@ -15,63 +15,63 @@ type PrismicAPIPromise = ReturnType<typeof Prismic.getApi>
 type PrismicAPI = ThenArg<PrismicAPIPromise>
 
 type ElementType =
-  | 'heading1'
-  | 'heading2'
-  | 'heading3'
-  | 'heading4'
-  | 'heading5'
-  | 'heading6'
-  | 'paragraph'
-  | 'preformatted'
-  | 'strong'
-  | 'em'
-  | 'list-item'
-  | 'o-list-item'
-  | 'group-list-item'
-  | 'group-o-list-item'
-  | 'image'
-  | 'embed'
-  | 'hyperlink'
-  | 'label'
-  | 'span'
+    | 'heading1'
+    | 'heading2'
+    | 'heading3'
+    | 'heading4'
+    | 'heading5'
+    | 'heading6'
+    | 'paragraph'
+    | 'preformatted'
+    | 'strong'
+    | 'em'
+    | 'list-item'
+    | 'o-list-item'
+    | 'group-list-item'
+    | 'group-o-list-item'
+    | 'image'
+    | 'embed'
+    | 'hyperlink'
+    | 'label'
+    | 'span'
 
 type Elements = { [key in ElementType]: string }
 
 type HTMLSerializer<T> = (type: ElementType, element: any, text: string | null, children: T[], index: number) => T
 
 interface RichText {
-  Elements: Elements
+    Elements: Elements
 
-  asHtml(richText: any, linkResolver?: (doc: any) => string, serializer?: HTMLSerializer<string>): string
+    asHtml(richText: any, linkResolver?: (doc: any) => string, serializer?: HTMLSerializer<string>): string
 
-  asText(richText: any, joinString?: string): string
+    asText(richText: any, joinString?: string): string
 }
 
 interface Link {
-  url(link: any, linkResolver?: (doc: any) => string): string
+    url(link: any, linkResolver?: (doc: any) => string): string
 }
 
 interface VuePrismic {
-  endpoint: string
-  linkResolver: (doc: any) => string
-  htmlSerializer: HTMLSerializer<string>
-  client: DefaultClient
-  richTextAsPlain: (field: string) => string
+    endpoint: string
+    linkResolver: (doc: any) => string
+    htmlSerializer: HTMLSerializer<string>
+    client: DefaultClient
+    richTextAsPlain: (field: string) => string
 }
 
 type PrismicVue<T> = VuePrismic & T
 
 declare module '@nuxt/types' {
-  interface Context {
-    $prismic: PrismicVue<PrismicAPI> & RichText & { api: ResolvedApi } & typeof Prismic
-  }
+    interface Context {
+        $prismic: PrismicVue<PrismicAPI> & RichText & { api: ResolvedApi } & typeof Prismic
+    }
 }
 
 // here's the solution
 declare module 'vue/types/vue' {
-  interface Vue {
-    $prismic: PrismicVue<PrismicAPI> & RichText & { api: ResolvedApi } & typeof Prismic
-  }
+    interface Vue {
+        $prismic: PrismicVue<PrismicAPI> & RichText & { api: ResolvedApi } & typeof Prismic
+    }
 }
 
 interface PrismicModuleOptions {}

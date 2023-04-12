@@ -16,11 +16,12 @@
 
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
-// import SliceZone from '@prismicio/vue/dist/prismic-vue'
-import { components } from '~/../slices'
+import { SliceZone } from '@prismicio/vue/src/components/SliceZone'
+import { components } from '~~/slices'
 import Page from '~/mixins/Page'
 
 export default mixins(Page).extend({
+    components: { SliceZone },
     data() {
         return { components }
     },

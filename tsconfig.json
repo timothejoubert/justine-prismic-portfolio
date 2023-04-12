@@ -22,6 +22,9 @@
             ],
             "@/*": [
                 "./src/*"
+            ],
+            "~~/*": [
+                "./*"
             ]
         },
         "types": [
@@ -31,8 +34,7 @@
             "@nuxt/image",
             "@nuxt/content",
             "webpack-env",
-            "/src/types/prismic/prismic-types.generated.ts",
-            "src/type/prismic/prismic-components.d.ts"
+            "src/types/prismic/*.ts"
         ]
     },
     "exclude": [

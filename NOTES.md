@@ -20,6 +20,7 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 ### TODO
 
+* **(VImage)** Faire custom VImage a partir de PrismicImage component
 * **(Config)** Register Prismic component (ex: PrismicRichText | SliceZone')
 * **(Setup)** Add storybook ?
 * **(Slice)**: CarouselMedia | RandomGridImage | ProjectListing (layout: carousel && grid)

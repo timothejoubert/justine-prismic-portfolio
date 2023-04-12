@@ -20,11 +20,13 @@
 <script lang="ts">
 import Vue from 'vue'
 import { getSliceComponentProps } from '@prismicio/vue/components'
+import PrismicImage from '@prismicio/vue/src/components/Image'
 import { isProjectDocument } from '~/utils/prismic/entity'
 import NodeUid from '~/constants/node-uid'
 
 export default Vue.extend({
     name: 'AboutBlock',
+    components: { PrismicImage },
     props: getSliceComponentProps(['slice', 'index', 'slices', 'context']),
     computed: {
         title(): string | null {
