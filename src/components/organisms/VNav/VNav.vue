@@ -35,15 +35,14 @@ import { gsap } from 'gsap'
 import mixins from 'vue-typed-mixins'
 import ThemeProvider from '~/mixins/ThemeProvider'
 import { getCSSVarFromTheme } from '~/utils/get-theme'
-import { getMenuLinkList } from '~/utils/prismic/parse-api-data'
-import { MenuItem } from '~/types/prismic/app-prismic'
 import NodeUid from '~/constants/node-uid'
 import { isHomeRoute } from '~/utils/prismic/type-check'
 import { isHomePage } from '~/utils/prismic/document'
 import { getProjectUid } from '~/utils/prismic/project'
 import { getRelationLinkUid } from '~/utils/prismic/field-relation'
+import FetchMainMenu from '~/mixins/FetchMainMenu'
 
-export default mixins(ThemeProvider).extend({
+export default mixins(ThemeProvider, FetchMainMenu).extend({
     name: 'VNav',
     props: {
         value: Boolean,
@@ -63,9 +62,6 @@ export default mixins(ThemeProvider).extend({
                 this.isMenuOpen && this.$style['root--open'],
                 typeof this.theme === 'string' && this.$style[`root--theme-${this.theme}`],
             ]
-        },
-        pages(): MenuItem[] {
-            return getMenuLinkList(this.$store.state.mainMenu) || []
         },
         isHome(): boolean {
             return isHomeRoute(this.$route.fullPath, this.$route.params?.uid)
