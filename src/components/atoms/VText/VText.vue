@@ -7,10 +7,10 @@
 import Vue from 'vue'
 import type { PropType } from 'vue'
 import * as prismicT from '@prismicio/types'
+// import { Component } from 'vue/types/options'
 
 export default Vue.extend({
     name: 'VText',
-    // functional: true,
     props: {
         tag: { type: String, default: 'div' },
         content: [String, Array] as PropType<String | prismicT.RichTextField>,

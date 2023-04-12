@@ -2,11 +2,11 @@
     <div :class="$style.root">
         <div :class="$style.head">
             <div :class="$style.medias">
-                <prismic-image v-if="project.thumbnail" :field="project.thumbnail" :class="$style.image" />
+                <prismic-image v-if="pageData.thumbnail" :field="pageData.thumbnail" :class="$style.image" />
             </div>
 
             <div :class="$style.body">
-                <h1 v-if="project && project.title" :class="$style.title" class="text-h3">{{ project.title }}</h1>
+                <h1 v-if="pageData.title" :class="$style.title" class="text-h3">{{ pageData.title }}</h1>
                 <div v-if="tagList && tagList.length" :class="$style.tags">
                     <v-button
                         v-for="(tag, i) in tagList"
@@ -20,10 +20,10 @@
                     <div v-if="year" :class="$style.year">{{ year }}</div>
                 </div>
                 <v-text
-                    v-if="project.description"
+                    v-if="pageData.description"
                     :class="$style.description"
                     class="text-body-s"
-                    :content="project.description"
+                    :content="pageData.description"
                 />
             </div>
         </div>
@@ -35,29 +35,25 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
 import { FilledLinkToMediaField } from '@prismicio/types/src/value/linkToMedia'
-import { ProjectData } from '~/types/prismic/app-prismic'
-import { getDocumentData } from '~/utils/prismic/parse-api-data'
+import mixins from 'vue-typed-mixins'
 import { stringDateToYear } from '~/utils/utils'
 import { filteredMediaGroupByKey, isGroupFulled } from '~/utils/prismic/field-group'
+import PageProvider from '~/mixins/PageProvider'
 
-export default Vue.extend({
+export default mixins(PageProvider).extend({
     name: 'VProject',
     computed: {
-        project(): ProjectData {
-            return getDocumentData<ProjectData>(this.$store.state.currentPageData)
-        },
         year(): number | null {
-            return stringDateToYear(this.project.date)
+            return stringDateToYear(this.pageData.date)
         },
         tagList(): string[] {
-            return this.project.tags?.filter((tag) => !!tag.label).map((tag) => tag.label as string)
+            return this.pageData.tags?.filter((tag) => !!tag.label).map((tag) => tag.label as string)
         },
         gallery(): FilledLinkToMediaField[] | undefined {
-            if (!this.project.gallery?.length || !isGroupFulled(this.project.gallery)) return
+            if (!this.pageData.gallery?.length || !isGroupFulled(this.pageData.gallery)) return
             // @ts-ignore
-            return filteredMediaGroupByKey<FilledLinkToMediaField>(this.project.gallery, 'media')
+            return filteredMediaGroupByKey<FilledLinkToMediaField>(this.pageData.gallery, 'media')
         },
     },
 })

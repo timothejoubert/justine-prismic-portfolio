@@ -1,11 +1,11 @@
 <template>
     <div v-if="pageData" :class="$style.root">
-        <lazy-v-home v-if="isHome" :page-data="pageData" />
-        <lazy-v-sketch-books v-else-if="isSketchBook" :page-data="pageData" />
-        <lazy-v-project-list v-else-if="isProjectListing" :page-data="pageData" />
-        <lazy-v-about v-else-if="isAbout" :page-data="pageData" />
-        <lazy-v-project v-else-if="isProjectPage" :page-data="pageData" />
-        <lazy-v-default v-else :page-data="pageData" />
+        <lazy-v-home v-if="isHome" />
+        <lazy-v-sketch-books v-else-if="isSketchBook" />
+        <lazy-v-project-list v-else-if="isProjectListing" />
+        <lazy-v-about v-else-if="isAbout" />
+        <lazy-v-project v-else-if="isProjectPage" />
+        <lazy-v-default v-else />
 
         <slice-zone v-if="slices" wrapper="main" :slices="slices" :components="components" :class="$style.main" />
     </div>

@@ -1,19 +1,24 @@
 <template>
     <div :class="$style.root">
-        <PrismicImage :field="pageData.thumbnail" :class="$style.image" />
+        <prismic-image :field="pageData.thumbnail" :class="$style.image" />
 
         <v-about-tags :class="$style.tags" />
         <!--        <v-marquee-carousel :tags="tags"/>-->
 
         <div :class="$style.left">
-            <PrismicRichText
+            <v-text
                 v-if="settingsData.description"
                 class="text-h3"
                 :class="$style.tagline"
-                :field="settingsData.tagline"
+                :content="settingsData.tagline"
             />
 
-            <PrismicRichText class="text-l" :class="$style.content" :field="pageData.description" />
+            <v-text
+                v-if="pageData.description"
+                class="text-l"
+                :class="$style.content"
+                :content="pageData.description"
+            />
 
             <div :class="$style.socials">
                 <v-social v-for="(social, i) in socials" :key="i" :social="social" />

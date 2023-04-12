@@ -44,7 +44,7 @@ export default mixins(PageProvider).extend({
     },
     computed: {
         title(): string {
-            return this.pageData.title || 'justine'
+            return this.pageData?.title || 'justine'
         },
     },
 })
