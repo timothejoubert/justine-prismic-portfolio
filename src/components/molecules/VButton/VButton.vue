@@ -27,7 +27,7 @@ type Color = 'primary' | 'secondary'
 export type Variant = 'navigation'
 
 function isRelativePath(path: string): boolean {
-    return path.charAt(0) === '/'
+    return path.charAt(0) === '/' || path.charAt(0) === '#'
 }
 
 export default Vue.extend({

@@ -21,6 +21,17 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 ### TODO
 
+CustomType:
+
+- HomePage
+- CustomPage [type: Sketchbooks | ProjectList | About]
+- ProjectPage
+- DefaultPage [Contact | Informations | Awwwards]
+- CommonContent [Menu | socials | siteInfo]
+
+* **(Home)** Create Home Type (display all slice only on it)
+* **(Internalization)** Set Fr as Default
+  locale: [Forum](https://community.prismic.io/t/changing-the-main-locale-language/1010)
 * **(VImage)** Faire custom VImage a partir de PrismicImage component
 * **(Config)** Register Prismic component (ex: PrismicRichText | SliceZone')
 * **(Setup)** Add storybook ?

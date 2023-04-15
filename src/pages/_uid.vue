@@ -7,7 +7,14 @@
         <lazy-v-project v-else-if="isProjectPage" />
         <lazy-v-default v-else />
 
-        <slice-zone v-if="slices" wrapper="main" :slices="slices" :components="components" :class="$style.main" />
+        <slice-zone
+            v-if="slices"
+            id="main"
+            wrapper="main"
+            :slices="slices"
+            :components="components"
+            :class="$style.main"
+        />
     </div>
     <div v-else>
         <p>pageData not find</p>
@@ -36,10 +43,10 @@ export default mixins(Page).extend({
 }
 
 .main {
-    @include full-width(true);
+    @include full-width($padding: true);
 
     & > *:not(:first-child) {
-        margin-block: rem(200);
+        margin-block: rem(280);
     }
 }
 </style>

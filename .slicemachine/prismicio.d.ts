@@ -401,13 +401,13 @@ interface ContactBlockSliceDefaultPrimary {
     /**
      * Title field in *ContactBlock → Primary*
      *
-     * - **Field Type**: Title
-     * - **Placeholder**: This is where it all begins...
+     * - **Field Type**: Text
+     * - **Placeholder**: *None*
      * - **API ID Path**: contact_block.primary.title
-     * - **Documentation**: https://prismic.io/docs/core-concepts/rich-text-title
+     * - **Documentation**: https://prismic.io/docs/core-concepts/key-text
      *
      */
-    title: prismicT.TitleField;
+    title: prismicT.KeyTextField;
     /**
      * Description field in *ContactBlock → Primary*
      *

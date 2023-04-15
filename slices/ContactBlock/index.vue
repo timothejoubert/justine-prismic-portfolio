@@ -7,24 +7,27 @@
             :class="$style.description"
             class="text-body-m"
         />
-        <div v-if="contactContent" :class="$style.contact" class="text-h5" @click="onClick">
+        <button v-if="contactContent" :class="$style.contact" class="text-h5" @click="onClick">
             {{ contactContent }}
-        </div>
+        </button>
         <div v-if="socials" :class="$style.socials">
             <v-social v-for="(social, i) in socials" :key="i" :social="social" :class="$style.social" />
         </div>
 
-        <transition name="slide-in">
-            <div v-if="clipBoard" :class="$style['clip-board']">
-                <div :class="$style['clip-board__content']">E-mail copié dans le presse papier</div>
-            </div>
-        </transition>
+        <client-only>
+            <transition name="slide-in">
+                <div v-show="clipBoard" :class="$style['clip-board']">
+                    <div :class="$style['clip-board__content']">E-mail copié dans le presse papier 🎉</div>
+                </div>
+            </transition>
+        </client-only>
     </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { getSliceComponentProps } from '@prismicio/vue/components'
+// import { Portal } from 'portal-vue'
 import { Social } from '~/components/molecules/VSocial/VSocial.vue'
 
 export default Vue.extend({
@@ -64,8 +67,8 @@ export default Vue.extend({
     position: relative;
     background: #f7f7f7;
     color: #111;
-    text-align: center;
     padding-block: rem(100);
+    text-align: center;
 }
 
 .title {
@@ -81,8 +84,8 @@ export default Vue.extend({
 }
 
 .description {
-    margin-inline: auto;
     max-width: rem(360);
+    margin-inline: auto;
 }
 
 .contact {
@@ -95,18 +98,28 @@ export default Vue.extend({
 
 .clip-board {
     position: fixed;
+    z-index: 102;
     right: 20px;
     bottom: 20px;
-    padding: rem(28) rem(42);
+    padding: rem(22) rem(36);
+    color: color(orange);
+    border: 1px solid color(orange);
     border-radius: rem(10);
-    background-color: color(orange);
-    color: color(light);
-    z-index: 102;
+    background-color: color(light);
+
+    &::before {
+        position: absolute;
+        background-color: color(orange);
+        //content: '';
+        inset: 0;
+        //opacity: 0.8;
+    }
 }
 
 .clip-board__content {
+    position: relative;
     font-size: rem(16);
-    max-width: 220px;
+    //max-width: 220px;
     text-align: left;
 }
 </style>

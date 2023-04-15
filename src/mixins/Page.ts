@@ -11,6 +11,7 @@ import mockData from '~/static/mock-data/page-data-fallback.json'
 import { getProjectUid } from '~/utils/prismic/project'
 import { isAbout, isHomePage, isProjectListing, isSketchBooks } from '~/utils/prismic/document'
 import { isProjectDocument } from '~/utils/prismic/entity'
+import CustomType from '~/constants/custom-type'
 
 export default Vue.extend({
     // middleware({ req, redirect }: Context) {
@@ -32,9 +33,9 @@ export default Vue.extend({
         // TODO fetch data from dispatch actions
 
         try {
-            if (parameter) page = await $prismic.api.getByUID('page', parameter)
-            if (parameter && !page) page = await $prismic.api.getByUID('project', parameter)
-            if (!page) page = await $prismic.api.getByUID('page', NodeUid.HOME)
+            if (parameter) page = await $prismic.api.getByUID(CustomType.PAGE, parameter)
+            if (parameter && !page) page = await $prismic.api.getByUID(CustomType.PROJECT, parameter)
+            if (!page) page = await $prismic.api.getByUID(CustomType.PAGE, NodeUid.HOME)
         } catch (error) {
             console.log('failed on asyncData page', error)
         }

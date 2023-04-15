@@ -4,7 +4,8 @@ import { PrismicDocument } from '@prismicio/types/src/value/document'
 import { Document } from '@prismicio/client/types/documents'
 import { RootState } from '~/types/store'
 import MutationType from '~/constants/mutation-type'
-import { CustomTypeName, MainMenu, Settings } from '~/types/prismic/app-prismic'
+import { CustomTypeName, MainMenu, ProjectData, Settings } from '~/types/prismic/app-prismic'
+import CustomType from '~/constants/custom-type'
 // import { Context, NuxtError } from '@nuxt/types'
 
 const actions: ActionTree<RootState, RootState> = {
@@ -19,15 +20,34 @@ const actions: ActionTree<RootState, RootState> = {
             .catch((fetchError: Error) => {
                 console.log('failed to fetch mainMenu or setting', fetchError)
             })
+
+        await dispatch('getProjects', context)
+            .then((projects: Array<ProjectData>) => {
+                console.log('project result', projects)
+                commit(MutationType.SET_PROJECTS, projects)
+            })
+            .catch((fetchError: Error) => {
+                console.log('failed to fetch mainMenu or setting', fetchError)
+            })
     },
     getCommonContent(
         _actionContext: ActionContext<RootState, RootState>,
         context: Context
     ): Promise<Document<MainMenu | Settings>[]> {
-        const mainMenu = context.$prismic.api.getSingle('main_menu' as CustomTypeName, {})
-        const settings = context.$prismic.api.getSingle('settings' as CustomTypeName, {})
+        const mainMenu = context.$prismic.api.getSingle(CustomType.MAIN_MENU as CustomTypeName, {})
+        const settings = context.$prismic.api.getSingle(CustomType.SETTINGS as CustomTypeName, {})
 
         return Promise.all([mainMenu, settings])
+    },
+    getProjects(
+        _actionContext: ActionContext<RootState, RootState>,
+        context: Context
+    ): Promise<Document<ProjectData>[]> {
+        const projects = context.$prismic.api
+            .query(context.$prismic.predicates.at('document.type', CustomType.PROJECT as CustomTypeName))
+            .then((response) => response.results)
+
+        return Promise.resolve(projects)
     },
     updatePageData({ commit }: ActionContext<RootState, RootState>, data: PrismicDocument) {
         commit(MutationType.CURRENT_PAGE_DATA, data)

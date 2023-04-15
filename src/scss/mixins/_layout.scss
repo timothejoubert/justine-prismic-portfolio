@@ -7,3 +7,8 @@
         margin-inline: auto;
     }
 }
+
+@mixin wide-background {
+    box-shadow: 0 0 0 100vmax #{var(--background-color, color(black))}, inset 0 0 0 100vmax var(--background-color, #{color(black)});
+    clip-path: inset(0 -100vmax);
+}

@@ -17,7 +17,7 @@
             "label": "Title",
             "placeholder": "This is where it all begins...",
             "allowTargetBlank": false,
-            "single": "heading2"
+            "single": "heading3,heading4"
           }
         },
         "description": {

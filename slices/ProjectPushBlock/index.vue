@@ -3,8 +3,15 @@
         <v-link :reference="slice.primary.project">
             <prismic-image v-if="image" ref="image" :field="image" :class="$style.image" />
             <div :class="$style.content">
-                <v-text :class="$style.title" class="text-h5" :content="slice.primary.title" />
-                <v-text class="over-title-m" :content="slice.primary.description" />
+                <div :class="$style.content__inner" :style="{ transform: `translateY(${descriptionHeight}px)` }">
+                    <v-text ref="title" :class="$style.title" class="text-h5" :content="slice.primary.title" />
+                    <v-text
+                        ref="description"
+                        class="over-title-m"
+                        :class="$style.description"
+                        :content="slice.primary.description"
+                    />
+                </div>
                 <v-button :class="$style.cta" :label="linkLabel" theme="orange" size="l" filled />
             </div>
         </v-link>
@@ -26,6 +33,7 @@ export default Vue.extend({
     data() {
         return {
             project: {} as Document<ProjectData>,
+            descriptionHeight: 0,
         }
     },
     async fetch() {
@@ -50,6 +58,7 @@ export default Vue.extend({
     },
     mounted() {
         this.initScrollAnimation()
+        this.setDescriptionHeight()
     },
     methods: {
         initScrollAnimation() {
@@ -66,9 +75,13 @@ export default Vue.extend({
                     start: 'top bottom',
                     end: 'top',
                 },
-                scale: 1.1,
+                scale: 1.15,
                 ease: 'none',
             })
+        },
+        setDescriptionHeight() {
+            const el = (this.$refs.description as Vue)?.$el
+            this.descriptionHeight = el?.getBoundingClientRect()?.height
         },
     },
 })
@@ -93,11 +106,12 @@ export default Vue.extend({
     }
 
     &::before {
-        background: linear-gradient(to top, rgba(#000, 0.25), transparent 30%);
+        z-index: 1;
+        background: linear-gradient(to top, rgba(#fff, 0.2), transparent 30%);
     }
 
     &::after {
-        background: linear-gradient(to top, rgba(#000, 0), rgba(#000, 0.1));
+        background: linear-gradient(to top, rgba(#000, 0), rgba(#000, 0.05));
         transition: opacity 0.6s;
     }
 
@@ -116,16 +130,31 @@ export default Vue.extend({
     $space: #{calc(app(padding) * 1)};
 
     position: absolute;
+    overflow: hidden;
     inset: inherit $space $space $space;
 }
 
-.title {
-    margin-bottom: rem(15);
+.content__inner {
+    transition: transform 0.35s ease(out-quad);
+
+    .root:hover & {
+        transform: translateY(0) !important;
+    }
 }
 
 .description,
 .title {
     width: clamp(#{rem(360), 40%, rem(450)});
+}
+
+.description {
+    padding-top: rem(15);
+    opacity: 0;
+    transition: opacity 0.35s ease(out-quad);
+
+    .root:hover & {
+        opacity: 1;
+    }
 }
 
 .cta {

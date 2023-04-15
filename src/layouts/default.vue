@@ -24,11 +24,14 @@
         />
 
         <Nuxt />
+
+        <!--        <portal-target name="clip-board" />-->
     </div>
 </template>
 
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
+// import { PortalTarget } from 'portal-vue'
 import Resize from '~/mixins/Resize'
 import MutationType from '~/constants/mutation-type'
 import SplashScreen from '~/mixins/SplashScreen'

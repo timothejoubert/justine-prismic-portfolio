@@ -1,44 +1,51 @@
 <template>
-    <div :class="$style.root">
+    <v-link :reference="document" :class="[$style.root, overlapInfo && $style['root--overlap-info']]">
         <v-button v-if="displayNumber" :class="$style.counter" tag="div" filled theme="orange" size="xs">
             <template #default>
                 <span :class="$style.current">{{ formatValue(index + 1) }}</span>
                 <div :class="$style.length">{{ formatValue(length) }}</div>
             </template>
         </v-button>
-        <PrismicImage v-if="project.thumbnail" :field="project.thumbnail" :class="$style.image" />
+        <prismic-image v-if="project && project.thumbnail" :field="project.thumbnail" :class="$style.image" />
         <div :class="$style.body">
             <h2 :class="$style.title">{{ title }}</h2>
             <div v-if="year" :class="$style.year">{{ year }}</div>
         </div>
-    </div>
+    </v-link>
 </template>
 
 <script lang="ts">
 import type { PropType } from 'vue'
 import mixins from 'vue-typed-mixins'
 import { stringDateToYear } from '~/utils/utils'
-import { ProjectData } from '~/types/prismic/app-prismic'
+import { ProjectData, ProjectDocument } from '~/types/prismic/app-prismic'
 import CarouselSlide from '~/mixins/CarouselSlide'
 
 export default mixins(CarouselSlide).extend({
     name: 'VProjectCard',
     props: {
-        project: Object as PropType<ProjectData>,
+        document: Object as PropType<ProjectDocument>,
         length: Number,
-        index: Number,
-        displayNumber: Boolean,
+        index: [Number, String] as PropType<Number | String>,
+        overlapInfo: Boolean,
+        displayYear: Boolean,
     },
     computed: {
-        year(): number | null {
-            return stringDateToYear(this.project?.date)
+        project(): ProjectData {
+            return this.document?.data
+        },
+        displayNumber(): boolean {
+            return !!this.index && !!this.length
+        },
+        year(): false | number | null {
+            return this.displayYear && stringDateToYear(this.project?.date)
         },
         title(): string {
-            return this.$asText(this.project.title) || 'add a project title'
+            return this.$asText(this.project?.title) || 'add a project title'
         },
     },
     methods: {
-        formatValue(value: number): string {
+        formatValue(value: number | string): string {
             return ('0' + (value || 0)).substr(-2)
         },
     },
@@ -48,6 +55,7 @@ export default mixins(CarouselSlide).extend({
 <style lang="scss" module>
 .root {
     position: relative;
+    overflow: hidden;
 }
 
 .head {
@@ -79,6 +87,12 @@ export default mixins(CarouselSlide).extend({
 .body {
     margin-top: rem(12);
     opacity: 0.8;
+
+    .root--overlap-info & {
+        position: absolute;
+        bottom: 0;
+        padding: rem(18);
+    }
 }
 
 .title {
@@ -91,9 +105,12 @@ export default mixins(CarouselSlide).extend({
 }
 
 .image {
+    display: block;
     width: 100%;
+    height: var(--project-image-height);
     min-height: 100%;
     background-color: lightgrey;
+    border-radius: var(--project-image-border-radius);
     object-fit: cover;
 
     img {

@@ -7,9 +7,9 @@
         "__TYPE__": "StructuredTextContent",
         "value": [
           {
-            "type": "heading2",
+            "type": "heading3",
             "content": {
-              "text": "Score"
+              "text": "Total"
             }
           }
         ]

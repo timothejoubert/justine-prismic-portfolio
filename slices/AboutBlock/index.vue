@@ -2,7 +2,7 @@
     <section :class="$style.root">
         <prismic-image :field="slice.primary.media" :class="$style.media" />
         <div :class="$style.content">
-            <div v-if="title" :class="$style.title" class="text-h4">{{ title }}</div>
+            <div v-if="title" :class="$style.title" class="text-h5">{{ title }}</div>
             <v-text :class="$style.content" :content="slice.primary.content" class="text-body-l" />
             <v-button
                 v-if="internalLink"
@@ -44,10 +44,13 @@ export default Vue.extend({
 
 <style lang="scss" module>
 .root {
+    --background-color: #{color(grey-50)};
+    @include wide-background;
+
     display: flex;
     align-items: center;
     background: #f7f7f7;
-    padding-block: rem(100);
+    padding-block: rem(150);
 }
 
 .media {

@@ -11,15 +11,13 @@
         <template v-else>
             <v-carousel-loop v-model="slideIndex" :class="$style.projects" async-slides>
                 <li v-for="(project, i) in projects" :key="project.uid" :class="$style.project">
-                    <v-link :reference="project">
-                        <v-project-card
-                            :index="i"
-                            :project="project.data"
-                            :length="projects.length"
-                            :class="$style.card"
-                            :display-number="displayNumber"
-                        />
-                    </v-link>
+                    <v-project-card
+                        :index="i"
+                        :project="project"
+                        :length="projects.length"
+                        :class="$style.card"
+                        :display-number="displayNumber"
+                    />
                 </li>
             </v-carousel-loop>
         </template>

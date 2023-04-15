@@ -3,6 +3,14 @@
         <nuxt-link :to="$config.homePath">
             <v-text ref="title" class="text-h1" :class="$style.title" :content="title" />
         </nuxt-link>
+        <v-button
+            ref="cta"
+            label="découvrez mes illustration"
+            outlined
+            theme="orange"
+            :class="$style.cta"
+            @click="onClick"
+        />
     </div>
 </template>
 
@@ -16,9 +24,21 @@ import PageProvider from '~/mixins/PageProvider'
 export default mixins(PageProvider).extend({
     name: 'VHome',
     mounted() {
+        document.addEventListener('scroll', this.onScroll)
         if (this.$refs.title) this.initScrollAnimation()
     },
+    beforeDestroy() {
+        document.removeEventListener('scroll', this.onScroll)
+    },
     methods: {
+        onScroll(_event: Event) {
+            const cta = (this.$refs.cta as Vue)?.$el
+            if (window.scrollY > 60) {
+                cta?.classList.add(this.$style['cta--hide'])
+            } else {
+                cta?.classList.remove(this.$style['cta--hide'])
+            }
+        },
         initScrollAnimation() {
             gsap.registerPlugin(ScrollTrigger)
 
@@ -41,6 +61,13 @@ export default mixins(PageProvider).extend({
                 ease: 'none',
             })
         },
+        onClick() {
+            window.scrollTo({
+                top: window.innerHeight,
+                left: 0,
+                behavior: 'smooth',
+            })
+        },
     },
     computed: {
         title(): string {
@@ -57,6 +84,7 @@ export default mixins(PageProvider).extend({
     display: flex;
     width: 100%;
     height: 100vh;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     pointer-events: none;
@@ -66,5 +94,16 @@ export default mixins(PageProvider).extend({
     color: color(orange);
     pointer-events: auto;
     transform-origin: center center;
+}
+
+.cta {
+    position: absolute;
+    top: 65vh;
+    pointer-events: auto;
+    transition: opacity 0.4s;
+
+    &--hide {
+        opacity: 0;
+    }
 }
 </style>
