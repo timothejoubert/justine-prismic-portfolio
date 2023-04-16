@@ -24,7 +24,7 @@
 
         <Nuxt />
 
-        <v-footer ref="footer" />
+        <lazy-v-footer v-if="isHomePage" ref="footer" />
     </div>
 </template>
 
@@ -53,6 +53,11 @@ export default mixins(Resize, SplashScreen, Vue as VueConstructor<Vue & Componen
             MutationType.PREFERS_REDUCED_MOTION,
             window.matchMedia('(prefers-reduced-motion: reduce)').matches
         )
+
+        this.$nextTick(() => {
+            if (document.body.scrollHeight <= window.innerHeight) this.updateNavPosition()
+        })
+
         this.createIntersectionObserver()
     },
     computed: {
@@ -68,24 +73,47 @@ export default mixins(Resize, SplashScreen, Vue as VueConstructor<Vue & Componen
     },
     watch: {
         isFooterVisible(value: boolean) {
-            if (value) document.addEventListener('scroll', this.onScroll)
-            else document.removeEventListener('scroll', this.onScroll)
+            if (value) {
+                document.addEventListener('scroll', this.onScroll)
+            } else {
+                document.removeEventListener('scroll', this.onScroll)
+                this.restoreNavPosition()
+            }
+        },
+        isHomePage(value: boolean) {
+            if (value) {
+                this.$nextTick(this.createIntersectionObserver)
+            } else {
+                this.disposeIntersectionObserver()
+            }
         },
     },
     methods: {
         onScroll() {
+            this.updateNavPosition()
+        },
+        updateNavPosition() {
             const nav = (this.$refs.nav as Vue).$el as HTMLElement
-            const footer = (this.$refs.footer as Vue).$el as HTMLElement
-            if (!nav || !footer) return
+            const footer = (this.$refs.footer as Vue)?.$el as HTMLElement | undefined
+            if (!footer) {
+                this.restoreNavPosition()
+                return
+            }
             const bottomOffset = Math.abs(footer.getBoundingClientRect().top - window.innerHeight) * -1
 
             nav.style.transform = `translate(-50%, ${bottomOffset}px)`
         },
+        restoreNavPosition() {
+            const nav = (this.$refs.nav as Vue).$el as HTMLElement
+            if (!nav) return
+            nav.style.transform = `translate(-50%, 0px)`
+        },
         createIntersectionObserver() {
-            const el = (this.$refs.footer as Vue).$el as HTMLElement
+            const footer = (this.$refs.footer as Vue)?.$el as HTMLElement | undefined
+            if (!footer) return
 
             this.intersectionObserver = new IntersectionObserver(this.onIntersectionObserverChange)
-            this.intersectionObserver.observe(el)
+            this.intersectionObserver.observe(footer)
         },
         onIntersectionObserverChange([entry]: IntersectionObserverEntry[]) {
             this.isFooterVisible = entry.isIntersecting
@@ -99,7 +127,7 @@ export default mixins(Resize, SplashScreen, Vue as VueConstructor<Vue & Componen
 </script>
 <style lang="scss" module>
 .root {
-    min-height: 100vh;
+    position: relative;
 }
 
 .nav {

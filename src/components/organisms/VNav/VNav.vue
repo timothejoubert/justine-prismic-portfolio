@@ -32,19 +32,17 @@
 
 <script lang="ts">
 import { gsap } from 'gsap'
-import mixins from 'vue-typed-mixins'
-import ThemeProvider from '~/mixins/ThemeProvider'
+import Vue from 'vue'
 import { getCSSVarFromTheme } from '~/utils/get-theme'
 import NodeUid from '~/constants/node-uid'
 import { isHomeRoute } from '~/utils/prismic/type-check'
 import { isHomePage } from '~/utils/prismic/document'
 import { getProjectUid } from '~/utils/prismic/project'
 import { getRelationLinkUid } from '~/utils/prismic/field-relation'
-import FetchMainMenu from '~/mixins/FetchMainMenu'
 import { getMenuLinkList } from '~/utils/prismic/parse-api-data'
 import { MenuItem } from '~/types/prismic/app-prismic'
 
-export default mixins(ThemeProvider, FetchMainMenu).extend({
+export default Vue.extend({
     name: 'VNav',
     props: {
         value: Boolean,
@@ -58,11 +56,7 @@ export default mixins(ThemeProvider, FetchMainMenu).extend({
     },
     computed: {
         rootClass(): (undefined | false | string)[] {
-            return [
-                this.$style.root,
-                this.isMenuOpen && this.$style['root--open'],
-                typeof this.theme === 'string' && this.$style[`root--theme-${this.theme}`],
-            ]
+            return [this.$style.root, this.isMenuOpen && this.$style['root--open'], this.$style['root--theme-orange']]
         },
         pages(): MenuItem[] {
             return getMenuLinkList(this.$store.state.mainMenu)
@@ -82,7 +76,9 @@ export default mixins(ThemeProvider, FetchMainMenu).extend({
     },
     methods: {
         pageLink(pageUid: string): string {
-            return '/' + (isHomePage(pageUid) ? '' : pageUid)
+            if (isHomePage(pageUid)) return '/'
+            if (this.$store.getters.isProjectUid(pageUid)) return '/' + NodeUid.PROJECT_LISTING + '/' + pageUid
+            return '/' + pageUid
         },
         onMouseLeave() {
             this.timeoutId = window.setTimeout(this.closeMenu, 100)
@@ -134,7 +130,7 @@ export default mixins(ThemeProvider, FetchMainMenu).extend({
             this.resetLinkColor(selectedTarget, blurLinkList)
         },
         resetLinkColor(selectedTarget: HTMLElement, blurLinkList: HTMLElement[]) {
-            const theme = getCSSVarFromTheme(this.theme || 'orange')
+            const theme = getCSSVarFromTheme('orange')
 
             gsap.to(selectedTarget, 0.3, { color: theme['--theme-on-default'], ease: 'none' })
             gsap.to(blurLinkList, 0.3, { color: theme['--theme-default'], ease: 'none' })

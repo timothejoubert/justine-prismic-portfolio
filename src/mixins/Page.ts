@@ -19,23 +19,24 @@ export default Vue.extend({
     //     const slugifyPath = req.url.replace(/\s+/g, '-').toLowerCase();
     //     if (slugifyPath !== req.url) return redirect(slugifyPath)
     // },
-    async asyncData({ $prismic, params, store }: Context) {
-        const parameter = params?.uid || NodeUid.HOME
-        console.log('route parameter', parameter)
+    async asyncData({ $prismic, params, store, route }: Context) {
+        let page
+        const isProjectListingPage = route.path.substring(1) === NodeUid.PROJECT_LISTING
+        const isProjectPath = route.path.includes(`/${NodeUid.PROJECT_LISTING}/`) && !!params?.uid
+        const parameter = params?.uid || (isProjectListingPage ? NodeUid.PROJECT_LISTING : NodeUid.HOME)
 
-        try {
-            const page = await $prismic.api.getByUID(CustomType.PAGE, parameter)
-            if (page) {
-                await store.dispatch('updatePageData', page)
-                return { page }
-            }
-        } catch (error) {
-            console.log('failed on asyncData page', error)
+        if (isProjectPath) {
+            page = store.getters.getProjectByUid(parameter)
+        } else {
+            page = await $prismic.api.getByUID(CustomType.PAGE, parameter)
         }
 
-        // console.log('current page', page)
-
-        // if (page) return { page: mockData }
+        if (page) {
+            await store.dispatch('updatePageData', page)
+            return { page }
+        } else {
+            return { page: mockData }
+        }
     },
     head(): MetaInfo {
         const meta = [

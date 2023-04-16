@@ -9,6 +9,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import NodeUid from '~/constants/node-uid'
 
 export default Vue.extend({
     layout: 'error',
@@ -22,7 +23,7 @@ export default Vue.extend({
                 : "Y a un pb je sais pas d'ou ça vient"
         },
         isPageProject(): boolean {
-            return !!this.$route.path.includes('project')
+            return this.$route.path.includes(NodeUid.PROJECT_LISTING)
         },
     },
 })
@@ -31,7 +32,7 @@ export default Vue.extend({
 <style lang="scss" module>
 .root {
     position: relative;
-    width: rem(800);
+    max-width: rem(800);
     min-height: calc(100vh - rem(68 + 28)); // footer height and margin bottom
     margin-inline: auto;
     padding-block: rem(200);

@@ -5,12 +5,16 @@
         </nuxt-link>
         <v-button
             ref="cta"
-            label="découvrez mes illustration"
+            label="Découvrir mes illustrations"
             outlined
             theme="orange"
             :class="$style.cta"
             @click="onClick"
-        />
+        >
+            <template #icon>
+                <icon-chevron-down />
+            </template>
+        </v-button>
     </div>
 </template>
 
@@ -20,9 +24,11 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Vue from 'vue'
 import PageProvider from '~/mixins/PageProvider'
+import IconChevronDown from '~/assets/images/icons/chevron-down.svg?sprite'
 
 export default mixins(PageProvider).extend({
     name: 'VHome',
+    components: { IconChevronDown },
     mounted() {
         document.addEventListener('scroll', this.onScroll)
         if (this.$refs.title) this.initScrollAnimation()
@@ -48,7 +54,7 @@ export default mixins(PageProvider).extend({
             // https://codepen.io/GreenSock/pen/WNvVOWw?editors=0010
             gsap.to(title, {
                 scrollTrigger: {
-                    markers: true,
+                    markers: false,
                     trigger: root,
                     scrub: true,
                     start: '10px',
@@ -97,8 +103,10 @@ export default mixins(PageProvider).extend({
 }
 
 .cta {
+    ---v-button-icon-margin: 6px;
+
     position: absolute;
-    top: 65vh;
+    top: 60vh;
     pointer-events: auto;
     transition: opacity 0.4s;
 

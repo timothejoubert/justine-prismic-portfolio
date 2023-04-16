@@ -1,12 +1,13 @@
 import { NuxtError } from '@nuxt/types'
 import { PrismicDocument } from '@prismicio/types/src/value/document'
 import { MainMenuDocument, SettingsDocument } from '~/types/prismic/prismic-types.generated'
+import { ProjectDocument } from '~/types/prismic/app-prismic'
 
 interface RootState {
     // Prismic
     settings: SettingsDocument | null
     mainMenu: MainMenuDocument | null
-    projects: PrismicDocument[] | null
+    projects: ProjectDocument[] | null
     currentPageData: PrismicDocument | null
 
     // Global

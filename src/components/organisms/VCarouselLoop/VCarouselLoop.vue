@@ -119,7 +119,7 @@ export default mixins(Carousel, Vue as VueConstructor<Component>).extend({
             if (!this.hadInteraction) this.resume()
         },
         resume() {
-            // this.timeline?.resume()
+            this.timeline?.resume()
         },
         pause() {
             this.timeline?.pause()

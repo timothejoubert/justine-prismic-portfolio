@@ -62,6 +62,7 @@ export default Vue.extend({
     width: auto;
     height: 100%;
     flex-shrink: 0;
+    object-fit: contain;
 
     &:not(:last-child) {
         padding-right: rem(60);

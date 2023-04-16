@@ -9,6 +9,6 @@
 }
 
 @mixin wide-background {
-    box-shadow: 0 0 0 100vmax #{var(--background-color, color(black))}, inset 0 0 0 100vmax var(--background-color, #{color(black)});
+    box-shadow: 0 0 0 100vmax #{var(--background-color, color(dark))}, inset 0 0 0 100vmax var(--background-color, #{color(dark)});
     clip-path: inset(0 -100vmax);
 }

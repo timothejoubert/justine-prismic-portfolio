@@ -3,12 +3,13 @@ import { PrismicDocument } from '@prismicio/types/src/value/document'
 import MutationType from '~/constants/mutation-type'
 import { RootState } from '~/types/store'
 import { MainMenuDocument, SettingsDocument } from '~/types/prismic/prismic-types.generated'
+import { ProjectDocument } from '~/types/prismic/app-prismic'
 
 export default {
     // Prismic
     [MutationType.SET_SETTINGS]: (state, settings: SettingsDocument) => (state.settings = settings),
     [MutationType.SET_MAIN_MENU]: (state, navigation: MainMenuDocument) => (state.mainMenu = navigation),
-    [MutationType.SET_PROJECTS]: (state, value: PrismicDocument[]) => (state.projects = value),
+    [MutationType.SET_PROJECTS]: (state, value: ProjectDocument[]) => (state.projects = value),
     [MutationType.CURRENT_PAGE_DATA]: (state, value: PrismicDocument) => (state.currentPageData = value),
 
     // Global

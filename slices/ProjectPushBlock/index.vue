@@ -22,23 +22,23 @@
 import { getSliceComponentProps } from '@prismicio/vue/components'
 import * as prismicT from '@prismicio/types'
 import Vue from 'vue'
-import { Document } from '@prismicio/client/types/documents'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ProjectData } from '~/types/prismic/app-prismic'
+import { ProjectDocument } from '~/types/prismic/app-prismic'
+import { getProjectByUid } from '~/utils/prismic/project'
 
 export default Vue.extend({
     name: 'ProjectPushBlock',
     props: getSliceComponentProps(['slice', 'index', 'slices', 'context']),
     data() {
         return {
-            project: {} as Document<ProjectData>,
+            project: {} as ProjectDocument,
             descriptionHeight: 0,
         }
     },
     async fetch() {
-        let project = this.$store.getters.getProjectByUid(this.projectUid)
-        if (!project) project = await this.$prismic.api.getByUID('project', this.projectUid)
+        let project = getProjectByUid(this.$store.state.projects, this.projectUid)
+        if (!project) project = (await this.$prismic.api.getByUID('project', this.projectUid)) as ProjectDocument
 
         if (project) this.project = project
     },
@@ -69,7 +69,7 @@ export default Vue.extend({
             if (!root || !image) return
             gsap.to(image, {
                 scrollTrigger: {
-                    markers: true,
+                    markers: false,
                     trigger: root,
                     scrub: true,
                     start: 'top bottom',

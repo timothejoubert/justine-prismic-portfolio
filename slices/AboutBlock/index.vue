@@ -10,7 +10,7 @@
                 label="En savoir plus"
                 theme="orange"
                 size="m"
-                filled
+                outlined
                 :to="internalLink"
             />
         </div>
@@ -51,6 +51,8 @@ export default Vue.extend({
     align-items: center;
     background: #f7f7f7;
     padding-block: rem(150);
+    max-width: rem(1000);
+    margin-inline: auto;
 }
 
 .media {
@@ -60,15 +62,15 @@ export default Vue.extend({
     border-radius: app(border-radius);
 
     @include media('>=md') {
-        margin-right: app(gutter) * 2;
+        margin-right: rem(82);
     }
 }
 
-.title,
-.content,
-.cta {
-    &:not(&:last-child) {
-        margin-bottom: rem(28);
-    }
+.title {
+    margin-bottom: rem(36);
+}
+
+.content {
+    margin-bottom: rem(52);
 }
 </style>

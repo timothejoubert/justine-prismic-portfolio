@@ -4,7 +4,7 @@ import { PrismicDocument } from '@prismicio/types/src/value/document'
 import { Document } from '@prismicio/client/types/documents'
 import { RootState } from '~/types/store'
 import MutationType from '~/constants/mutation-type'
-import { CustomTypeName, MainMenu, ProjectData, Settings } from '~/types/prismic/app-prismic'
+import { CustomTypeName, MainMenu, ProjectDocument, Settings } from '~/types/prismic/app-prismic'
 import CustomType from '~/constants/custom-type'
 // import { Context, NuxtError } from '@nuxt/types'
 
@@ -22,7 +22,7 @@ const actions: ActionTree<RootState, RootState> = {
             })
 
         await dispatch('getProjects', context)
-            .then((projects: Array<ProjectData>) => {
+            .then((projects: Array<ProjectDocument>) => {
                 // TODO: order project by date
                 commit(MutationType.SET_PROJECTS, projects)
             })
@@ -42,7 +42,7 @@ const actions: ActionTree<RootState, RootState> = {
     getProjects(
         _actionContext: ActionContext<RootState, RootState>,
         context: Context
-    ): Promise<Document<ProjectData>[]> {
+    ): Promise<Document<ProjectDocument>[]> {
         const projects = context.$prismic.api
             .query(context.$prismic.predicates.at('document.type', CustomType.PROJECT as CustomTypeName))
             .then((response) => response.results)

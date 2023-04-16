@@ -15,24 +15,23 @@
 </template>
 
 <script lang="ts">
-import mixins from 'vue-typed-mixins'
-import ProjectsMutation from '~/mixins/ProjectsMutation'
+import Vue from 'vue'
 import { ProjectDocument } from '~/types/prismic/app-prismic'
 
-export default mixins(ProjectsMutation).extend({
+export default Vue.extend({
     name: 'VCarouselProject',
     props: {
         displayNumber: { type: Boolean, default: true },
-    },
-    computed: {
-        projects(): ProjectDocument[] {
-            return this.$store.state.projects
-        },
     },
     data() {
         return {
             slideIndex: 0,
         }
+    },
+    computed: {
+        projects(): ProjectDocument[] {
+            return this.$store.state.projects
+        },
     },
 })
 </script>
