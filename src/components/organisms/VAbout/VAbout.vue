@@ -30,13 +30,16 @@
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
 import PageProvider from '~/mixins/PageProvider'
-import ProjectsMutation from '~/mixins/ProjectsMutation'
+import { ProjectDocument } from '~/types/prismic/app-prismic'
 
-export default mixins(PageProvider, ProjectsMutation).extend({
+export default mixins(PageProvider).extend({
     name: 'VAbout',
     computed: {
         settingsData() {
             return this.$store.state.settings.data
+        },
+        projects(): ProjectDocument[] {
+            return this.$store.state.projects
         },
         socials() {
             return this.settingsData.socials

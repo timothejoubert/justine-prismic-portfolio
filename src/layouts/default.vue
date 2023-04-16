@@ -10,9 +10,8 @@
             <h1 :class="$style.logo">{{ siteName }}</h1>
         </nuxt-link>
 
-        <v-nav :class="$style.nav" />
+        <v-nav ref="nav" :class="$style.nav" />
 
-        <!--    <nuxt-img :class="$style.texture" provider="static" src="/images/texture.png" />-->
         <nuxt-picture
             provider="static"
             sizes="sm:480 md:768 lg:1024"
@@ -25,25 +24,36 @@
 
         <Nuxt />
 
-        <!--        <portal-target name="clip-board" />-->
+        <v-footer ref="footer" />
     </div>
 </template>
 
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
-// import { PortalTarget } from 'portal-vue'
+import Vue from 'vue'
+import type { VueConstructor } from 'vue'
 import Resize from '~/mixins/Resize'
 import MutationType from '~/constants/mutation-type'
 import SplashScreen from '~/mixins/SplashScreen'
 import { isHomePage } from '~/utils/prismic/document'
 
-export default mixins(Resize, SplashScreen).extend({
+interface Component {
+    intersectionObserver: null | IntersectionObserver
+}
+
+export default mixins(Resize, SplashScreen, Vue as VueConstructor<Vue & Component>).extend({
     name: 'default',
+    data() {
+        return {
+            isFooterVisible: false,
+        }
+    },
     mounted() {
         this.$store.commit(
             MutationType.PREFERS_REDUCED_MOTION,
             window.matchMedia('(prefers-reduced-motion: reduce)').matches
         )
+        this.createIntersectionObserver()
     },
     computed: {
         siteName(): string {
@@ -51,6 +61,38 @@ export default mixins(Resize, SplashScreen).extend({
         },
         isHomePage(): boolean {
             return isHomePage(this.$store.state.currentPageData)
+        },
+    },
+    beforeDestroy() {
+        this.disposeIntersectionObserver()
+    },
+    watch: {
+        isFooterVisible(value: boolean) {
+            if (value) document.addEventListener('scroll', this.onScroll)
+            else document.removeEventListener('scroll', this.onScroll)
+        },
+    },
+    methods: {
+        onScroll() {
+            const nav = (this.$refs.nav as Vue).$el as HTMLElement
+            const footer = (this.$refs.footer as Vue).$el as HTMLElement
+            if (!nav || !footer) return
+            const bottomOffset = Math.abs(footer.getBoundingClientRect().top - window.innerHeight) * -1
+
+            nav.style.transform = `translate(-50%, ${bottomOffset}px)`
+        },
+        createIntersectionObserver() {
+            const el = (this.$refs.footer as Vue).$el as HTMLElement
+
+            this.intersectionObserver = new IntersectionObserver(this.onIntersectionObserverChange)
+            this.intersectionObserver.observe(el)
+        },
+        onIntersectionObserverChange([entry]: IntersectionObserverEntry[]) {
+            this.isFooterVisible = entry.isIntersecting
+        },
+        disposeIntersectionObserver() {
+            this.intersectionObserver?.disconnect()
+            this.intersectionObserver = null
         },
     },
 })
@@ -66,6 +108,10 @@ export default mixins(Resize, SplashScreen).extend({
     bottom: rem(20);
     left: 50%;
     transform: translateX(-50%);
+
+    &--sticky {
+        background-color: red !important;
+    }
 }
 
 .title {
@@ -88,6 +134,8 @@ export default mixins(Resize, SplashScreen).extend({
     overflow: hidden;
     border-radius: rem(40);
     inset: rem(20);
+    opacity: 0.5;
+    pointer-events: none;
 }
 
 .texture__image {

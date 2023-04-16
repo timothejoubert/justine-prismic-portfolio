@@ -33,7 +33,7 @@ export default mixins(PageProvider).extend({
     methods: {
         onScroll(_event: Event) {
             const cta = (this.$refs.cta as Vue)?.$el
-            if (window.scrollY > 60) {
+            if (window.scrollY > 40) {
                 cta?.classList.add(this.$style['cta--hide'])
             } else {
                 cta?.classList.remove(this.$style['cta--hide'])
@@ -104,6 +104,10 @@ export default mixins(PageProvider).extend({
 
     &--hide {
         opacity: 0;
+    }
+
+    & > span {
+        background-color: color(light);
     }
 }
 </style>

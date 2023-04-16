@@ -44,7 +44,7 @@ export default Vue.extend({
 
 <style lang="scss" module>
 .root {
-    --background-color: #{color(grey-50)};
+    --background-color: #{color(light)};
     @include wide-background;
 
     display: flex;

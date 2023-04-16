@@ -1,37 +1,33 @@
 <template>
     <div :class="$style.root">
-        <div v-if="$fetchState.pending" :class="$style.projects">
-            <div
-                v-for="i in 6"
-                :key="'placeholder-' + i"
-                :class="[$style.project, $style['project--placeholder']]"
-                :style="{ '--placeholder-delay': i }"
-            ></div>
-        </div>
-        <template v-else>
-            <v-carousel-loop v-model="slideIndex" :class="$style.projects" async-slides>
-                <li v-for="(project, i) in projects" :key="project.uid" :class="$style.project">
-                    <v-project-card
-                        :index="i"
-                        :project="project"
-                        :length="projects.length"
-                        :class="$style.card"
-                        :display-number="displayNumber"
-                    />
-                </li>
-            </v-carousel-loop>
-        </template>
+        <v-carousel-loop v-model="slideIndex" :class="$style.projects" wrapper-tag="ul" async-slides>
+            <li v-for="(project, i) in projects" :key="project.uid" :class="$style.project">
+                <v-project-card
+                    :index="i"
+                    :document="project"
+                    :length="projects.length"
+                    :class="$style.card"
+                    :display-number="displayNumber"
+                />
+            </li>
+        </v-carousel-loop>
     </div>
 </template>
 
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
 import ProjectsMutation from '~/mixins/ProjectsMutation'
+import { ProjectDocument } from '~/types/prismic/app-prismic'
 
 export default mixins(ProjectsMutation).extend({
     name: 'VCarouselProject',
     props: {
         displayNumber: { type: Boolean, default: true },
+    },
+    computed: {
+        projects(): ProjectDocument[] {
+            return this.$store.state.projects
+        },
     },
     data() {
         return {

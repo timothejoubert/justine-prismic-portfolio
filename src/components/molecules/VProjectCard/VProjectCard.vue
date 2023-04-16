@@ -28,7 +28,7 @@ export default mixins(CarouselSlide).extend({
         length: Number,
         index: [Number, String] as PropType<Number | String>,
         overlapInfo: Boolean,
-        displayYear: Boolean,
+        displayYear: { type: Boolean, default: true },
     },
     computed: {
         project(): ProjectData {
@@ -55,7 +55,7 @@ export default mixins(CarouselSlide).extend({
 <style lang="scss" module>
 .root {
     position: relative;
-    overflow: hidden;
+    user-select: none;
 }
 
 .head {

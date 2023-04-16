@@ -6,7 +6,7 @@
 import Vue from 'vue'
 import type { PropType } from 'vue'
 
-interface ExternalLink {
+export interface ExternalLink {
     link_type: string
     url: string
 }

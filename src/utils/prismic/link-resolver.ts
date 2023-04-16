@@ -1,17 +1,10 @@
-// switch (doc.type) {
-//     case 'project':
-//         return `/projects/${doc.uid}`
-//     case 'page':
-//         return doc.uid === 'home-page' ? '/' : `/${doc.uid}`
-//     default:
-//         return '/'
-// }
+import { Document } from '@prismicio/client/types/documents'
+import NodeUid from '../../constants/node-uid'
+import CustomType from '../../constants/custom-type'
 
-export default function linkResolver(doc: any) {
-    switch (doc.uid) {
-        case 'home-page':
-            return '/'
-        default:
-            return `/${doc.uid}`
-    }
+export default function linkResolver({ uid, type }: Document) {
+    if (uid === NodeUid.HOME) return '/'
+    if (type === CustomType.PROJECT) return `/${NodeUid.PROJECT_LISTING}/${uid}`
+
+    return `/${uid}`
 }

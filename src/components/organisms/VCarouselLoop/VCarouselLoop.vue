@@ -1,7 +1,7 @@
 <template>
-    <div :class="$style.root" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
+    <component :is="wrapperTag" :class="$style.root" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave">
         <slot />
-    </div>
+    </component>
 </template>
 
 <script lang="ts">
@@ -26,6 +26,7 @@ export default mixins(Carousel, Vue as VueConstructor<Component>).extend({
     name: 'VCarouselLoop',
     props: {
         value: Number,
+        wrapperTag: { type: String, default: 'div' },
     },
     data() {
         return {
@@ -70,6 +71,7 @@ export default mixins(Carousel, Vue as VueConstructor<Component>).extend({
         this.timeline = null
 
         eventBus.$off(EventType.RESIZE, this.updateAutoplay)
+        this.disposeIntersectionObserver()
     },
     methods: {
         createIntersectionObserver() {
@@ -117,7 +119,7 @@ export default mixins(Carousel, Vue as VueConstructor<Component>).extend({
             if (!this.hadInteraction) this.resume()
         },
         resume() {
-            this.timeline?.resume()
+            // this.timeline?.resume()
         },
         pause() {
             this.timeline?.pause()

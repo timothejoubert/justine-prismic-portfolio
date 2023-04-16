@@ -23,7 +23,7 @@ const actions: ActionTree<RootState, RootState> = {
 
         await dispatch('getProjects', context)
             .then((projects: Array<ProjectData>) => {
-                console.log('project result', projects)
+                // TODO: order project by date
                 commit(MutationType.SET_PROJECTS, projects)
             })
             .catch((fetchError: Error) => {

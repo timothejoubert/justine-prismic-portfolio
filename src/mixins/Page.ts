@@ -8,7 +8,6 @@ import { createTwitterMeta } from '~/utils/meta/twitter'
 import { MainPageData } from '~/types/prismic/app-prismic'
 import NodeUid from '~/constants/node-uid'
 import mockData from '~/static/mock-data/page-data-fallback.json'
-import { getProjectUid } from '~/utils/prismic/project'
 import { isAbout, isHomePage, isProjectListing, isSketchBooks } from '~/utils/prismic/document'
 import { isProjectDocument } from '~/utils/prismic/entity'
 import CustomType from '~/constants/custom-type'
@@ -21,31 +20,22 @@ export default Vue.extend({
     //     if (slugifyPath !== req.url) return redirect(slugifyPath)
     // },
     async asyncData({ $prismic, params, store }: Context) {
-        let page
-
-        const projectUid = getProjectUid(params)
-        const parameter = params?.uid || projectUid
-
-        console.log('params', parameter, getProjectUid(params))
-        console.log('fetch page in async data mixin')
-
-        // TODO: if project => check if already store in state
-        // TODO fetch data from dispatch actions
+        const parameter = params?.uid || NodeUid.HOME
+        console.log('route parameter', parameter)
 
         try {
-            if (parameter) page = await $prismic.api.getByUID(CustomType.PAGE, parameter)
-            if (parameter && !page) page = await $prismic.api.getByUID(CustomType.PROJECT, parameter)
-            if (!page) page = await $prismic.api.getByUID(CustomType.PAGE, NodeUid.HOME)
+            const page = await $prismic.api.getByUID(CustomType.PAGE, parameter)
+            if (page) {
+                await store.dispatch('updatePageData', page)
+                return { page }
+            }
         } catch (error) {
             console.log('failed on asyncData page', error)
         }
 
-        await store.dispatch('updatePageData', page)
-        console.log('current page', page)
-        if (page) return { page }
-        return { page: mockData }
+        // console.log('current page', page)
 
-        // await store.dispatch('load', 'second function argument to pass in load function')
+        // if (page) return { page: mockData }
     },
     head(): MetaInfo {
         const meta = [

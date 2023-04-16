@@ -101,7 +101,7 @@ export default (Vue as VueConstructor<Component>).extend({
             this.swiper = new SwiperBundle.Swiper(this.$el as HTMLElement, {
                 modules,
                 grabCursor: true,
-                preventInteractionOnTransition: true,
+                preventInteractionOnTransition: false,
                 threshold: 6,
                 slidesPerView: 'auto',
                 watchOverflow: true,

@@ -26,4 +26,6 @@ export type MenuItem = MainMenuDocumentDataLinksItem
 
 // COMMON CONTENT
 export type Settings = GeneratedTypes.SettingsDocument
+export type SettingsData = Settings['data']
 export type MainMenu = GeneratedTypes.MainMenuDocument
+export type MainMenuData = MainMenu['data']
