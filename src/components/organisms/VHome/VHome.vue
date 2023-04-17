@@ -112,6 +112,8 @@ export default mixins(PageProvider).extend({
 
     &--hide {
         opacity: 0;
+        pointer-events: none;
+        user-select: none;
     }
 
     & > span {

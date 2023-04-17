@@ -12,23 +12,13 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 ### IN PROGRESS
 
-* **(Bug)**: PageProject error => mixin page not load when try to access project/slug.html ?
-* **(Slice)**: RandomGridImage
-* **(Project)**: Project link or url path don't work
-* **(Setup)**: Clean prismic/utils files and methods names
+* **(SSR)**: Menu & Projects listing aren't load in ssr
+* **(Project)**: /projects/slug url aren't link to _uid.vue page
 * **(VLink && VButton)**: add PrismicLink && PrismicDocument
-* **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_
 
 ### TODO
 
-CustomType:
-
-- HomePage
-- CustomPage [type: Sketchbooks | ProjectList | About]
-- ProjectPage
-- DefaultPage [Contact | Informations | Awwwards]
-- CommonContent [Menu | socials | siteInfo]
-
+* **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_
 * **(Home)** Create Home Type (display all slice only on it)
 * **(Internalization)** Set Fr as Default
   locale: [Forum](https://community.prismic.io/t/changing-the-main-locale-language/1010)
@@ -40,6 +30,9 @@ CustomType:
 
 #### DONE
 
+* **(Slice)**: RandomGridImage
+* **(Setup)**: Clean prismic/utils files and methods names
+* **(Bug)**: PageProject error => mixin page not load when try to access project/slug.html ?
 * **(Setup)** Prettier vs EsLint conflict
 * **(Config)** Fix TS error type on build
 * **(Config)** Fix "Could not find a declaration file for module '@prismicio/vue/components'." on build
@@ -56,6 +49,14 @@ CustomType:
 
 * **(Config)**: I18n
 * **(Nav && Config)**: Configure nested route
+
+CustomType:
+
+- HomePage
+- CustomPage [type: Sketchbooks | ProjectList | About]
+- ProjectPage
+- DefaultPage [Contact | Informations | Awwwards]
+- CommonContent [Menu | socials | siteInfo]
 
 #### RESOURCES
 

@@ -5,6 +5,7 @@ export function getDocumentData<T>(document: Document): T {
     return document.data
 }
 
-export const getMenuLinkList = (mainMenu: MainMenu): MenuItem[] => {
+export const getMenuLinkList = (mainMenu: MainMenu | undefined): MenuItem[] => {
+    if (!mainMenu) return []
     return mainMenu.data.links as MenuItem[]
 }

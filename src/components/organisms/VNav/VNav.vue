@@ -59,7 +59,7 @@ export default Vue.extend({
             return [this.$style.root, this.isMenuOpen && this.$style['root--open'], this.$style['root--theme-orange']]
         },
         pages(): MenuItem[] {
-            return getMenuLinkList(this.$store.state.mainMenu)
+            return getMenuLinkList(this.$store.state?.mainMenu)
         },
         isHome(): boolean {
             return isHomeRoute(this.$route.fullPath, this.$route.params?.uid)

@@ -1,6 +1,6 @@
 <template>
     <div :class="$style.root">
-        <div :class="$style.copyright" class="text-body-xs">© {{ siteName }} | {{ currentYear }}</div>
+        <div class="text-body-xs">© {{ siteName }} | {{ currentYear }}</div>
         <div v-if="socials.length" :class="$style.socials">
             <a v-for="(social, i) in socials" :key="i" :href="social.url" target="_blank" :class="$style.link">
                 <component :is="social.tagIcon" />
@@ -19,15 +19,16 @@ export default Vue.extend({
     name: 'VFooter',
     computed: {
         settingsData(): SettingsData {
-            return this.$store.state.settings.data
+            return this.$store.state.settings?.data || { data: null }
         },
         siteName(): string | null {
-            return this.settingsData.site_name
+            return this.settingsData?.site_name
         },
         socials(): SocialsContent[] {
-            const prismicSocialGroup = this.settingsData.socials
+            const prismicSocialGroup = this.settingsData?.socials
 
-            if (isGroupFulled<Social>(prismicSocialGroup)) return getSocialsData(prismicSocialGroup)
+            if (prismicSocialGroup && isGroupFulled<Social>(prismicSocialGroup))
+                return getSocialsData(prismicSocialGroup)
 
             return []
         },

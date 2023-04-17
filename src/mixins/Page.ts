@@ -13,17 +13,14 @@ import { isProjectDocument } from '~/utils/prismic/entity'
 import CustomType from '~/constants/custom-type'
 
 export default Vue.extend({
-    // middleware({ req, redirect }: Context) {
-    //     if (!req?.url) return
-    //
-    //     const slugifyPath = req.url.replace(/\s+/g, '-').toLowerCase();
-    //     if (slugifyPath !== req.url) return redirect(slugifyPath)
-    // },
+    // middleware: 'slugParser',
     async asyncData({ $prismic, params, store, route }: Context) {
         let page
         const isProjectListingPage = route.path.substring(1) === NodeUid.PROJECT_LISTING
         const isProjectPath = route.path.includes(`/${NodeUid.PROJECT_LISTING}/`) && !!params?.uid
         const parameter = params?.uid || (isProjectListingPage ? NodeUid.PROJECT_LISTING : NodeUid.HOME)
+
+        console.log(route, isProjectPath, parameter)
 
         if (isProjectPath) {
             page = store.getters.getProjectByUid(parameter)
