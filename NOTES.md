@@ -16,6 +16,11 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 * **(Project)**: /projects/slug url aren't link to _uid.vue page
 * **(VLink && VButton)**: add PrismicLink && PrismicDocument
 
+### QUESTIONS
+
+* **(Routing)**: Why unknown routing /projects/_uid (not redirect to _uid) ?
+* **(Routing)**: Why need to specify basPath '/' ?
+
 ### TODO
 
 * **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_

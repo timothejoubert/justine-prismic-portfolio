@@ -20,8 +20,6 @@ export default Vue.extend({
         const isProjectPath = route.path.includes(`/${NodeUid.PROJECT_LISTING}/`) && !!params?.uid
         const parameter = params?.uid || (isProjectListingPage ? NodeUid.PROJECT_LISTING : NodeUid.HOME)
 
-        console.log(route, isProjectPath, parameter)
-
         if (isProjectPath) {
             page = store.getters.getProjectByUid(parameter)
         } else {

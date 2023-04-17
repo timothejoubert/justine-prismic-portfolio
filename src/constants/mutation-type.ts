@@ -5,7 +5,7 @@ enum MutationType {
     SET_PROJECTS = 'setProjects',
     CURRENT_PAGE_DATA = 'setCurrentPageData',
     // loading
-    SPLASH_SCREEN_FINISH = 'splashScreenFinish',
+    SPLASH_SCREEN_DONE = 'splashScreenDone',
     ANIMATION_ENTER = 'animationEnter',
     ALREADY_VISITED = 'alreadyVisited',
     // Global

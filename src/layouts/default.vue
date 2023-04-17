@@ -1,14 +1,8 @@
 <template>
     <div :class="$style.root">
-        <!--    <template v-if="splashScreenState !== 'hidden'">-->
-        <!--      <transition name="splash-screen">-->
-        <!--        <v-splash-screen v-if="splashScreenState !== 'done'" v-model="splashScreenState" :content="siteName" />-->
-        <!--      </transition>-->
-        <!--    </template>-->
+        <!--        <v-splash-screen-wrapper :class="$style.splash" />-->
 
-        <nuxt-link v-if="!isHomePage" to="/" :class="$style.title">
-            <h1 :class="$style.logo">{{ siteName }}</h1>
-        </nuxt-link>
+        <v-header />
 
         <v-nav ref="nav" :class="$style.nav" />
 
@@ -34,14 +28,13 @@ import Vue from 'vue'
 import type { VueConstructor } from 'vue'
 import Resize from '~/mixins/Resize'
 import MutationType from '~/constants/mutation-type'
-import SplashScreen from '~/mixins/SplashScreen'
 import { isHomePage } from '~/utils/prismic/document'
 
 interface Component {
     intersectionObserver: null | IntersectionObserver
 }
 
-export default mixins(Resize, SplashScreen, Vue as VueConstructor<Vue & Component>).extend({
+export default mixins(Resize, Vue as VueConstructor<Vue & Component>).extend({
     name: 'default',
     data() {
         return {
@@ -61,8 +54,8 @@ export default mixins(Resize, SplashScreen, Vue as VueConstructor<Vue & Componen
         this.createIntersectionObserver()
     },
     computed: {
-        siteName(): string {
-            return this.$store.state.settings.data.site_name
+        isSplashScreenDone(): boolean {
+            return this.$store.state.splashScreenDone
         },
         isHomePage(): boolean {
             return isHomePage(this.$store.state.currentPageData)
@@ -93,7 +86,7 @@ export default mixins(Resize, SplashScreen, Vue as VueConstructor<Vue & Componen
             this.updateNavPosition()
         },
         updateNavPosition() {
-            const nav = (this.$refs.nav as Vue).$el as HTMLElement
+            const nav = (this.$refs.nav as Vue)?.$el as HTMLElement
             const footer = (this.$refs.footer as Vue)?.$el as HTMLElement | undefined
             if (!footer) {
                 this.restoreNavPosition()
@@ -104,7 +97,7 @@ export default mixins(Resize, SplashScreen, Vue as VueConstructor<Vue & Componen
             nav.style.transform = `translate(-50%, ${bottomOffset}px)`
         },
         restoreNavPosition() {
-            const nav = (this.$refs.nav as Vue).$el as HTMLElement
+            const nav = (this.$refs.nav as Vue)?.$el as HTMLElement
             if (!nav) return
             nav.style.transform = `translate(-50%, 0px)`
         },
@@ -170,5 +163,9 @@ export default mixins(Resize, SplashScreen, Vue as VueConstructor<Vue & Componen
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.splash {
+    z-index: 1001;
 }
 </style>

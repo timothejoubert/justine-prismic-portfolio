@@ -7,6 +7,9 @@ export default (): RootState => ({
     projects: [],
     currentPageData: null,
 
+    // SplashScreen
+    splashScreenDone: false,
+
     // General
     errorPage: null,
     windowWidth: 0,

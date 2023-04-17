@@ -10,6 +10,9 @@ interface RootState {
     projects: ProjectDocument[]
     currentPageData: PrismicDocument | null
 
+    // SplashScreen
+    splashScreenDone: Boolean
+
     // Global
     windowWidth: number
     windowHeight: number

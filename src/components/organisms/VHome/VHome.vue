@@ -1,8 +1,5 @@
 <template>
     <div :class="$style.root">
-        <nuxt-link to="/">
-            <v-text ref="title" class="text-h1" :class="$style.title" :content="title" />
-        </nuxt-link>
         <v-button
             ref="cta"
             label="Découvrir mes illustrations"
@@ -20,8 +17,6 @@
 
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Vue from 'vue'
 import PageProvider from '~/mixins/PageProvider'
 import IconChevronDown from '~/assets/images/icons/chevron-down.svg?sprite'
@@ -31,7 +26,6 @@ export default mixins(PageProvider).extend({
     components: { IconChevronDown },
     mounted() {
         document.addEventListener('scroll', this.onScroll)
-        if (this.$refs.title) this.initScrollAnimation()
     },
     beforeDestroy() {
         document.removeEventListener('scroll', this.onScroll)
@@ -45,39 +39,12 @@ export default mixins(PageProvider).extend({
                 cta?.classList.remove(this.$style['cta--hide'])
             }
         },
-        initScrollAnimation() {
-            gsap.registerPlugin(ScrollTrigger)
-
-            const root = this.$el as HTMLElement
-            const title = (this.$refs.title as Vue).$el as HTMLElement
-
-            // https://codepen.io/GreenSock/pen/WNvVOWw?editors=0010
-            gsap.to(title, {
-                scrollTrigger: {
-                    markers: false,
-                    trigger: root,
-                    scrub: true,
-                    start: '10px',
-                    end: 'bottom',
-                    onLeave: () => root.classList.add(this.$style.fixed),
-                    onEnterBack: () => root.classList.remove(this.$style.fixed),
-                },
-                scale: 0.2,
-                y: -500,
-                ease: 'none',
-            })
-        },
         onClick() {
             window.scrollTo({
                 top: window.innerHeight,
                 left: 0,
                 behavior: 'smooth',
             })
-        },
-    },
-    computed: {
-        title(): string {
-            return this.pageData?.title || 'justine fallback'
         },
     },
 })
@@ -94,12 +61,6 @@ export default mixins(PageProvider).extend({
     align-items: center;
     justify-content: center;
     pointer-events: none;
-}
-
-.title {
-    color: color(orange);
-    pointer-events: auto;
-    transform-origin: center center;
 }
 
 .cta {
@@ -119,5 +80,18 @@ export default mixins(PageProvider).extend({
     & > span {
         background-color: color(light);
     }
+}
+
+.decorator:global(#{'-enter-active'}),
+.decorator:global(#{'-leave-active'}) {
+    transition: 0.3s;
+    transition-property: opacity, transform;
+    transition-timing-function: ease(out-quad);
+}
+
+.decorator:global(#{'-enter'}),
+.decorator:global(#{'-leave-to'}) {
+    opacity: 0;
+    transform: translateX(0);
 }
 </style>

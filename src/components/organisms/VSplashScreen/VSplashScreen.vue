@@ -1,17 +1,17 @@
 <template>
-  <div :class="rootClass">
-    <div :class="$style.center">
-      <v-split-word
-        :class="[$style.title, 'text-h1']"
-        :content="content"
-        :transition-state="animationState"
-        default-hidden
-        @transitionend="onTransitionEnd"
-      />
+    <div :class="rootClass">
+        <div :class="$style.center">
+            <v-split-word
+                :class="[$style.title, 'text-h1']"
+                :content="siteName"
+                :transition-state="animationState"
+                default-hidden
+                @transitionend="onTransitionEnd"
+            />
 
-      <div :class="$style.slider"></div>
+            <div :class="$style.slider"></div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script lang="ts">
@@ -19,33 +19,42 @@ import Vue from 'vue'
 import type { PropType } from 'vue'
 import { SplashScreenState } from '~/mixins/SplashScreen'
 
-export type AnimationState = 'pending' | 'started' | 'revert'
+export type AnimationState = 'pending' | 'started' | 'reverse' | 'done'
 
 export default Vue.extend({
-  name: 'VSplashScreen',
-  props: {
-    content: String,
-    value: String as PropType<SplashScreenState>,
-  },
-  data() {
-    return {
-      animationState: 'pending' as AnimationState,
-    }
-  },
-  computed: {
-    rootClass(): (string | undefined | false)[] {
-      return [this.$style.root, this.value === 'starting' && 'load', this.animationState === 'revert' && 'revert']
+    name: 'VSplashScreen',
+    props: {
+        content: String,
+        value: String as PropType<SplashScreenState>,
     },
-  },
-  mounted() {
-    this.animationState = 'started'
-  },
-  methods: {
-    onTransitionEnd() {
-      if (this.animationState === 'revert') this.$emit('input', 'ended')
-      this.animationState = 'revert'
+    data() {
+        return {
+            animationState: 'pending' as AnimationState,
+        }
     },
-  },
+    computed: {
+        rootClass(): (string | undefined | false)[] {
+            return [
+                this.$style.root,
+                this.value === 'beforeEnter' && 'load',
+                this.animationState === 'reverse' && 'revert',
+            ]
+        },
+        siteName(): string {
+            return this.$store.state.settings.data.site_name || 'test'
+        },
+    },
+    watch: {
+        value(state: SplashScreenState) {
+            if (state === 'beforeEnter') this.animationState = 'started'
+        },
+    },
+    methods: {
+        onTransitionEnd() {
+            if (this.animationState === 'reverse') this.$emit('input', 'beforeLeaved')
+            this.animationState = 'reverse'
+        },
+    },
 })
 </script>
 
@@ -132,6 +141,7 @@ $duration-background: 1s;
     .root:global(.load) &::after {
         transform: translateX(300px) !important;
     }
+
     .root:global(.revert) &::after {
         transition-delay: 0.2s;
     }

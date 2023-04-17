@@ -31,7 +31,6 @@ import Page from '~/mixins/Page'
 export default mixins(Page).extend({
     name: 'page',
     key(route: Route) {
-        console.log(route, route.meta)
         return route.meta?.key || route.path
     },
     components: { SliceZone },

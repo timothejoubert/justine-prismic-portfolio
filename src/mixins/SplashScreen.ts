@@ -2,7 +2,7 @@ import Vue from 'vue'
 import toBoolean from '~/utils/to-boolean'
 import GeneralsConst from '~/constants/app'
 
-export type SplashScreenState = 'pending' | 'hidden' | 'starting' | 'ended' | 'done'
+export type SplashScreenState = 'pending' | 'hidden' | 'beforeEnter' | 'ended' | 'done'
 
 export default Vue.extend({
     data() {
@@ -36,7 +36,7 @@ export default Vue.extend({
                 (toBoolean(GeneralsConst.DISPLAY_SPLASH_SCREEN_ONCE) && !this.hasAlreadyVisited())
 
             if (hide) this.splashScreenState = 'hidden'
-            else if (display) this.splashScreenState = 'starting'
+            else if (display) this.splashScreenState = 'beforeEnter'
             else this.splashScreenState = 'done'
         },
         hasAlreadyVisited(): boolean {

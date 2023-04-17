@@ -26,7 +26,7 @@ export default mixins(CarouselSlide).extend({
     props: {
         document: Object as PropType<ProjectDocument>,
         length: Number,
-        index: [Number, String] as PropType<Number | String>,
+        index: Number,
         overlapInfo: Boolean,
         displayYear: { type: Boolean, default: true },
     },
@@ -35,7 +35,7 @@ export default mixins(CarouselSlide).extend({
             return this.document?.data
         },
         displayNumber(): boolean {
-            return !!this.index && !!this.length
+            return typeof this.index === 'number' && !!this.length
         },
         year(): false | number | null {
             return this.displayYear && stringDateToYear(this.project?.date)
@@ -45,7 +45,7 @@ export default mixins(CarouselSlide).extend({
         },
     },
     methods: {
-        formatValue(value: number | string): string {
+        formatValue(value: number): string {
             return ('0' + (value || 0)).substr(-2)
         },
     },

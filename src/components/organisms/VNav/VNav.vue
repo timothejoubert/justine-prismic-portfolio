@@ -75,10 +75,11 @@ export default Vue.extend({
         },
     },
     methods: {
-        pageLink(pageUid: string): string {
+        pageLink(pageUid: string | undefined): string | undefined {
             if (isHomePage(pageUid)) return '/'
             if (this.$store.getters.isProjectUid(pageUid)) return '/' + NodeUid.PROJECT_LISTING + '/' + pageUid
-            return '/' + pageUid
+            if (pageUid) return '/' + pageUid
+            return undefined
         },
         onMouseLeave() {
             this.timeoutId = window.setTimeout(this.closeMenu, 100)

@@ -12,6 +12,9 @@ export default {
     [MutationType.SET_PROJECTS]: (state, value: ProjectDocument[]) => (state.projects = value),
     [MutationType.CURRENT_PAGE_DATA]: (state, value: PrismicDocument) => (state.currentPageData = value),
 
+    // SplashScreen
+    [MutationType.SPLASH_SCREEN_DONE]: (state, value: boolean) => (state.splashScreenDone = value),
+
     // Global
     [MutationType.WINDOW_WIDTH]: (state, value: number) => (state.windowWidth = value),
     [MutationType.WINDOW_HEIGHT]: (state, value: number) => (state.windowHeight = value),
