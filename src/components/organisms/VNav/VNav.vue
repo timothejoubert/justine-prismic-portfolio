@@ -67,7 +67,7 @@ export default Vue.extend({
     },
     watch: {
         selectedIndex(newIndex: number) {
-            this.updateIndicatorPosition(newIndex)
+            this.updateIndicatorPosition(Math.max(newIndex, 0))
         },
         value(isOpen) {
             if (isOpen) this.openMenu()
@@ -112,7 +112,7 @@ export default Vue.extend({
         },
         initIndicatorPosition() {
             this.updateSelectedIndexByRoute()
-            setTimeout(() => this.updateIndicatorPosition(this.selectedIndex || 0), 200)
+            setTimeout(() => this.updateIndicatorPosition(Math.max(this.selectedIndex || 0, 0)), 200)
         },
         updateIndicatorPosition(newIndex: number) {
             const targets = this.$refs.link as HTMLElement[]

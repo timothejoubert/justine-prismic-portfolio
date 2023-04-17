@@ -7,7 +7,7 @@ interface RootState {
     // Prismic
     settings: SettingsDocument | null
     mainMenu: MainMenuDocument | null
-    projects: ProjectDocument[] | null
+    projects: ProjectDocument[]
     currentPageData: PrismicDocument | null
 
     // Global

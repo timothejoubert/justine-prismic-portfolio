@@ -4,7 +4,7 @@ export default (): RootState => ({
     // prismic
     settings: null,
     mainMenu: null,
-    projects: null,
+    projects: [],
     currentPageData: null,
 
     // General

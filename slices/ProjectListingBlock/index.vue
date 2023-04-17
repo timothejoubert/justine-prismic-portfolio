@@ -7,7 +7,12 @@
             :class="$style.description"
             class="text-body-s"
         />
-        <v-carousel-navigation v-model="slideIndex" :length="projects.length - 1" :class="$style.navigation" />
+        <v-carousel-navigation
+            v-if="projects && projects.length"
+            v-model="slideIndex"
+            :length="projects.length - 1"
+            :class="$style.navigation"
+        />
         <v-carousel
             v-if="projects && projects.length"
             v-model="slideIndex"
@@ -40,8 +45,8 @@ export default Vue.extend({
         }
     },
     computed: {
-        projects(): ProjectDocument[] {
-            return this.$store.state.projects
+        projects(): ProjectDocument[] | undefined {
+            return this.$store.state?.projects
         },
     },
 })
