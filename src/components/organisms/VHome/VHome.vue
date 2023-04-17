@@ -1,6 +1,6 @@
 <template>
     <div :class="$style.root">
-        <nuxt-link :to="$config.homePath">
+        <nuxt-link to="/">
             <v-text ref="title" class="text-h1" :class="$style.title" :content="title" />
         </nuxt-link>
         <v-button
@@ -77,7 +77,7 @@ export default mixins(PageProvider).extend({
     },
     computed: {
         title(): string {
-            return this.pageData?.title || 'justine'
+            return this.pageData?.title || 'justine fallback'
         },
     },
 })

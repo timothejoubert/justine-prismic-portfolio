@@ -20,6 +20,10 @@ export default {
     // https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-srcdir
     srcDir: 'src',
 
+    router: {
+        base: '/',
+    },
+
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
         title: process.env.APP_TITLE,
@@ -121,7 +125,7 @@ export default {
         development: process.env.NODE_ENV === 'development',
         siteUrl: process.env.APP_URL,
         apiUrl: apiEndpoint,
-        homePath: process.env.HOME_PATH,
+        homePath: process.env.HOME_PATH || '/',
     },
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

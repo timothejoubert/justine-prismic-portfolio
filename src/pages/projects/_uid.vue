@@ -24,11 +24,16 @@
 <script lang="ts">
 import mixins from 'vue-typed-mixins'
 import { SliceZone } from '@prismicio/vue/src/components/SliceZone'
+import type { Route } from 'vue-router'
 import { components } from '~~/slices'
 import Page from '~/mixins/Page'
 
 export default mixins(Page).extend({
     name: 'page',
+    key(route: Route) {
+        console.log(route, route.meta)
+        return route.meta?.key || route.path
+    },
     components: { SliceZone },
     data() {
         return { components }
