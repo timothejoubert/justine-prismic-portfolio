@@ -197,7 +197,7 @@ export default Vue.extend({
     }
 
     &--enter-animation {
-        animation: enter-animation 1s calc(100ms * var(--index-letter-total, 1)) ease(out-quart) forwards;
+        animation: enter-animation 0.8s calc(80ms * var(--index-letter-total, 1)) ease(out-quart) forwards;
     }
 
     &--leave-animation {

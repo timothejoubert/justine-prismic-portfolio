@@ -45,7 +45,6 @@ export default Vue.extend({
     },
     watch: {
         value(splashState: SplashScreenState) {
-            console.log('splashState', splashState)
             if (splashState === 'beforeEnter') this.onEnter()
         },
     },
@@ -89,11 +88,11 @@ export default Vue.extend({
     }
 
     &--enter-animation::after {
-        animation: enter 1.4s 0.6s ease(in-back) forwards;
+        animation: enter 1.4s ease(in-back) forwards;
     }
 
     &--leave-animation::after {
-        animation: leave 1.6s ease(in-back) backwards;
+        animation: leave 1.2s ease(in-back) backwards;
     }
 }
 

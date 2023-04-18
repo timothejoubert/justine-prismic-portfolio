@@ -68,6 +68,9 @@ export default Vue.extend({
         },
     },
     watch: {
+        $route() {
+            this.restoreNavPosition()
+        },
         selectedIndex(newIndex: number) {
             this.updateIndicatorPosition(Math.max(newIndex, 0))
         },

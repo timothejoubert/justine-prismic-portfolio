@@ -1,6 +1,6 @@
 <template>
     <section v-if="sketchList.length" :class="$style.root">
-        <v-masonry :enabled="true" :column-number="5" @container-width="setContainerWidth">
+        <v-masonry :enabled="masonryEnabled" :column-number="5" @container-width="setContainerWidth">
             <div ref="sketchs" :class="$style['sketch-list']">
                 <v-masonry-item v-for="(sketch, i) in sketchList" :key="i">
                     <div :class="$style.sketch">
@@ -9,7 +9,11 @@
                             :src="sketch.media.url"
                             sizes="xs:20vw md:20vw lg:20vw vl:20vw xl:20vw xxl:20vw hd:20vw"
                             :class="$style.image"
+                            quality="80"
+                            :placeholder="[sketch.media.dimensions.width, sketch.media.dimensions.height, 10]"
+                            @load="onImgLoad"
                         />
+                        <!--                        {{ sketch.media }}-->
                         <v-text :content="sketch.name" class="text-body-xs" :class="$style.content" />
                     </div>
                 </v-masonry-item>
@@ -35,9 +39,20 @@ interface Component {
 export default (Vue as VueConstructor<Vue & Component>).extend({
     name: 'SketchBook',
     props: getSliceComponentProps(['slice', 'index', 'slices', 'context']),
+    data() {
+        return {
+            masonryEnabled: false,
+            imgRegistered: 0,
+        }
+    },
     computed: {
         sketchList(): { media: any; name: string }[] {
             return this.slice.items
+        },
+    },
+    watch: {
+        imgRegistered(value: number) {
+            this.masonryEnabled = value === this.sketchList.length
         },
     },
     mounted() {
@@ -100,6 +115,9 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
                 { duration: 1000, fill: 'forwards' }
             )
         },
+        onImgLoad() {
+            this.imgRegistered++
+        },
     },
 })
 </script>
@@ -143,6 +161,7 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
 }
 
 .image {
+    min-height: rem(100);
     width: 100%;
     filter: grayscale(1);
     transition: filter 0.5s ease(out-quad);

@@ -60,7 +60,7 @@ export default Vue.extend({
 <style lang="scss" module>
 .splash-screen:global(#{'-enter-active'}),
 .splash-screen:global(#{'-leave-active'}) {
-    transition: opacity 0.4s;
+    transition: opacity 0.3s;
 }
 
 .splash-screen:global(#{'-enter'}),
