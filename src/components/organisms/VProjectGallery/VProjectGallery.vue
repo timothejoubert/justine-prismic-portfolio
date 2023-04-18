@@ -2,7 +2,14 @@
     <div :class="$style.root">
         <div :class="$style.title" class="text-h4">Gallery</div>
         <v-carousel v-model="slideIndex" :class="$style.list">
-            <prismic-image v-for="(document, i) in documents" :key="i" :field="document" :class="$style.image" />
+            <nuxt-img
+                v-for="(document, i) in documents"
+                :key="i"
+                provider="prismic"
+                :src="document.url"
+                sizes="xs:100vw md:70vw lg:60vw vl:60vw xl:60vw xxl:60vw hd:60vw"
+                :class="$style.image"
+            />
         </v-carousel>
     </div>
 </template>

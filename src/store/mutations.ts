@@ -19,4 +19,5 @@ export default {
     [MutationType.WINDOW_WIDTH]: (state, value: number) => (state.windowWidth = value),
     [MutationType.WINDOW_HEIGHT]: (state, value: number) => (state.windowHeight = value),
     [MutationType.PREFERS_REDUCED_MOTION]: (state, navigation: boolean) => (state.prefersReducedMotion = navigation),
+    [MutationType.SCROLL_IS_DISABLED]: (state, value: boolean) => (state.scrollIsDisabled = value),
 } as MutationTree<RootState>

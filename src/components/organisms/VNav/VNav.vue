@@ -41,6 +41,8 @@ import { getProjectUid } from '~/utils/prismic/project'
 import { getRelationLinkUid } from '~/utils/prismic/field-relation'
 import { getMenuLinkList } from '~/utils/prismic/parse-api-data'
 import { MenuItem } from '~/types/prismic/app-prismic'
+import eventBus from '~/utils/event-bus'
+import EventType from '~/constants/event-type'
 
 export default Vue.extend({
     name: 'VNav',
@@ -73,6 +75,9 @@ export default Vue.extend({
             if (isOpen) this.openMenu()
             else this.closeMenu()
         },
+    },
+    mounted() {
+        eventBus.$on(EventType.FOOTER_DISTANCE, this.updateNavPosition)
     },
     methods: {
         pageLink(pageUid: string | undefined): string | undefined {
@@ -136,6 +141,12 @@ export default Vue.extend({
             gsap.to(selectedTarget, 0.3, { color: theme['--theme-on-default'], ease: 'none' })
             gsap.to(blurLinkList, 0.3, { color: theme['--theme-default'], ease: 'none' })
         },
+        updateNavPosition(dist: number) {
+            ;(this.$el as HTMLElement).style.transform = `translate(-50%, ${dist}px)`
+        },
+        restoreNavPosition() {
+            ;(this.$el as HTMLElement).style.transform = `translate(-50%, 0px)`
+        },
     },
 })
 </script>
@@ -146,11 +157,16 @@ $height: rem(34);
 .root {
     @include theme-variants;
 
+    position: fixed;
+    z-index: 101;
+    bottom: rem(20);
+    left: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+    transform: translateX(-50%);
 }
 
 .menu {

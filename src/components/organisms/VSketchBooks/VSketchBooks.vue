@@ -1,6 +1,6 @@
 <template>
     <div :class="$style.root">
-        <h1 v-if="pageData.title">{{ pageData.title }}</h1>
+        <!--        <h1 v-if="pageData.title">{{ pageData.title }}</h1>-->
     </div>
 </template>
 

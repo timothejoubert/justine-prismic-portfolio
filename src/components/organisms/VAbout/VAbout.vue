@@ -1,7 +1,12 @@
 <template>
     <div :class="$style.root">
-        <prismic-image :field="pageData.thumbnail" :class="$style.image" />
-
+        <nuxt-img
+            v-if="pageData && pageData.thumbnail && pageData.thumbnail.url"
+            provider="prismic"
+            :src="pageData.thumbnail.url"
+            sizes="xs:50vw md:50vw lg:50vw vl:50vw xl:50vw xxl:50vw hd:50vw"
+            :class="$style.image"
+        />
         <v-about-tags :class="$style.tags" />
         <!--        <v-marquee-carousel :tags="tags"/>-->
 

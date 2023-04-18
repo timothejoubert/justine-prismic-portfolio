@@ -1,5 +1,7 @@
 import type { ActionTree, ActionContext } from 'vuex'
 import { Context } from '@nuxt/types'
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
+import type { BodyScrollOptions } from 'body-scroll-lock'
 import { PrismicDocument } from '@prismicio/types/src/value/document'
 import { Document } from '@prismicio/client/types/documents'
 import { RootState } from '~/types/store'
@@ -51,6 +53,19 @@ const actions: ActionTree<RootState, RootState> = {
     },
     updatePageData({ commit }: ActionContext<RootState, RootState>, data: PrismicDocument) {
         commit(MutationType.CURRENT_PAGE_DATA, data)
+    },
+    disableScroll(
+        { commit }: ActionContext<RootState, RootState>,
+        { element, options }: { element: HTMLElement; options?: BodyScrollOptions }
+    ) {
+        disableBodyScroll(element, { reserveScrollBarGap: true, ...options })
+
+        commit(MutationType.SCROLL_IS_DISABLED, true)
+    },
+    enableScroll({ commit }: ActionContext<RootState, RootState>, { element }: { element: HTMLElement }) {
+        enableBodyScroll(element)
+
+        commit(MutationType.SCROLL_IS_DISABLED, false)
     },
 }
 

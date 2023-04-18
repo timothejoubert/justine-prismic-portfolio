@@ -18,4 +18,5 @@ interface RootState {
     windowHeight: number
     errorPage: NuxtError | null
     prefersReducedMotion: boolean
+    scrollIsDisabled: boolean
 }

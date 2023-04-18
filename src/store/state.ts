@@ -15,4 +15,5 @@ export default (): RootState => ({
     windowWidth: 0,
     windowHeight: 0,
     prefersReducedMotion: false,
+    scrollIsDisabled: false,
 })

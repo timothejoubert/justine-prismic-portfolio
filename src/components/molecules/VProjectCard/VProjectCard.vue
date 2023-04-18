@@ -6,7 +6,13 @@
                 <div :class="$style.length">{{ formatValue(length) }}</div>
             </template>
         </v-button>
-        <prismic-image v-if="project && project.thumbnail" :field="project.thumbnail" :class="$style.image" />
+        <nuxt-img
+            v-if="project && project.thumbnail && project.thumbnail.url"
+            provider="prismic"
+            :src="project.thumbnail.url"
+            sizes="xs:50vw md:50vw lg:50vw vl:50vw xl:50vw xxl:50vw hd:50vw"
+            :class="$style.image"
+        />
         <div :class="$style.body">
             <h2 :class="$style.title">{{ title }}</h2>
             <div v-if="year" :class="$style.year">{{ year }}</div>

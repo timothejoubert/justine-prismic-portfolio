@@ -21,7 +21,11 @@ export default {
     srcDir: 'src',
 
     router: {
-        base: '/',
+        base: process.env.HOME_PATH,
+    },
+
+    image: {
+        prismic: {},
     },
 
     // Global page headers: https://go.nuxtjs.dev/config-head

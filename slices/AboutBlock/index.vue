@@ -1,6 +1,12 @@
 <template>
     <section :class="$style.root">
-        <prismic-image :field="slice.primary.media" :class="$style.media" />
+        <nuxt-img
+            v-if="slice.primary.media"
+            provider="prismic"
+            :src="slice.primary.media.url"
+            sizes="xs:100vw md:50vw lg:50vw vl:50vw xl:50vw xxl:50vw hd:50vw"
+            :class="$style.media"
+        />
         <div :class="$style.content">
             <div v-if="title" :class="$style.title" class="text-h5">{{ title }}</div>
             <v-text :class="$style.content" :content="slice.primary.content" class="text-body-l" />

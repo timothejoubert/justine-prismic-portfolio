@@ -23,6 +23,7 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 ### TODO
 
+* **(VImage)** Use responsive img with <nuxt-img> 
 * **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_
 * **(Home)** Create Home Type (display all slice only on it)
 * **(Internalization)** Set Fr as Default

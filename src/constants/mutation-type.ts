@@ -13,6 +13,7 @@ enum MutationType {
     WINDOW_HEIGHT = 'windowHeight',
     ERROR_PAGE = 'errorPage',
     PREFERS_REDUCED_MOTION = 'prefersReducedMotion',
+    SCROLL_IS_DISABLED = 'scrollIsDisabled',
 }
 
 export default MutationType

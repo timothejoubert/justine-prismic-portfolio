@@ -3,8 +3,6 @@ import Vue from 'vue'
 import type { VNode, PropType } from 'vue'
 import { AnimationState } from '~/components/organisms/VSplashScreen/VSplashScreen.vue'
 
-// import { throttle } from 'throttle-debounce'
-
 interface SplitWordProps {
     enabled: boolean
     content: string
@@ -31,32 +29,12 @@ export default Vue.extend({
         content: String,
         enabled: { type: Boolean, default: true },
         breakWord: { type: Boolean, default: true },
-        defaultHidden: { type: Boolean, default: false },
+        defaultHidden: { type: Boolean, default: true },
         transitionState: String as PropType<AnimationState>,
     },
-    watch: {
-        transitionState(state: string) {
-            if (state === 'started' || state === 'reverse') this.initTransitionListener()
-        },
-    },
-    beforeDestroy() {
-        this.removeTransitionListener()
-    },
     methods: {
-        initTransitionListener() {
-            const letters = this.$el.querySelectorAll('.split-letter')
-            if (!letters) return
-
-            letters[letters.length - 1].addEventListener('transitionend', this.onTransitionEnd, { once: true })
-        },
-        removeTransitionListener() {
-            const letters = this.$el.querySelectorAll('.split-letter')
-            if (!letters) return
-
-            letters[letters.length - 1].removeEventListener('transitionend', this.onTransitionEnd)
-        },
-        onTransitionEnd() {
-            this.$emit('transitionend')
+        onAnimationEnd(state: AnimationState) {
+            this.$emit('transitionend', state)
         },
     },
     render(createElement): VNode {
@@ -84,21 +62,31 @@ export default Vue.extend({
         const parsedLetters = (word: string): VNode[] => {
             const letters = word.split('')
             return letters.map((letter: string, index: number) => {
+                let event = {}
                 indexLetter++
+
+                const lastLetter = letters.length - 1 === indexLetter
+                if (lastLetter) {
+                    event = { animationend: () => this.onAnimationEnd(this.transitionState) }
+                }
+
                 return createElement(
                     'div',
                     {
                         class: [
                             this.$style.letter,
                             defaultHidden && this.$style['letter--hide'],
+                            'split-letter',
                             letter === ' ' && this.$style['letter--last'],
                             this.breakWord && this.$style['letter--break'],
-                            'split-letter',
+                            this.transitionState === 'entering' && this.$style['letter--enter-animation'],
+                            this.transitionState === 'afterEnter' && this.$style['letter--leave-animation'],
                         ],
                         style: {
                             '--index-letter-in-word': index,
                             '--index-letter-total': indexLetter,
                         } as Record<string, any>,
+                        on: event,
                     },
                     letter
                 )
@@ -185,13 +173,15 @@ export default Vue.extend({
 .letter {
     position: relative;
     display: inline-block;
-    transition-delay: calc(60ms * var(--index-letter-total, 1));
-    transition-duration: 0.6s;
-    transition-property: transform, opacity, font-variation-settings;
-    transition-timing-function: ease(out-quart);
 
     .root:not(.root--enable) & {
         display: inline;
+    }
+
+    &--hide {
+        font-variation-settings: 'wght' 100;
+        opacity: 0;
+        transform: translateY(-50px);
     }
 
     &--last#{&}--break {
@@ -206,22 +196,38 @@ export default Vue.extend({
         font-size: 2rem;
     }
 
-    &.letter--hide {
+    &--enter-animation {
+        animation: enter-animation 1s calc(100ms * var(--index-letter-total, 1)) ease(out-quart) forwards;
+    }
+
+    &--leave-animation {
+        animation: leave-animation 0.5s calc(40ms * var(--index-letter-total, 1)) ease(out-quart) backwards;
+    }
+}
+
+@keyframes enter-animation {
+    from {
         font-variation-settings: 'wght' 100;
         opacity: 0;
         transform: translateY(-50px);
     }
-
-    :global(.load) & {
+    to {
         font-variation-settings: 'wght' 900;
         opacity: 1;
         transform: translateY(0);
     }
+}
 
-    :global(.revert) & {
-        transition-delay: calc(20ms * var(--index-letter-total, 1));
-        transition-duration: 0.4s;
-        transition-timing-function: ease(out-quad);
+@keyframes leave-animation {
+    from {
+        font-variation-settings: 'wght' 900;
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        font-variation-settings: 'wght' 100;
+        opacity: 0;
+        transform: translateY(-50px);
     }
 }
 </style>

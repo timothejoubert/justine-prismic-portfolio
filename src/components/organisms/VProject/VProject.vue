@@ -2,7 +2,13 @@
     <div :class="$style.root">
         <div :class="$style.head">
             <div :class="$style.medias">
-                <prismic-image v-if="pageData.thumbnail" :field="pageData.thumbnail" :class="$style.image" />
+                <nuxt-img
+                    v-if="pageData && pageData.thumbnail && pageData.thumbnail.url"
+                    provider="prismic"
+                    :src="pageData.thumbnail.url"
+                    sizes="xs:50vw md:50vw lg:50vw vl:50vw xl:50vw xxl:50vw hd:50vw"
+                    :class="$style.image"
+                />
             </div>
 
             <div :class="$style.body">
@@ -37,6 +43,7 @@
 <script lang="ts">
 import { FilledLinkToMediaField } from '@prismicio/types/src/value/linkToMedia'
 import mixins from 'vue-typed-mixins'
+import page from '../../../mixins/Page'
 import { stringDateToYear } from '~/utils/utils'
 import { filteredMediaGroupByKey, isGroupFulled } from '~/utils/prismic/field-group'
 import PageProvider from '~/mixins/PageProvider'
@@ -44,6 +51,9 @@ import PageProvider from '~/mixins/PageProvider'
 export default mixins(PageProvider).extend({
     name: 'VProject',
     computed: {
+        page() {
+            return page
+        },
         year(): number | null {
             return stringDateToYear(this.pageData.date)
         },

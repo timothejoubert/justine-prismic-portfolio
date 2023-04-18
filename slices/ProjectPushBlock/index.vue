@@ -1,7 +1,14 @@
 <template>
     <section :class="$style.root">
         <v-link :reference="slice.primary.project">
-            <prismic-image v-if="image" ref="image" :field="image" :class="$style.image" />
+            <nuxt-img
+                v-if="image"
+                ref="image"
+                provider="prismic"
+                :src="image.url"
+                sizes="xs:100vw md:95vw lg:95vw vl:95vw xl:95vw xxl:95vw hd:95vw"
+                :class="$style.image"
+            />
             <div :class="$style.content">
                 <div :class="$style.content__inner" :style="{ transform: `translateY(${descriptionHeight}px)` }">
                     <v-text ref="title" :class="$style.title" class="text-h5" :content="slice.primary.title" />
@@ -32,17 +39,13 @@ export default Vue.extend({
     props: getSliceComponentProps(['slice', 'index', 'slices', 'context']),
     data() {
         return {
-            project: {} as ProjectDocument,
             descriptionHeight: 0,
         }
     },
-    async fetch() {
-        let project = getProjectByUid(this.$store.state.projects, this.projectUid)
-        if (!project) project = (await this.$prismic.api.getByUID('project', this.projectUid)) as ProjectDocument
-
-        if (project) this.project = project
-    },
     computed: {
+        project(): ProjectDocument | undefined {
+            return getProjectByUid(this.$store.state.projects, this.projectUid)
+        },
         projectUid(): string {
             return this.slice.primary.project.uid
         },

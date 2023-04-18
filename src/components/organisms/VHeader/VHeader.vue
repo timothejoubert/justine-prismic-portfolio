@@ -40,15 +40,14 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
     },
     watch: {
         $route() {
-            if (isHomePath(this.$route.fullPath) || isHomePage(this.$store.state.currentPageData)) {
+            if (isHomePath(this.$route) || isHomePage(this.$store.state.currentPageData)) {
                 this.isSticky = false
                 this.initScrollAnimation()
             } else this.setStickyPosition()
         },
     },
     mounted() {
-        if (isHomePath(this.$route.fullPath) || isHomePage(this.$store.state.currentPageData))
-            this.initScrollAnimation()
+        if (isHomePath(this.$route) || isHomePage(this.$store.state.currentPageData)) this.initScrollAnimation()
         else this.setStickyPosition()
     },
     methods: {
