@@ -12,9 +12,7 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 ### IN PROGRESS
 
-* **(SSR)**: Menu & Projects listing aren't load in ssr
-* **(Project)**: /projects/slug url aren't link to _uid.vue page
-* **(VLink && VButton)**: add PrismicLink && PrismicDocument
+* **(VHeader)**: Adjust logo position on top
 
 ### QUESTIONS
 
@@ -23,7 +21,7 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 ### TODO
 
-* **(VImage)** Use responsive img with <nuxt-img> 
+* **(VLink && VButton)**: add PrismicLink && PrismicDocument
 * **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_
 * **(Home)** Create Home Type (display all slice only on it)
 * **(Internalization)** Set Fr as Default
@@ -36,6 +34,7 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 #### DONE
 
+* **(VImage)** Use responsive img with <nuxt-img>
 * **(Slice)**: RandomGridImage
 * **(Setup)**: Clean prismic/utils files and methods names
 * **(Bug)**: PageProject error => mixin page not load when try to access project/slug.html ?

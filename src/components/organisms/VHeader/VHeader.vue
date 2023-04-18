@@ -3,7 +3,9 @@
         <nuxt-link ref="title" to="/" :class="$style.link">
             <v-text class="text-h1" :content="title.firstName" />
             <transition :name="$style.decorator">
-                <span v-if="isSticky" :class="$style['title-decorator']" class="text-h1">{{ title.familyParsed }}</span>
+                <span v-if="isSticky" ref="family" :class="$style['title-decorator']" class="text-h1">{{
+                    title.familyParsed
+                }}</span>
             </transition>
         </nuxt-link>
     </div>
@@ -14,7 +16,6 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Vue from 'vue'
 import type { VueConstructor } from 'vue'
-import { epilogue } from 'concurrently/dist/bin/epilogue'
 import { isHomePath } from '~/utils/route-path'
 import { isHomePage } from '~/utils/prismic/document'
 
@@ -42,6 +43,7 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
         $route() {
             if (isHomePath(this.$route) || isHomePage(this.$store.state.currentPageData)) {
                 this.isSticky = false
+                gsap.set(this.$refs.family as HTMLElement, { opacity: 0 })
                 this.initScrollAnimation()
             } else this.setStickyPosition()
         },

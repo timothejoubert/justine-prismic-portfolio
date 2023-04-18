@@ -1,12 +1,18 @@
 <template>
-    <div :class="$style.root">
-        <div class="text-body-xs">© {{ siteName }} | {{ currentYear }}</div>
+    <footer :class="$style.root">
+        <div class="text-body-xs" :class="$style.copyrigth">
+            © {{ siteName }} | {{ currentYear }}
+            <div :class="$style.creator">
+                <span> Créée par </span>
+                <a href="https://timothejoubert.com" target="_blank">Timothé J.</a>
+            </div>
+        </div>
         <div v-if="socials.length" :class="$style.socials">
             <a v-for="(social, i) in socials" :key="i" :href="social.url" target="_blank" :class="$style.link">
                 <component :is="social.tagIcon" />
             </a>
         </div>
-    </div>
+    </footer>
 </template>
 
 <script lang="ts">
@@ -118,6 +124,29 @@ export default mixins(Vue as VueConstructor<Vue & Component>).extend({
     background-color: color(orange);
     border-radius: app(border-radius);
     color: color(white);
+}
+
+.copyrigth {
+    display: flex;
+    align-items: center;
+}
+
+.creator {
+    & > * {
+        opacity: 0.7;
+    }
+
+    & > *:first-child {
+        margin-left: rem(18);
+    }
+
+    & > a {
+        transition: opacity 0.3s;
+    }
+
+    & > a:hover {
+        opacity: 1;
+    }
 }
 
 .socials {

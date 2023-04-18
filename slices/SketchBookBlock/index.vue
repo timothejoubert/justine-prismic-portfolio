@@ -1,5 +1,5 @@
 <template>
-    <section v-if="sketchList.length" :class="$style.root">
+    <section v-if="sketchList.length" :class="[$style.root, masonryEnabled && $style['root--ready']]">
         <v-masonry :enabled="masonryEnabled" :column-number="5" @container-width="setContainerWidth">
             <div ref="sketchs" :class="$style['sketch-list']">
                 <v-masonry-item v-for="(sketch, i) in sketchList" :key="i">
@@ -125,6 +125,12 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
 <style lang="scss" module>
 .root {
     padding: rem(300) 0 0 0;
+    opacity: 0;
+    transition: opacity 0.4s ease(in-quad);
+
+    &--ready {
+        opacity: 1;
+    }
 }
 
 .sketch-list {
@@ -144,6 +150,27 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
     margin-top: rem(150);
     background-color: #fff;
     transition: transform 0.5s ease(out-quad);
+    user-select: none;
+
+    &:nth-child(2) {
+        margin-top: rem(300);
+    }
+
+    &:nth-child(3) {
+        margin-top: rem(100);
+    }
+
+    &:nth-child(3) {
+        margin-top: rem(400);
+    }
+
+    &:nth-child(4) {
+        margin-top: rem(200);
+    }
+
+    &:nth-child(5) {
+        margin-top: rem(550);
+    }
 
     &::after {
         position: absolute;
@@ -161,8 +188,8 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
 }
 
 .image {
-    min-height: rem(100);
     width: 100%;
+    min-height: rem(100);
     filter: grayscale(1);
     transition: filter 0.5s ease(out-quad);
 
