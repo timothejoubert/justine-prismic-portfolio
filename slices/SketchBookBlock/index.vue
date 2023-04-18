@@ -41,11 +41,15 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
         },
     },
     mounted() {
+        this.$store.dispatch('disableScroll', { element: this.$el, options: { reserveScrollBarGap: false } })
+
         eventBus.$on(EventType.RESIZE, this.setContainerHeight)
         window.addEventListener('mousemove', this.onMouseMove)
         this.initResizeObserver()
     },
     beforeDestroy() {
+        this.$store.dispatch('enableScroll', { element: this.$el })
+
         eventBus.$off(EventType.RESIZE, this.setContainerHeight)
         window.removeEventListener('mousemove', this.onMouseMove)
         this.disposeResizeObserver()
@@ -68,12 +72,11 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
             const translateX = mapRange(x, 0, window.innerWidth, 200, this.containerWidth * -1 + window.innerWidth)
             const translateY = mapRange(y, 0, window.innerHeight, 0, this.containerHeight * -1 + window.innerHeight)
 
-            console.log(translateX)
             ;(this.$el as HTMLElement).animate(
                 {
                     transform: `translate(${Math.round(translateX)}px, ${Math.round(translateY)}px)`,
                 },
-                { duration: 3500, fill: 'forwards' }
+                { duration: 6500, fill: 'forwards' }
             )
         },
         setContainerWidth(value: number) {
