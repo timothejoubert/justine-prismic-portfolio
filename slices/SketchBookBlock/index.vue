@@ -3,7 +3,7 @@
         <v-masonry :enabled="masonryEnabled" :column-number="5" @container-width="setContainerWidth">
             <div ref="sketchs" :class="$style['sketch-list']">
                 <v-masonry-item v-for="(sketch, i) in sketchList" :key="i">
-                    <div :class="$style.sketch">
+                    <button :class="$style.sketch" @click="onClick(i)">
                         <nuxt-img
                             provider="prismic"
                             :src="sketch.media.url"
@@ -15,7 +15,7 @@
                         />
                         <!--                        {{ sketch.media }}-->
                         <v-text :content="sketch.name" class="text-body-xs" :class="$style.content" />
-                    </div>
+                    </button>
                 </v-masonry-item>
             </div>
         </v-masonry>
@@ -29,6 +29,7 @@ import type { VueConstructor } from 'vue'
 import { mapRange } from '~/utils/utils'
 import eventBus from '~/utils/event-bus'
 import EventType from '~/constants/event-type'
+import mutationType from '~/constants/mutation-type'
 
 interface Component {
     resizeObserver: null | ResizeObserver
@@ -117,6 +118,12 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
         },
         onImgLoad() {
             this.imgRegistered++
+        },
+        onClick(index: number) {
+            const medias = this.sketchList.map((sketch) => sketch.media)
+
+            this.$store.commit(mutationType.MEDIA_VIEWER_DATA, medias)
+            this.$store.commit(mutationType.MEDIA_VIEWER_SLIDE_INDEX, index)
         },
     },
 })

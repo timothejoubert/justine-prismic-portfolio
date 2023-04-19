@@ -14,6 +14,8 @@ enum MutationType {
     ERROR_PAGE = 'errorPage',
     PREFERS_REDUCED_MOTION = 'prefersReducedMotion',
     SCROLL_IS_DISABLED = 'scrollIsDisabled',
+    MEDIA_VIEWER_DATA = 'mediaViewerData',
+    MEDIA_VIEWER_SLIDE_INDEX = 'mediaViewerSlideIndex',
 }
 
 export default MutationType

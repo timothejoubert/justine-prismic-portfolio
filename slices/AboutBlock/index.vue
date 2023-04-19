@@ -1,5 +1,5 @@
 <template>
-    <section :class="$style.root">
+    <section :class="$style.root" class="layout--wide-background">
         <nuxt-img
             v-if="slice.primary.media"
             provider="prismic"
@@ -7,7 +7,7 @@
             sizes="xs:100vw md:50vw lg:50vw vl:50vw xl:50vw xxl:50vw hd:50vw"
             :class="$style.media"
         />
-        <div :class="$style.content">
+        <div :class="$style.body">
             <div v-if="title" :class="$style.title" class="text-h5">{{ title }}</div>
             <v-text :class="$style.content" :content="slice.primary.content" class="text-body-l" />
             <v-button
@@ -51,32 +51,46 @@ export default Vue.extend({
 <style lang="scss" module>
 .root {
     --background-color: #{color(light)};
-    @include wide-background;
 
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     background: #f7f7f7;
     padding-block: rem(150);
     max-width: rem(1000);
+    gap: rem(38);
     margin-inline: auto;
+
+    @include media('>=lg') {
+        gap: rem(38) rem(68);
+    }
 }
 
 .media {
     overflow: hidden;
-    width: clamp(400px, 40%, 620px);
-    flex-shrink: 0;
     border-radius: app(border-radius);
+    width: 100%;
 
     @include media('>=md') {
-        margin-right: rem(82);
+        width: clamp(300px, 40%, 620px);
     }
 }
 
-.title {
-    margin-bottom: rem(36);
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: rem(20);
+    padding-inline: var(--layout-padding-inline);
+    margin-inline: auto;
+
+    @include media('>=md') {
+        width: 50%;
+    }
 }
 
 .content {
-    margin-bottom: rem(52);
+    margin-bottom: rem(28);
 }
 </style>

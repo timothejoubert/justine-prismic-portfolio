@@ -1,7 +1,5 @@
 <template>
-    <div :class="$style.root">
-        <!--        <h1 v-if="pageData.title">{{ pageData.title }}</h1>-->
-    </div>
+    <div :class="$style.root"></div>
 </template>
 
 <script lang="ts">

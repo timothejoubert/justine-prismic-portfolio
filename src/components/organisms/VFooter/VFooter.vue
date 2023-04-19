@@ -1,6 +1,6 @@
 <template>
     <footer :class="$style.root">
-        <div class="text-body-xs" :class="$style.copyrigth">
+        <div class="text-body-xs" :class="$style.copyright">
             © {{ siteName }} | {{ currentYear }}
             <div :class="$style.creator">
                 <span> Créée par </span>
@@ -117,16 +117,22 @@ export default mixins(Vue as VueConstructor<Vue & Component>).extend({
     @include full-width($padding: false);
 
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    padding: rem(20) rem(30);
+    justify-content: center;
+    padding: rem(36) rem(30) rem(20);
     margin-bottom: rem(28);
     background-color: color(orange);
     border-radius: app(border-radius);
     color: color(white);
+
+    @include media('>=md') {
+        justify-content: space-between;
+        padding-block: rem(20);
+    }
 }
 
-.copyrigth {
+.copyright {
     display: flex;
     align-items: center;
 }
@@ -153,23 +159,30 @@ export default mixins(Vue as VueConstructor<Vue & Component>).extend({
     display: flex;
     align-items: center;
     gap: rem(16);
+
+    @include media('<md') {
+        width: 100%;
+        flex-shrink: 0;
+        justify-content: center;
+        margin-top: rem(10);
+    }
 }
 
 .link {
     display: flex;
-    width: rem(28);
+    padding: rem(10);
     opacity: 0.7;
     transition: opacity 0.3s;
+
+    & svg {
+        width: rem(28);
+        height: auto;
+    }
 
     @media (hover: hover) {
         &:hover {
             opacity: 1;
         }
-    }
-
-    & svg {
-        width: 100%;
-        height: auto;
     }
 }
 </style>

@@ -1,14 +1,14 @@
 @use 'sass:math';
 
 @mixin text-h1 {
+    @include font-size-fluid((xs: 54, xl: 160));
     font-family: $dida;
-    font-size: rem(141);
     font-weight: 400;
     line-height: math.div(108, 120);
 }
 
 @mixin text-h2 {
-    font-size: rem(96);
+    @include font-size-fluid((xs: 58, xl: 98));
     font-weight: 900;
     line-height: 1;
 }
@@ -26,7 +26,7 @@
 }
 
 @mixin text-h5 {
-    font-size: rem(48);
+    @include font-size-fluid((xs: 30, xl: 52));
     line-height: 1;
     font-weight: 550;
 }

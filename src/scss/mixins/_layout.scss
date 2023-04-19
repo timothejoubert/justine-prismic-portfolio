@@ -1,9 +1,9 @@
 @mixin full-width($padding: false) {
     @if $padding {
         width: 100%;
-        padding-inline: app(padding);
+        padding-inline: var(--layout-padding-inline);
     } @else {
-        width: calc(100% - #{app(padding) * 2});
+        width: calc(100% - var(--layout-padding-inline) * 2);
         margin-inline: auto;
     }
 }

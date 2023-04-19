@@ -1,15 +1,17 @@
 <template>
     <div :class="$style.root">
         <div :class="$style.title" class="text-h4">Gallery</div>
-        <v-carousel v-model="slideIndex" :class="$style.list">
-            <nuxt-img
-                v-for="(document, i) in documents"
-                :key="i"
-                provider="prismic"
-                :src="document.url"
-                sizes="xs:100vw md:70vw lg:60vw vl:60vw xl:60vw xxl:60vw hd:60vw"
-                :class="$style.image"
-            />
+        <v-carousel v-model="slideIndex" :class="$style.list" async-slides>
+            <template v-for="(document, i) in documents">
+                <nuxt-img
+                    v-if="document && document.url"
+                    :key="i"
+                    provider="prismic"
+                    :src="document.url"
+                    sizes="xs:100vw md:70vw lg:60vw vl:60vw xl:60vw xxl:60vw hd:60vw"
+                    :class="$style.image"
+                />
+            </template>
         </v-carousel>
     </div>
 </template>
@@ -22,7 +24,10 @@ import { FilledLinkToMediaField } from '@prismicio/types/src/value/linkToMedia'
 export default Vue.extend({
     name: 'VProjectGallery',
     props: {
-        documents: Array as PropType<FilledLinkToMediaField[]>,
+        documents: {
+            type: Array as PropType<FilledLinkToMediaField[]>,
+            default: () => [],
+        },
     },
     data() {
         return {
@@ -36,7 +41,7 @@ export default Vue.extend({
 .root {
     position: relative;
     min-height: 100vh;
-    padding: rem(300) app(padding);
+    padding: rem(300) var(--layout-padding-inline);
     margin-top: rem(400);
     isolation: isolate;
 
@@ -45,7 +50,7 @@ export default Vue.extend({
         z-index: -1;
         background-color: #f5f5f5;
         content: '';
-        inset: #{0 calc(app(padding) * -1) 0 calc(app(padding) * -1)};
+        inset: 0 calc(var(--layout-padding-inline) * -1) 0 calc(var(--layout-padding-inline) * -1);
     }
 }
 

@@ -1,0 +1,19 @@
+.layout--fullwidth {
+    @include full-width($padding: true);
+}
+
+.layout--wide-background {
+    @include wide-background;
+}
+
+:root {
+    @each $breakpoint, $value in $paddings {
+        @if $breakpoint == 0 {
+            --layout-padding-inline: #{$value};
+        } @else {
+            @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+                --layout-padding-inline: #{$value};
+            }
+        }
+    }
+}

@@ -14,6 +14,10 @@
         />
         <Nuxt />
         <lazy-v-footer v-if="isHomePage" ref="footer" />
+
+        <client-only>
+            <v-media-viewer-wrapper />
+        </client-only>
     </div>
 </template>
 

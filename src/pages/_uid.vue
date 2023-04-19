@@ -1,5 +1,5 @@
 <template>
-    <div v-if="pageData" :class="$style.root">
+    <div v-if="pageData" :class="$style.root" class="layout--fullwidth">
         <lazy-v-home v-if="isHome" />
         <lazy-v-sketch-books v-else-if="isSketchBook" />
         <lazy-v-project-list v-else-if="isProjectListing" />
@@ -44,10 +44,12 @@ export default mixins(Page).extend({
 }
 
 .main {
-    @include full-width($padding: true);
-
     & > *:not(:first-child) {
-        margin-block: rem(280);
+        margin-block: rem(140);
+
+        @include media('>=md') {
+            margin-block: rem(280);
+        }
     }
 }
 </style>

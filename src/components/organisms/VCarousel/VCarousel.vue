@@ -140,7 +140,7 @@ export default (Vue as VueConstructor<Component>).extend({
             this.resizeObserver?.disconnect()
             this.resizeObserver = null
 
-            this.swiper && this.swiper.destroy()
+            this.swiper && this.swiper.destroy(true, false)
         },
         async reset(): Promise<void> {
             await this.disposeSwiper()

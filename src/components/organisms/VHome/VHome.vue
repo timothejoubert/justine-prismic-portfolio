@@ -54,6 +54,7 @@ export default mixins(PageProvider).extend({
 .root {
     position: fixed;
     z-index: 103;
+    left: 0;
     display: flex;
     width: 100%;
     height: 100vh;

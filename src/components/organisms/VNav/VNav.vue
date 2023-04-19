@@ -3,7 +3,7 @@
         <transition :name="$style.menu" @enter="initIndicatorPosition">
             <div v-show="isMenuOpen" :class="$style.menu">
                 <div ref="slider" :class="$style.slider"></div>
-                <ul v-if="pages && pages.length" :class="$style.list">
+                <ul v-if="pages && pages.length" ref="list" :class="$style.list">
                     <li
                         v-for="(page, i) in pages"
                         :key="i"
@@ -22,7 +22,7 @@
             </div>
         </transition>
 
-        <v-button :class="$style.button" theme="orange" filled label="menu" @click="isMenuOpen = !isMenuOpen">
+        <v-button :class="$style.button" theme="orange" filled :label="menuLabel" @click="isMenuOpen = !isMenuOpen">
             <template #icon>
                 <div :class="$style.burger"></div>
             </template>
@@ -33,18 +33,24 @@
 <script lang="ts">
 import { gsap } from 'gsap'
 import Vue from 'vue'
+import type { VueConstructor } from 'vue'
 import { getCSSVarFromTheme } from '~/utils/get-theme'
 import NodeUid from '~/constants/node-uid'
 import { isHomeRoute } from '~/utils/prismic/type-check'
 import { isHomePage } from '~/utils/prismic/document'
-import { getProjectUid } from '~/utils/prismic/project'
-import { getRelationLinkUid } from '~/utils/prismic/field-relation'
+import { hasProjectByUid } from '~/utils/prismic/project'
 import { getMenuLinkList } from '~/utils/prismic/parse-api-data'
 import { MenuItem } from '~/types/prismic/app-prismic'
 import eventBus from '~/utils/event-bus'
 import EventType from '~/constants/event-type'
+import { isInternalRelationLinkWithUidFulled } from '~/utils/prismic/field-relation'
 
-export default Vue.extend({
+interface Component {
+    resizeObserver: null | ResizeObserver
+    listDirection: string
+}
+
+export default (Vue as VueConstructor<Vue & Component>).extend({
     name: 'VNav',
     props: {
         value: Boolean,
@@ -57,6 +63,14 @@ export default Vue.extend({
         }
     },
     computed: {
+        menuLabel(): string {
+            if (this.isHome) return 'Menu'
+            const currentUid = this.$route.params.uid || this.$route.fullPath.substring(1)
+            const currentPage = this.pages.filter(
+                (page) => isInternalRelationLinkWithUidFulled(page.link) && page.link.uid === currentUid
+            )?.[0]
+            return currentPage?.label || 'menu'
+        },
         rootClass(): (undefined | false | string)[] {
             return [this.$style.root, this.isMenuOpen && this.$style['root--open'], this.$style['root--theme-orange']]
         },
@@ -72,7 +86,7 @@ export default Vue.extend({
             this.restoreNavPosition()
         },
         selectedIndex(newIndex: number) {
-            this.updateIndicatorPosition(Math.max(newIndex, 0))
+            this.updateIndicatorPosition(newIndex)
         },
         value(isOpen) {
             if (isOpen) this.openMenu()
@@ -80,9 +94,35 @@ export default Vue.extend({
         },
     },
     mounted() {
+        this.updateLinkDirection()
+        this.initResizeObserver()
         eventBus.$on(EventType.FOOTER_DISTANCE, this.updateNavPosition)
     },
+    beforeDestroy() {
+        this.disposeResizeObserver()
+    },
     methods: {
+        updateLinkDirection() {
+            const slider = this.$refs.slider as HTMLElement
+            gsap.to(slider, { clearProps: 'transform' })
+
+            const linkList = this.$refs.list as HTMLElement
+            this.listDirection = getComputedStyle(linkList).flexDirection
+
+            this.selectedIndex = 0
+        },
+        initResizeObserver() {
+            const linkList = this.$refs.list as HTMLElement
+            this.resizeObserver = new ResizeObserver(() => {
+                const hasDirectionChanged = this.listDirection !== getComputedStyle(linkList).flexDirection
+                if (hasDirectionChanged) this.updateLinkDirection()
+            })
+            this.resizeObserver.observe(linkList)
+        },
+        disposeResizeObserver() {
+            this.resizeObserver?.disconnect()
+            this.resizeObserver = null
+        },
         pageLink(pageUid: string | undefined): string | undefined {
             if (isHomePage(pageUid)) return '/'
             if (this.$store.getters.isProjectUid(pageUid)) return '/' + NodeUid.PROJECT_LISTING + '/' + pageUid
@@ -104,24 +144,20 @@ export default Vue.extend({
             this.isMenuOpen = true
         },
         onLinkMouseEnter(index: number) {
-            this.updateSelectedIndex(index)
+            this.selectedIndex = index
         },
         updateSelectedIndexByRoute() {
-            const projectUid = getProjectUid(this.$route.params)
-            const currentPageUid = this.$route.params?.uid || (projectUid ? NodeUid.PROJECT_LISTING : NodeUid.HOME)
+            let currentPageUid = this.$route.params?.uid || this.$route.fullPath.substring(1)
+            const isProjectPage = hasProjectByUid(this.$store.state.projects, currentPageUid)
+            if (isProjectPage) currentPageUid = NodeUid.PROJECT_LISTING
 
-            const pageIndex = this.pages?.findIndex((page) => {
-                return getRelationLinkUid(page.link) === currentPageUid
-            })
-
-            this.updateSelectedIndex(pageIndex)
-        },
-        updateSelectedIndex(index: number) {
-            this.selectedIndex = index
+            this.selectedIndex =
+                this.pages?.findIndex((page) => {
+                    return isInternalRelationLinkWithUidFulled(page.link) && page.link.uid === currentPageUid
+                }) || 0
         },
         initIndicatorPosition() {
             this.updateSelectedIndexByRoute()
-            setTimeout(() => this.updateIndicatorPosition(Math.max(this.selectedIndex || 0, 0)), 200)
         },
         updateIndicatorPosition(newIndex: number) {
             const targets = this.$refs.link as HTMLElement[]
@@ -131,10 +167,14 @@ export default Vue.extend({
 
             if (!selectedTarget || !slider) return
 
-            gsap.to(slider, 0.4, {
-                x: selectedTarget.offsetLeft - 5,
-                width: selectedTarget.offsetWidth + 2,
-            })
+            if (this.listDirection === 'row') {
+                gsap.to(slider, 0.4, {
+                    x: selectedTarget.offsetLeft - 5,
+                    width: selectedTarget.offsetWidth + 2,
+                })
+            } else {
+                gsap.to(slider, 0.4, { y: selectedTarget.offsetTop - 5 })
+            }
 
             this.resetLinkColor(selectedTarget, blurLinkList)
         },
@@ -155,14 +195,17 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" module>
-$height: rem(34);
+$height: rem(38);
 
 .root {
     @include theme-variants;
 
+    ---v-button-inner-height: #{rem(50)};
+    ---v-button-inner-padding: 0 #{rem(30)} 0 #{rem(32)};
+
     position: fixed;
     z-index: 101;
-    bottom: rem(20);
+    bottom: rem(28);
     left: 50%;
     display: flex;
     flex-direction: column;
@@ -181,16 +224,25 @@ $height: rem(34);
 
 .list {
     display: inline-flex;
-    padding: rem(4);
+    flex-direction: column;
+    padding: rem(12) rem(8);
     border: 1px solid var(--theme-default);
-    border-radius: $height;
+    border-radius: rem(20);
 
     &::before {
         position: absolute;
+        z-index: -1;
         background-color: color(light);
         border-radius: $height;
         content: '';
-        inset: rem(4);
+        inset: 0;
+        //inset: rem(4);
+    }
+
+    @include media('>=md') {
+        flex-direction: row;
+        padding: rem(4);
+        border-radius: $height;
     }
 }
 
@@ -203,23 +255,34 @@ $height: rem(34);
 
 .item__link {
     display: flex;
-    min-width: rem(68);
+    min-width: rem(230);
     min-height: $height;
     align-items: center;
     justify-content: center;
-    font-size: rem(12);
+    font-size: rem(13);
     padding-inline: rem(22);
+
+    @include media('>=md') {
+        min-width: rem(68);
+    }
 }
 
 .slider {
     position: absolute;
     z-index: 1;
+    top: rem(4);
+    right: rem(4);
+    left: rem(4);
+    height: $height;
     background: var(--theme-default);
-    border-radius: $height;
-    inset: rem(4);
+    border-radius: 100vmax;
     pointer-events: none;
     transform-origin: center;
     user-select: none;
+
+    @include media('>=md') {
+        inset: rem(4);
+    }
 }
 
 .button {

@@ -16,4 +16,6 @@ export default (): RootState => ({
     windowHeight: 0,
     prefersReducedMotion: false,
     scrollIsDisabled: false,
+    mediaViewerData: null,
+    mediaViewerSlideIndex: 0,
 })

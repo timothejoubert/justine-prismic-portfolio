@@ -1,11 +1,9 @@
 <template>
     <div :class="[$style.root, isSticky && $style['root--sticky']]">
-        <nuxt-link ref="title" to="/" :class="$style.link">
-            <v-text class="text-h1" :content="title.firstName" />
+        <nuxt-link ref="title" to="/" :class="$style.link" class="text-h1">
+            <div>{{ title.firstName }}</div>
             <transition :name="$style.decorator">
-                <span v-if="isSticky" ref="family" :class="$style['title-decorator']" class="text-h1">{{
-                    title.familyParsed
-                }}</span>
+                <div v-if="isSticky" ref="family" :class="$style['title-decorator']">{{ title.familyParsed }}</div>
             </transition>
         </nuxt-link>
     </div>
@@ -114,6 +112,7 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
 .link {
     position: relative;
     color: color(orange);
+    font-size: rem(148) !important;
     pointer-events: none;
     transform-origin: center center;
 

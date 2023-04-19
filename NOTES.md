@@ -12,6 +12,7 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 ### IN PROGRESS
 
+* **(VNav)**: Page project link to project tab
 * **(VHeader)**: Adjust logo position on top
 
 ### QUESTIONS
@@ -34,6 +35,7 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 #### DONE
 
+* **(VModelViewer)**: create composant
 * **(VImage)** Use responsive img with <nuxt-img>
 * **(Slice)**: RandomGridImage
 * **(Setup)**: Clean prismic/utils files and methods names

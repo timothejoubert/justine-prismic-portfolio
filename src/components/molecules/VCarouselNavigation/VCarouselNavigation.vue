@@ -65,6 +65,7 @@ export default Vue.extend({
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
 }
 
 .pagination {

@@ -8,6 +8,7 @@
                     :src="pageData.thumbnail.url"
                     sizes="xs:50vw md:50vw lg:50vw vl:50vw xl:50vw xxl:50vw hd:50vw"
                     :class="$style.image"
+                    :placeholder="[pageData.thumbnail.dimensions.width, pageData.thumbnail.dimensions.height, 10]"
                 />
             </div>
 
@@ -78,23 +79,49 @@ export default mixins(PageProvider).extend({
 
 .head {
     display: flex;
+    flex-direction: column;
+
+    @include media('>=md') {
+        flex-direction: row;
+    }
 }
 
 .medias {
     position: relative;
-    left: calc(#{app(gutter) * -1});
-    max-width: 50%;
-    height: 100vh;
+    left: calc(var(--layout-padding-inline) * -1);
+    width: calc(100% + var(--layout-padding-inline) * 2);
+    order: 2;
+    margin-top: rem(62);
+
+    @include media('>=md') {
+        max-width: 50%;
+        height: 100vh;
+        order: unset;
+        margin-top: 0;
+        padding-block: rem(70);
+    }
 }
 
 .image {
+    overflow: hidden;
+    width: 100%;
     height: 100%;
-    object-fit: contain;
+    min-height: 70vh;
+    border-radius: rem(28) rem(28) 0 0;
+    object-fit: cover;
+
+    @include media('>=md') {
+        border-radius: unset;
+        object-fit: contain;
+    }
 }
 
 .body {
-    width: 50%;
     margin-top: rem(200);
+
+    @include media('>=md') {
+        width: 50%;
+    }
 }
 
 .title {

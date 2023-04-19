@@ -98,7 +98,6 @@ export default Vue.extend({
     margin-bottom: rem(200);
     background: #f7f7f7;
     border-radius: app(border-radius);
-    margin-inline: app(gutter);
 
     &::before,
     &::after {
@@ -130,11 +129,13 @@ export default Vue.extend({
 }
 
 .content {
-    $space: #{calc(app(padding) * 1)};
-
     position: absolute;
     overflow: hidden;
-    inset: inherit $space $space $space;
+    inset: inherit rem(18) rem(18) rem(18);
+
+    @include media('>=md') {
+        inset: inherit rem(32) rem(32) rem(32);
+    }
 }
 
 .content__inner {

@@ -1,6 +1,6 @@
 <template>
     <section :class="$style.root">
-        <v-text v-if="slice.primary.title" :content="slice.primary.title" :class="$style.title" />
+        <v-text v-if="slice.primary.title" :content="slice.primary.title" :class="$style.title" class="text-h2" />
         <v-text
             v-if="slice.primary.description"
             :content="slice.primary.description"
@@ -58,11 +58,8 @@ export default Vue.extend({
 }
 
 .title {
-    @include text-h4;
-
-    & > * {
-        font-size: inherit;
-        font-weight: inherit;
+    > * {
+        font-weight: 550;
     }
 }
 
@@ -76,12 +73,17 @@ export default Vue.extend({
 }
 
 .navigation {
+    margin-top: rem(24);
+
     & > button {
         ---v-button-inner-min-width: 54px !important;
     }
 
-    float: right;
-    transform: translateY(-100%);
+    @include media('>=md') {
+        margin-top: 0;
+        float: right;
+        transform: translateY(-100%);
+    }
 }
 
 .projects {

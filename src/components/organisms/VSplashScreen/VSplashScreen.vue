@@ -40,7 +40,7 @@ export default Vue.extend({
             ]
         },
         siteName(): string {
-            return this.$store.state.settings.data.site_name || 'fallback site name in splash screen'
+            return this.$store.state.settings?.data?.site_name || 'fallback site name in splash screen'
         },
     },
     watch: {

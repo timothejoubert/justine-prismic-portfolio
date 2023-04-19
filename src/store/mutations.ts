@@ -1,5 +1,6 @@
 import type { MutationTree } from 'vuex'
 import { PrismicDocument } from '@prismicio/types/src/value/document'
+import * as prismicT from '@prismicio/types'
 import MutationType from '~/constants/mutation-type'
 import { RootState } from '~/types/store'
 import { MainMenuDocument, SettingsDocument } from '~/types/prismic/prismic-types.generated'
@@ -20,4 +21,6 @@ export default {
     [MutationType.WINDOW_HEIGHT]: (state, value: number) => (state.windowHeight = value),
     [MutationType.PREFERS_REDUCED_MOTION]: (state, navigation: boolean) => (state.prefersReducedMotion = navigation),
     [MutationType.SCROLL_IS_DISABLED]: (state, value: boolean) => (state.scrollIsDisabled = value),
+    [MutationType.MEDIA_VIEWER_DATA]: (state, value: prismicT.ImageField[] | null) => (state.mediaViewerData = value),
+    [MutationType.MEDIA_VIEWER_SLIDE_INDEX]: (state, value: number) => (state.mediaViewerSlideIndex = value),
 } as MutationTree<RootState>

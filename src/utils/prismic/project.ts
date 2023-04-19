@@ -12,6 +12,6 @@ export const getProjectByUid = (projects: ProjectDocument[], uid: string): Proje
     return projects?.find((project) => project.uid === uid)
 }
 
-export const hasProjectByUid = (projects: ProjectDocument[], uid: string) => {
-    return projects?.some((project) => project.uid === uid)
+export const hasProjectByUid = (projectDocumentList: ProjectDocument[], uid: string) => {
+    return projectDocumentList?.some((projectDocument) => projectDocument.uid === uid)
 }

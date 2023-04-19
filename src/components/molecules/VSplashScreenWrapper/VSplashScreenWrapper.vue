@@ -27,7 +27,6 @@ export default Vue.extend({
     mounted() {
         this.setSplashScreenState()
         this.setVisited()
-        // this.$store.dispatch('disableScroll', { element: this.$el, options: { reserveScrollBarGap: true } })
     },
     beforeDestroy() {
         this.disposeVisited()
@@ -41,7 +40,6 @@ export default Vue.extend({
         },
         onSplashScreenDone() {
             this.$store.commit(MutationType.SPLASH_SCREEN_DONE, true)
-            // this.$store.dispatch('enableScroll', { element: this.$el })
             this.splashScreenState = 'leaved'
         },
         hasAlreadyVisited(): boolean {
