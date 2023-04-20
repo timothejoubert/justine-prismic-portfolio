@@ -24,8 +24,7 @@ import { getSocialsData, Social, SocialsContent } from '~/utils/get-socials-data
 import { isGroupFulled } from '~/utils/prismic/field-group'
 import { isHomePage } from '~/utils/prismic/document'
 import { isHomePath } from '~/utils/route-path'
-import eventBus from '~/utils/event-bus'
-import EventType from '~/constants/event-type'
+import MutationType from '~/constants/mutation-type'
 
 interface Component {
     intersectionObserver: null | IntersectionObserver
@@ -40,29 +39,20 @@ export default mixins(Vue as VueConstructor<Vue & Component>).extend({
     },
     beforeDestroy() {
         this.disposeIntersectionObserver()
+        this.resetNavPosition()
+        document.removeEventListener('scroll', this.onScroll)
     },
     mounted() {
-        // this.$nextTick(() => {
-        //     if (document.body.scrollHeight <= window.innerHeight) this.updateNavPosition()
-        // })
-
         this.createIntersectionObserver()
     },
     watch: {
         isVisible(value: boolean) {
             if (value) {
-                this.sendBottomDistance()
+                this.updateNavPosition()
                 document.addEventListener('scroll', this.onScroll)
             } else {
-                eventBus.$emit(EventType.FOOTER_DISTANCE, 0)
+                this.resetNavPosition()
                 document.removeEventListener('scroll', this.onScroll)
-            }
-        },
-        isHomePage(value: boolean) {
-            if (value) {
-                this.$nextTick(this.createIntersectionObserver)
-            } else {
-                this.disposeIntersectionObserver()
             }
         },
     },
@@ -90,12 +80,7 @@ export default mixins(Vue as VueConstructor<Vue & Component>).extend({
     },
     methods: {
         onScroll() {
-            this.sendBottomDistance()
-        },
-        sendBottomDistance() {
-            const bottomOffset = Math.abs(this.$el.getBoundingClientRect().top - window.innerHeight) * -1
-
-            eventBus.$emit(EventType.FOOTER_DISTANCE, bottomOffset)
+            this.updateNavPosition()
         },
         createIntersectionObserver() {
             this.intersectionObserver = new IntersectionObserver(this.onIntersectionObserverChange)
@@ -107,6 +92,18 @@ export default mixins(Vue as VueConstructor<Vue & Component>).extend({
         disposeIntersectionObserver() {
             this.intersectionObserver?.disconnect()
             this.intersectionObserver = null
+        },
+        updateNavPosition() {
+            if (!this.isVisible) {
+                this.resetNavPosition()
+                return
+            }
+
+            const bottomOffset = Math.abs(this.$el.getBoundingClientRect().top - window.innerHeight) * -1
+            this.$store.commit(MutationType.NAV_DISTANCE_FROM_BOTTOM, bottomOffset)
+        },
+        resetNavPosition() {
+            this.$store.commit(MutationType.NAV_DISTANCE_FROM_BOTTOM, 0)
         },
     },
 })

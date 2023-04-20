@@ -1,14 +1,14 @@
 <template>
     <section :class="$style.root">
         <v-link :reference="slice.primary.project">
-            <nuxt-img
+            <v-image
                 v-if="image"
                 ref="image"
-                provider="prismic"
-                :src="image.url"
-                sizes="xs:100vw md:95vw lg:95vw vl:95vw xl:95vw xxl:95vw hd:95vw"
+                :prismic-image="image"
                 :class="$style.image"
+                sizes="xs:100vw md:95vw lg:95vw vl:95vw xl:95vw xxl:95vw hd:95vw"
             />
+
             <div :class="$style.content">
                 <div :class="$style.content__inner" :style="{ transform: `translateY(${descriptionHeight}px)` }">
                     <v-text ref="title" :class="$style.title" class="text-h5" :content="slice.primary.title" />
@@ -27,14 +27,19 @@
 
 <script lang="ts">
 import { getSliceComponentProps } from '@prismicio/vue/components'
-import * as prismicT from '@prismicio/types'
 import Vue from 'vue'
+import type { VueConstructor } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import type { ImageField } from '@prismicio/types'
 import { ProjectDocument } from '~/types/prismic/app-prismic'
 import { getProjectByUid } from '~/utils/prismic/project'
 
-export default Vue.extend({
+interface Component {
+    resizeObserver: null | ResizeObserver
+}
+
+export default (Vue as VueConstructor<Vue & Component>).extend({
     name: 'ProjectPushBlock',
     props: getSliceComponentProps(['slice', 'index', 'slices', 'context']),
     data() {
@@ -55,30 +60,45 @@ export default Vue.extend({
         linkLabel(): string {
             return this.slice.primary.cta_label || 'Voir mon projet'
         },
-        image(): boolean | prismicT.ImageField<never> {
+        image(): false | ImageField {
             return !!this.project?.data?.thumbnail && this.project.data.thumbnail
         },
     },
     mounted() {
         this.initScrollAnimation()
+        this.initResizeObserver()
         this.setDescriptionHeight()
     },
+    beforeDestroy() {
+        this.disposeResizeObserver()
+    },
     methods: {
+        initResizeObserver() {
+            const description = (this.$refs.description as Vue | undefined)?.$el as HTMLElement
+            if (!description) return
+
+            this.resizeObserver = new ResizeObserver(() => this.setDescriptionHeight())
+            this.resizeObserver.observe(description)
+        },
+        disposeResizeObserver() {
+            this.resizeObserver?.disconnect()
+            this.resizeObserver = null
+        },
         initScrollAnimation() {
             gsap.registerPlugin(ScrollTrigger)
             const root = this.$el as HTMLElement
-            const image = this.$refs.image as HTMLElement
+            const image = (this.$refs.image as Vue | undefined)?.$el as HTMLElement
 
             if (!root || !image) return
+
             gsap.to(image, {
                 scrollTrigger: {
-                    markers: false,
                     trigger: root,
                     scrub: true,
                     start: 'top bottom',
                     end: 'top',
                 },
-                scale: 1.15,
+                scale: 1.12,
                 ease: 'none',
             })
         },

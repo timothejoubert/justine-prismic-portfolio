@@ -12,29 +12,30 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 ### IN PROGRESS
 
-* **(VNav)**: Page project link to project tab
-* **(VHeader)**: Adjust logo position on top
+* **(VProjectPush)**: fix reveal anim
 
 ### QUESTIONS
 
 * **(Routing)**: Why unknown routing /projects/_uid (not redirect to _uid) ?
-* **(Routing)**: Why need to specify basPath '/' ?
+* **(Routing)**: Why need to specify basePath '/' ?
 
 ### TODO
 
+* **(VButton)**: Hover effect
+* **(VImage)**: Ajouter padding via le ratio pour éviter le layout shifting
 * **(VLink && VButton)**: add PrismicLink && PrismicDocument
 * **(PrismicTypeModule)** import correctly **shim** client types _(ex: context.$prismic.api.query())_
-* **(Home)** Create Home Type (display all slice only on it)
-* **(Internalization)** Set Fr as Default
-  locale: [Forum](https://community.prismic.io/t/changing-the-main-locale-language/1010)
-* **(VImage)** Faire custom VImage a partir de PrismicImage component
 * **(Config)** Register Prismic component (ex: PrismicRichText | SliceZone')
-* **(Setup)** Add storybook ?
-* **(Slice)**: CarouselMedia | RandomGridImage | ProjectListing (layout: carousel && grid)
-* **(VCarousel)**: Add VCarouselLoop from modelec
 
 #### DONE
 
+* **(VNav)**: Keep tracking Footer distance when pageUpdated
+* **(Slice)**: CarouselMedia | RandomGridImage | ProjectListing (layout: carousel && grid)
+* **(VCarousel)**: Add VCarouselLoop from modelec
+* **(VImage)** Faire custom VImage a partir de PrismicImage component
+* **(Home)** Create Home Type (display all slice only on it)
+* **(VHeader)**: anim logo: default = sticky position ?
+* **(VNav)**: Page project link to project tab
 * **(VModelViewer)**: create composant
 * **(VImage)** Use responsive img with <nuxt-img>
 * **(Slice)**: RandomGridImage
@@ -54,6 +55,9 @@ import {CustomTypesClientConfig} from "@prismicio/custom-types-client";
 
 #### LATER
 
+* **(Setup)** Add storybook ?
+* **(Internalization)** Set Fr as Default
+  locale: [Forum](https://community.prismic.io/t/changing-the-main-locale-language/1010)
 * **(Config)**: I18n
 * **(Nav && Config)**: Configure nested route
 

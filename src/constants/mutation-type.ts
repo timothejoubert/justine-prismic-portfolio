@@ -16,6 +16,7 @@ enum MutationType {
     SCROLL_IS_DISABLED = 'scrollIsDisabled',
     MEDIA_VIEWER_DATA = 'mediaViewerData',
     MEDIA_VIEWER_SLIDE_INDEX = 'mediaViewerSlideIndex',
+    NAV_DISTANCE_FROM_BOTTOM = 'navDistanceFromBottom',
 }
 
 export default MutationType

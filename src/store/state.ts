@@ -18,4 +18,5 @@ export default (): RootState => ({
     scrollIsDisabled: false,
     mediaViewerData: null,
     mediaViewerSlideIndex: 0,
+    navDistanceFromBottom: 0,
 })

@@ -1,19 +1,19 @@
 <template>
-    <div :class="[$style.root, isSplashScreenDone && $style['root--ready']]">
-        <v-splash-screen-wrapper />
+    <div :class="[$style.root, (isSplashScreenDone || !displaySplashScreen) && $style['root--ready']]">
+        <v-splash-screen-wrapper v-if="displaySplashScreen" />
         <v-header />
         <v-nav ref="nav" />
         <nuxt-picture
             provider="static"
-            sizes="sm:480 md:768 lg:1024"
             width="1673"
+            placeholder="10"
             height="1109"
             src="/images/texture.png"
             :class="$style.texture"
             :img-attrs="{ class: $style['texture__image'] }"
         />
         <Nuxt />
-        <lazy-v-footer v-if="isHomePage" ref="footer" />
+        <v-footer v-if="isHomePage" />
 
         <client-only>
             <v-media-viewer-wrapper />
@@ -27,6 +27,8 @@ import Resize from '~/mixins/Resize'
 import MutationType from '~/constants/mutation-type'
 import { isHomePage } from '~/utils/prismic/document'
 import { isHomePath } from '~/utils/route-path'
+import toBoolean from '~/utils/to-boolean'
+import GeneralsConst from '~/constants/app'
 
 export default mixins(Resize).extend({
     name: 'default',
@@ -37,6 +39,9 @@ export default mixins(Resize).extend({
         )
     },
     computed: {
+        displaySplashScreen(): boolean {
+            return toBoolean(GeneralsConst.DISPLAY_SPLASH_SCREEN_ONCE)
+        },
         isSplashScreenDone(): boolean {
             return this.$store.state.splashScreenDone
         },

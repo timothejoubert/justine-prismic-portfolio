@@ -23,4 +23,5 @@ export default {
     [MutationType.SCROLL_IS_DISABLED]: (state, value: boolean) => (state.scrollIsDisabled = value),
     [MutationType.MEDIA_VIEWER_DATA]: (state, value: prismicT.ImageField[] | null) => (state.mediaViewerData = value),
     [MutationType.MEDIA_VIEWER_SLIDE_INDEX]: (state, value: number) => (state.mediaViewerSlideIndex = value),
+    [MutationType.NAV_DISTANCE_FROM_BOTTOM]: (state, value: number) => (state.navDistanceFromBottom = value),
 } as MutationTree<RootState>

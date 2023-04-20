@@ -1,6 +1,6 @@
 <template>
     <div :class="[$style.root, isSticky && $style['root--sticky']]">
-        <nuxt-link ref="title" to="/" :class="$style.link" class="text-h1">
+        <nuxt-link ref="title" to="/" :class="$style.title" class="text-h1">
             <div>{{ title.firstName }}</div>
             <transition :name="$style.decorator">
                 <div v-if="isSticky" ref="family" :class="$style['title-decorator']">{{ title.familyParsed }}</div>
@@ -16,6 +16,8 @@ import Vue from 'vue'
 import type { VueConstructor } from 'vue'
 import { isHomePath } from '~/utils/route-path'
 import { isHomePage } from '~/utils/prismic/document'
+import eventBus from '~/utils/event-bus'
+import EventType from '~/constants/event-type'
 
 interface Component {
     tween: null | GSAPTween
@@ -43,14 +45,24 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
                 this.isSticky = false
                 gsap.set(this.$refs.family as HTMLElement, { opacity: 0 })
                 this.initScrollAnimation()
-            } else this.setStickyPosition()
+            } else this.setInitialPosition()
         },
     },
     mounted() {
         if (isHomePath(this.$route) || isHomePage(this.$store.state.currentPageData)) this.initScrollAnimation()
-        else this.setStickyPosition()
+        else this.setInitialPosition()
+
+        eventBus.$on(EventType.RESIZE, this.onResize)
+    },
+    beforeDestroy() {
+        this.killTween()
+        eventBus.$off(EventType.RESIZE, this.onResize)
     },
     methods: {
+        onResize() {
+            this.killTween()
+            this.initScrollAnimation()
+        },
         initScrollAnimation() {
             if (this.tween) return
 
@@ -61,31 +73,35 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
             gsap.set(title, { clearProps: 'all' })
 
             if (!root || !title) {
-                this.setStickyPosition()
+                this.setInitialPosition()
                 return
             }
 
-            this.tween = gsap.to(title, {
+            const multiplier = Math.min(window.innerWidth / 200, 6.2)
+
+            const startedHeight = title.getBoundingClientRect().height * multiplier
+            const windowHeight = window.innerHeight
+            const startedDist = windowHeight / 2 - startedHeight / 2
+
+            this.tween = gsap.from(title, {
                 scrollTrigger: {
-                    markers: false,
-                    trigger: root,
                     scrub: true,
                     start: 'top',
-                    end: 'bottom',
+                    end: `+=${windowHeight}`,
                     onLeave: (state) => (this.isSticky = !state.isActive),
                     onEnterBack: (state) => (this.isSticky = !state.isActive),
                 },
-                scale: 0.2,
-                y: -500,
+                scale: multiplier,
+                y: startedDist,
                 ease: 'none',
             })
         },
-        setStickyPosition() {
+        setInitialPosition() {
             const title = (this.$refs.title as Vue).$el as HTMLElement
 
             this.isSticky = true
 
-            gsap.set(title, { scale: 0.2, y: -500 })
+            gsap.set(title, { clearProps: 'all' })
             this.killTween()
         },
         killTween() {
@@ -97,27 +113,26 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
 </script>
 
 <style lang="scss" module>
+$headerHeight: rem(90);
+
 .root {
     position: fixed;
     z-index: 103;
     display: flex;
     width: 100%;
-    height: 100vh;
-    flex-direction: column;
+    height: $headerHeight;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
 }
 
-.link {
+.title {
     position: relative;
     color: color(orange);
-    font-size: rem(148) !important;
-    pointer-events: none;
+    font-size: rem(28) !important;
     transform-origin: center center;
 
-    .root--sticky & {
-        pointer-events: auto;
+    .root:not(.root--sticky) & {
+        pointer-events: none;
     }
 }
 

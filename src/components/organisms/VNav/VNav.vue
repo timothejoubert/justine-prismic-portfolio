@@ -82,8 +82,8 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
         },
     },
     watch: {
-        $route() {
-            this.restoreNavPosition()
+        '$store.state.navDistanceFromBottom'(value: number) {
+            ;(this.$el as HTMLElement).style.transform = `translate(-50%, ${value}px)`
         },
         selectedIndex(newIndex: number) {
             this.updateIndicatorPosition(newIndex)
@@ -96,7 +96,6 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
     mounted() {
         this.updateLinkDirection()
         this.initResizeObserver()
-        eventBus.$on(EventType.FOOTER_DISTANCE, this.updateNavPosition)
     },
     beforeDestroy() {
         this.disposeResizeObserver()
@@ -183,12 +182,6 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
 
             gsap.to(selectedTarget, 0.3, { color: theme['--theme-on-default'], ease: 'none' })
             gsap.to(blurLinkList, 0.3, { color: theme['--theme-default'], ease: 'none' })
-        },
-        updateNavPosition(dist: number) {
-            ;(this.$el as HTMLElement).style.transform = `translate(-50%, ${dist}px)`
-        },
-        restoreNavPosition() {
-            ;(this.$el as HTMLElement).style.transform = `translate(-50%, 0px)`
         },
     },
 })

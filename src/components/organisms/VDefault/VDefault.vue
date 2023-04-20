@@ -6,6 +6,7 @@
         <v-button label="label" size="m" filled theme="orange"></v-button>
         <v-button label="label" size="l" filled theme="orange"></v-button>
         <v-button label="label" size="xl" filled theme="orange"></v-button>
+        <v-image v-if="pageData.thumbnail" :prismic-image="pageData.thumbnail" />
     </div>
 </template>
 

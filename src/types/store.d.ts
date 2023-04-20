@@ -22,4 +22,5 @@ interface RootState {
     scrollIsDisabled: boolean
     mediaViewerData: null | prismicT.ImageField[]
     mediaViewerSlideIndex: number
+    navDistanceFromBottom: number
 }
