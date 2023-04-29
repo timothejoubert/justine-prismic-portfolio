@@ -30,7 +30,7 @@ export default Vue.extend({
                 '@context': 'https://schema.org',
                 '@type': 'WebSite',
                 name: this.$config.siteName,
-                alternateName: this.$config.siteName.replace(/\s/g, ''),
+                alternateName: this.$config.siteName?.replace(/\s/g, '') || '',
                 url: this.$config.siteUrl,
             }
         },
