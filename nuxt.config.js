@@ -127,6 +127,7 @@ export default {
 
     publicRuntimeConfig: {
         development: process.env.NODE_ENV === 'development',
+        siteName: process.env.APP_NAME,
         siteUrl: process.env.APP_URL,
         apiUrl: apiEndpoint,
         homePath: process.env.HOME_PATH || '/',

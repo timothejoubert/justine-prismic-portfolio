@@ -27,6 +27,9 @@
                 <div :class="$style.burger"></div>
             </template>
         </v-button>
+
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <script v-if="breadcrumbJsonldB" type="application/ld+json" v-html="breadcrumbJsonldB"></script>
     </nav>
 </template>
 
@@ -34,6 +37,7 @@
 import { gsap } from 'gsap'
 import Vue from 'vue'
 import type { VueConstructor } from 'vue'
+import mixins from 'vue-typed-mixins'
 import { getCSSVarFromTheme } from '~/utils/get-theme'
 import NodeUid from '~/constants/node-uid'
 import { isHomeRoute } from '~/utils/prismic/type-check'
@@ -41,16 +45,15 @@ import { isHomePage } from '~/utils/prismic/document'
 import { hasProjectByUid } from '~/utils/prismic/project'
 import { getMenuLinkList } from '~/utils/prismic/parse-api-data'
 import { MenuItem } from '~/types/prismic/app-prismic'
-import eventBus from '~/utils/event-bus'
-import EventType from '~/constants/event-type'
 import { isInternalRelationLinkWithUidFulled } from '~/utils/prismic/field-relation'
+import JsonLd from '~/mixins/JsonLd'
 
 interface Component {
     resizeObserver: null | ResizeObserver
     listDirection: string
 }
 
-export default (Vue as VueConstructor<Vue & Component>).extend({
+export default mixins(JsonLd, Vue as VueConstructor<Vue & Component>).extend({
     name: 'VNav',
     props: {
         value: Boolean,

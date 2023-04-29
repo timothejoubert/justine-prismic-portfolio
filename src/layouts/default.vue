@@ -18,6 +18,9 @@
         <client-only>
             <v-media-viewer-wrapper />
         </client-only>
+
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <script type="application/ld+json" v-html="websiteInfos"></script>
     </div>
 </template>
 
@@ -29,8 +32,9 @@ import { isHomePage } from '~/utils/prismic/document'
 import { isHomePath } from '~/utils/route-path'
 import toBoolean from '~/utils/to-boolean'
 import GeneralsConst from '~/constants/app'
+import JsonLd from '~/mixins/JsonLd'
 
-export default mixins(Resize).extend({
+export default mixins(Resize, JsonLd).extend({
     name: 'default',
     mounted() {
         this.$store.commit(
