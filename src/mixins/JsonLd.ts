@@ -2,6 +2,7 @@ import Vue from 'vue'
 import { joinURL } from 'ufo'
 import { MenuItem } from '~/types/prismic/app-prismic'
 import { isInternalRelationLinkWithUidFulled } from '~/utils/prismic/field-relation'
+import NodeUid from '~/constants/node-uid'
 
 export default Vue.extend({
     computed: {
@@ -18,8 +19,11 @@ export default Vue.extend({
                         name: item.label || 'Page label',
                     }
 
-                    if (isInternalRelationLinkWithUidFulled(item.link) && item.link.url)
-                        element.item = joinURL(this.$config.baseURL, item.link.url)
+                    if (isInternalRelationLinkWithUidFulled(item.link) && item.link.uid)
+                        element.item = joinURL(
+                            this.$config.siteUrl,
+                            item.link.uid === NodeUid.HOME ? '' : item.link.uid
+                        )
 
                     return element
                 }),
