@@ -114,7 +114,7 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
 .root {
     position: relative;
     overflow: hidden;
-    height: calc(100vh - #{rem(170)});
+    height: 40vh;
     margin-bottom: rem(200);
     background: #f7f7f7;
     border-radius: app(border-radius);
@@ -140,6 +140,10 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
     &:hover::after {
         opacity: 0;
     }
+
+    @include media('>=md') {
+        height: calc(100vh - #{rem(170)});
+    }
 }
 
 .image {
@@ -161,14 +165,20 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
 .content__inner {
     transition: transform 0.35s ease(out-quad);
 
-    .root:hover & {
-        transform: translateY(0) !important;
+    @include media('>=md') {
+        .root:hover & {
+            transform: translateY(0) !important;
+        }
     }
 }
 
 .description,
 .title {
-    width: clamp(#{rem(360), 40%, rem(450)});
+    width: min(100%, rem(300));
+
+    @include media('>=md') {
+        width: clamp(#{rem(360), 40%, rem(450)});
+    }
 }
 
 .description {
@@ -176,8 +186,10 @@ export default (Vue as VueConstructor<Vue & Component>).extend({
     opacity: 0;
     transition: opacity 0.35s ease(out-quad);
 
-    .root:hover & {
-        opacity: 1;
+    @include media('>=md') {
+        .root:hover & {
+            opacity: 1;
+        }
     }
 }
 
