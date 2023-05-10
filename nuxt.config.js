@@ -141,7 +141,6 @@ export default {
         components: true,
         endpoint: apiEndpoint,
         modern: true,
-        linkResolver,
         htmlSerializer,
     },
 
