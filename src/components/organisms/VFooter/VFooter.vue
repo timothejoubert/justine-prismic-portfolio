@@ -118,23 +118,31 @@ export default mixins(Vue as VueConstructor<Vue & Component>).extend({
     align-items: center;
     justify-content: center;
     padding: rem(36) rem(30) rem(20);
-    margin-bottom: rem(28);
+    margin-bottom: rem(22);
     background-color: color(orange);
     border-radius: app(border-radius);
     color: color(white);
 
     @include media('>=md') {
         justify-content: space-between;
-        padding-block: rem(20);
+        padding-block: rem(8);
     }
 }
 
 .copyright {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+
+    @include media('>=xs') {
+        flex-direction: row;
+    }
 }
 
 .creator {
+    margin-top: rem(6);
+
     & > * {
         opacity: 0.7;
     }
@@ -150,24 +158,32 @@ export default mixins(Vue as VueConstructor<Vue & Component>).extend({
     & > a:hover {
         opacity: 1;
     }
+
+    @include media('>=xs') {
+        margin-top: 0;
+    }
 }
 
 .socials {
     display: flex;
     align-items: center;
     gap: rem(16);
+    margin-top: rem(15);
 
     @include media('<md') {
         width: 100%;
         flex-shrink: 0;
         justify-content: center;
-        margin-top: rem(10);
+    }
+
+    @include media('>=xs') {
+        margin-top: 0;
     }
 }
 
 .link {
     display: flex;
-    padding: rem(10);
+    padding: rem(4);
     opacity: 0.7;
     transition: opacity 0.3s;
 
