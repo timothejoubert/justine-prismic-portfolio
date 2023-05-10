@@ -125,13 +125,14 @@ export default mixins(Vue as VueConstructor<Vue & Component>).extend({
 
     @include media('>=md') {
         justify-content: space-between;
-        padding-block: rem(8);
+        padding-block: rem(14);
     }
 }
 
 .copyright {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 
@@ -166,17 +167,16 @@ export default mixins(Vue as VueConstructor<Vue & Component>).extend({
 
 .socials {
     display: flex;
+    width: 100%;
+    flex-shrink: 0;
     align-items: center;
-    gap: rem(16);
+    justify-content: center;
     margin-top: rem(15);
+    gap: rem(16);
 
-    @include media('<md') {
-        width: 100%;
-        flex-shrink: 0;
-        justify-content: center;
-    }
-
-    @include media('>=xs') {
+    @include media('>=md') {
+        width: revert;
+        justify-content: inherit;
         margin-top: 0;
     }
 }
